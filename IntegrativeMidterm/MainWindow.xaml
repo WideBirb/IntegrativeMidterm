@@ -1,0 +1,95 @@
+﻿<Window x:Class="IntegrativeMidterm.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IntegrativeMidterm"
+        xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1000">
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
+    <Border Background="#22202f">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <ContentControl 
+                Grid.Column="1"
+                Grid.Row="1"
+                Content="{Binding CurrentView}"/>
+
+
+            <TextBlock Text="PET SHOP"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Foreground="White"
+                   FontSize="32" 
+                   FontFamily="Candara"
+                   Panel.ZIndex="2"/>
+
+            <TextBlock Text="{Binding WindowNameText}"
+                   Grid.Column="1"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Foreground="White"
+                   FontSize="32" 
+                   FontFamily="Candara"
+                   Panel.ZIndex="2"/>
+
+            <Border Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Background="#FF4FF14F"/>
+
+
+            <StackPanel Grid.Row="1">
+                <RadioButton Content="Dashboard"
+                         Height="50"
+                         Foreground="White"
+                         FontSize="15"
+                         Style="{StaticResource MenuButtonTheme}"
+                         IsChecked="True"
+                         Command="{Binding DashboardViewCommand}"/>
+
+                <RadioButton Content="Supplies Inventory"
+                         Height="50"
+                         Foreground="White"
+                         FontSize="15"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding SuppliesViewCommand}"/>
+
+                <RadioButton Content="Supplies Shop"
+                         Height="50"
+                         Foreground="White"
+                         FontSize="15"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding CheckOutViewCommand}"/>
+
+                <RadioButton Content="Transaction History"
+                         Height="50"
+                         Foreground="White"
+                         FontSize="15"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding TransactionHistoryViewCommand}"/>
+            </StackPanel>
+
+            <ContentControl 
+                Grid.Column="1"
+                Grid.Row="1"
+                Content="{Binding CurrentView}"/>
+
+
+
+        </Grid>
+    </Border>
+</Window>

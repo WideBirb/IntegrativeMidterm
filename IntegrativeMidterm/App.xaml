@@ -1,0 +1,38 @@
+﻿<Application x:Class="IntegrativeMidterm.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:IntegrativeMidterm"
+             xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
+             xmlns:view="clr-namespace:IntegrativeMidterm.MVVM.View"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!--THEMES-->
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Style/MenuButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+
+            <!--VIEWS-->
+
+            <DataTemplate DataType="{x:Type viewModel:CheckOutViewModel}">
+                <view:CheckOutView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
+                <view:DashboardView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:SuppliesInventoryViewModel}">
+                <view:SuppliesInventoryView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:TransactionHistoryViewModel}">
+                <view:TransactionHistoryView/>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

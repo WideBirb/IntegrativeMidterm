@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="IntegrativeMidterm.MVVM.View.SuppliesInventoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
+             xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
+             mc:Ignorable="d" 
+             x:Name="root"
+             HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <UserControl.DataContext>
+        <viewModel:SuppliesInventoryViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Margin="25">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <DataGrid 
+        ItemsSource="{Binding SupplyItems}"
+        SelectedItem="{Binding SelectedItem}"
+        CanUserAddRows="False" CanUserDeleteRows="False"
+        AutoGenerateColumns="False"
+        
+        >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Item ID" Binding="{Binding ItemID}" Width="1*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="1*"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="1*" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="1*" />
+                <DataGridTextColumn Header="Pet Type" Binding="{Binding PetType}" Width="1*" IsReadOnly="False"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel 
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+
+            <Label Content="Item ID" Width="250"/>
+            <TextBox x:Name="ItemIDTextBox"
+            Margin="5,0,5,15" Text="{Binding SelectedItem.ItemID, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+            <Label Content="Name"/>
+            <TextBox x:Name="NameTextBox"
+            Margin="5,0,5,15" Text="{Binding SelectedItem.Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Quantity"/>
+            <TextBox x:Name="QuantityTextBox" PreviewTextInput="QuantityTextBox_PreviewTextInput"
+            Margin="5,0,5,15" Text="{Binding SelectedItem.Quantity, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Price"/>
+            <TextBox x:Name="PriceTextBox" PreviewTextInput="PriceTextBox_PreviewTextInput"
+            Margin="5,0,5,15" Text="{Binding SelectedItem.Price, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Pet Type"/>
+
+
+            <ComboBox Margin="5,0,5,15"
+                  SelectedItem="{Binding SelectedItem.PetType , UpdateSourceTrigger=PropertyChanged}"
+                  x:Name="PetTypeComboBox">
+                <ComboBoxItem Content="Cat"/>
+                <ComboBoxItem Content="Dog"/>
+                <ComboBoxItem Content="Bird"/>
+
+            </ComboBox>
+            <Label Content="Image Path"/>
+            <TextBox x:Name="ImagePathTextBox" 
+            Margin="5,0,5,15" Text="{Binding SelectedItem.ImagePath, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Button Name="Hello" Content="Add" Width="125" Height="30" Margin="0,0,0,0"
+                Command="{Binding AddCommand}"
+                CommandParameter="{Binding ElementName=root}"/>
+            <Button Content="Delete" Width="125" Height="30" Margin="0,10,0,0"
+                Command="{Binding DeleteCommand}"/>
+
+        </StackPanel>
+    </Grid>
+</UserControl>
