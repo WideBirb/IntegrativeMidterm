@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace IntegrativeMidterm.MVVM.Model
 {
@@ -19,6 +20,8 @@ namespace IntegrativeMidterm.MVVM.Model
 
         // FOR OUTPUT
         public string Status { get; set; }
+        public string Age { get; set; }
+        public SolidColorBrush StatusColor { get; set; }
 
         // FOR INPUT ON ADDING TO TRANSACTIONS
         public int InTransactionHistoryID { get; set; }

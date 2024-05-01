@@ -14,6 +14,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
     internal class PetInventoryViewModel : ViewModelBase
     {
         public ObservableCollection<AvailabilityIndicatorData> AvailabilityIndicators { get; set; }
+        public ObservableCollection<Pet> PetsData { get; set; }
         public ObservableCollection<PetSpecies> PetSpeciesFilters { get; set; }
         public RelayCommand ConfirmCommand => new RelayCommand(execute => ManageInformation());
 
@@ -95,6 +96,21 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                     Description = "Dinosaur"
                 }
             };
+
+            PetsData = new ObservableCollection<Pet>() { };
+
+            for (int i = 0; i < 25; ++i)
+            {
+                PetsData.Add(
+                new Pet
+                {
+                    PetName = "Blue",
+                    Breed = "Chow chow",
+                    Gender = "M",
+                    Age = "22mo.",
+                    StatusColor = Brushes.Green,
+                });
+            }
         }
 
         private void ManageInformation()

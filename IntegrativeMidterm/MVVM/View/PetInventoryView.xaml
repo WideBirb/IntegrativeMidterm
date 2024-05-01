@@ -28,7 +28,7 @@
 
                 <ScrollViewer
                     Style="{StaticResource ThinScrollViewerStyle}"
-                    Margin="25 0 25 0"
+                    Margin="25 -23 25 10"
                     VerticalScrollBarVisibility="Disabled"
                     HorizontalScrollBarVisibility="Auto">
                     <ItemsControl
@@ -46,14 +46,24 @@
                     </ItemsControl>
                 </ScrollViewer>
 
-                <!--<ItemsControl
-                    ItemsSource="{Binding AvailabilityIndicators}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <components:PetAvailabilityIndicator/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>-->
+                <ScrollViewer Margin="0 0 25 0" MaxHeight="600"
+                              Style="{StaticResource ThinScrollViewerStyle}">
+                    <ItemsControl Margin="0 0 0 0"
+                        ItemsSource="{Binding PetsData}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <components:PetListItem Margin="0 0 0 15"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel
+                                    Orientation="Vertical"
+                                    Margin="40 0 40 0"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
             </StackPanel>
         </Grid>
 
