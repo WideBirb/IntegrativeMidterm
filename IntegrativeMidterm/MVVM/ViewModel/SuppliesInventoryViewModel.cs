@@ -14,7 +14,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
     internal class SuppliesInventoryViewModel : ViewModelBase
     {
 
-        public ObservableCollection<SupplyItem> SupplyItems { get; set; }
+        public ObservableCollection<PetSupply> SupplyItems { get; set; }
 
         public RelayCommand AddCommand => new RelayCommand(parameter => AddItem(parameter));
 
@@ -23,12 +23,12 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public SuppliesInventoryViewModel()
         {
 
-            SupplyItems = new ObservableCollection<SupplyItem>();
+            SupplyItems = new ObservableCollection<PetSupply>();
 
         }
 
-        private SupplyItem selectedItem;
-        public SupplyItem SelectedItem
+        private PetSupply selectedItem;
+        public PetSupply SelectedItem
         {
             get { return selectedItem; }
             set
@@ -53,14 +53,14 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             }
             else
             {
-                SupplyItems.Add(new SupplyItem
+                SupplyItems.Add(new PetSupply
                 {
-                    ItemID = random.Next().ToString(),
-                    Name = item.NameTextBox.Text,
-                    Quantity = int.Parse(item.QuantityTextBox.Text),
-                    Price = int.Parse(item.PriceTextBox.Text),
-                    PetType = item.PetTypeComboBox.Text,
-                    ImagePath = item.ImagePathTextBox.Text
+                    //ItemID = random.Next().ToString(),
+                    //Name = item.NameTextBox.Text,
+                    //Quantity = int.Parse(item.QuantityTextBox.Text),
+                    //Price = int.Parse(item.PriceTextBox.Text),
+                    //PetType = item.PetTypeComboBox.Text,
+                    //ImagePath = item.ImagePathTextBox.Text
                 }); ;
             }
 

@@ -55,6 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MVVM\Model\Pet.cs" />
+    <Compile Include="MVVM\Model\SalePetReceipt.cs" />
+    <Compile Include="MVVM\Model\SaleOverview.cs" />
+    <Compile Include="MVVM\Model\SaleSupplyReceipt.cs" />
+    <Compile Include="MVVM\Model\PetSupply.cs" />
     <Compile Include="userControl\CheckoutItems.xaml.cs">
       <DependentUpon>CheckoutItems.xaml</DependentUpon>
     </Compile>
@@ -105,8 +110,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MVVM\Model\Sales.cs" />
-    <Compile Include="MVVM\Model\SupplyItem.cs" />
     <Compile Include="MVVM\ViewModel\CheckOutViewModel.cs" />
     <Compile Include="MVVM\ViewModel\DashboardViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />

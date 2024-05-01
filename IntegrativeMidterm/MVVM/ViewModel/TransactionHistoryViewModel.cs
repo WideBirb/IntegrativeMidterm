@@ -10,10 +10,10 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 {
     internal class TransactionHistoryViewModel
     {
-        public ObservableCollection<Sales> Sales { get; set; }
+        public ObservableCollection<SaleOverview> Sales { get; set; }
         public TransactionHistoryViewModel()
         {
-            Sales = new ObservableCollection<Sales>();
+            Sales = new ObservableCollection<SaleOverview>();
         }
     }
 }
