@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace IntegrativeMidterm.userControl.General
+{
+    public partial class InputBar : UserControl
+    {
+        private bool _hasInput = false;
+        public InputBar()
+        {
+            InitializeComponent();
+            PlaceholderText = "";
+            InputText = "";
+            BackgroundColor = new SolidColorBrush(Colors.White);
+            BorderColor = new SolidColorBrush(Colors.Black);
+        }
+
+        public static readonly DependencyProperty PlaceholderTextProperty =
+            DependencyProperty.Register("PlaceholderText", typeof(string), typeof(InputBar));
+
+        public static readonly DependencyProperty InputTextProperty =
+            DependencyProperty.Register("InputText", typeof(string), typeof(InputBar));
+
+        public static readonly DependencyProperty BackgroundColorProperty =
+            DependencyProperty.Register("BackgroundColor", typeof(string), typeof(InputBar));
+
+        public static readonly DependencyProperty BorderColorProperty =
+            DependencyProperty.Register("BackgroundColor", typeof(string), typeof(InputBar));
+        
+        public string PlaceholderText
+        {
+            get { return (string)GetValue(PlaceholderTextProperty); }
+            set { SetValue(PlaceholderTextProperty, value); }
+        }
+        public string InputText
+        {
+            get { return (string)GetValue(InputTextProperty); }
+            set { SetValue(InputTextProperty, value); }
+        }
+        public SolidColorBrush BackgroundColor
+        {
+            get { return (SolidColorBrush)GetValue(BackgroundColorProperty); }
+            set { SetValue(BackgroundColorProperty, value); }
+        }
+        public SolidColorBrush BorderColor
+        {
+            get { return (SolidColorBrush)GetValue(BorderColorProperty); }
+            set { SetValue(BorderColorProperty, value); }
+        }
+
+        private void InputBar_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tbPlaceholder.Visibility = Visibility.Hidden;
+        }
+
+        private void InputBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (((TextBox)sender).Text.Length == 0)
+                _hasInput = false;
+            else
+                _hasInput = true;
+        }
+        
+        private void InputBar_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!_hasInput)
+            {
+                tbPlaceholder.Visibility = Visibility.Visible;
+            }
+        }
+    }
+}

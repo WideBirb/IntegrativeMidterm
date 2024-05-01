@@ -1,12 +1,28 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <SolidColorBrush x:Key="HeaderColor">#FF4FF14F</SolidColorBrush>
+    <SolidColorBrush x:Key="HeaderColor">#0C6B37</SolidColorBrush>
     <SolidColorBrush x:Key="BackgroundColor">#22202f</SolidColorBrush>
+
     <SolidColorBrush x:Key="FontColorLight">white</SolidColorBrush>
+    <SolidColorBrush x:Key="FontColorLightInactive">#C3C3C3</SolidColorBrush>
     <SolidColorBrush x:Key="FontColorDark">black</SolidColorBrush>
+    <SolidColorBrush x:Key="FontColorDarkInactive">black</SolidColorBrush>
+
+    <SolidColorBrush x:Key="TextBoxColorLight">white</SolidColorBrush>
 
     <SolidColorBrush x:Key="MenuButtonColor">#22202f</SolidColorBrush>
     <SolidColorBrush x:Key="MenuButtonHoveredColor">#2C2A3D</SolidColorBrush>
     <SolidColorBrush x:Key="MenuButtonPressedColor">#1E1C29</SolidColorBrush>
 
+    <SolidColorBrush x:Key="PrimaryButtonColor">#0C6B37</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimaryButtonHoveredColor">#0F8243</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimaryButtonPressedColor">#0B5E30</SolidColorBrush>
+
+    <SolidColorBrush x:Key="SecondaryButtonColor">#BC2023</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondaryButtonHoveredColor">#D12427</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondaryButtonPressedColor">#A31C1E</SolidColorBrush>
+
+    <SolidColorBrush x:Key="TertiaryButtonColor">#F8B324</SolidColorBrush>
+    <SolidColorBrush x:Key="TertiaryButtonHoveredColor">#FFB825</SolidColorBrush>
+    <SolidColorBrush x:Key="TertiaryButtonPressedColor">#EDAB22</SolidColorBrush>
 </ResourceDictionary>

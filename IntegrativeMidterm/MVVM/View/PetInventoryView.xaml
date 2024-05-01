@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
              xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
+             xmlns:userControls="clr-namespace:IntegrativeMidterm.userControl.General"
              xmlns:components="clr-namespace:IntegrativeMidterm.userControl.PetInventory"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800" MinWidth="900">
@@ -19,7 +20,41 @@
 
         <Grid Grid.Column="0" Margin="25 25 12.5 25">
             <Border Background="#2C2A3D"  CornerRadius="15"/>
+                <StackPanel>
+                    <userControls:SearchBar
+                    VerticalAlignment="Top" Margin="0 0 0 0"
+                    PlaceholderText="{Binding SearchBarPlaceholderText}"
+                    InputText="{Binding SearchBarInput}"/>
 
+                <ScrollViewer
+                    Style="{StaticResource ThinScrollViewerStyle}"
+                    Margin="25 0 25 0"
+                    VerticalScrollBarVisibility="Disabled"
+                    HorizontalScrollBarVisibility="Auto">
+                    <ItemsControl
+                        ItemsSource="{Binding PetSpeciesFilters}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Description}" Style="{StaticResource FilterButtonStyle}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <!--<ItemsControl
+                    ItemsSource="{Binding AvailabilityIndicators}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <components:PetAvailabilityIndicator/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>-->
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Column="1" Margin="12.5 25 25 25">
@@ -41,10 +76,36 @@
             </StackPanel>
 
             <Border Grid.Row="1" Background="#2C2A3D" CornerRadius="15" Margin="0 12.5 0 0"/>
-            <StackPanel Grid.Row="1"  Margin="10 22.5 10 10">
-                
-            </StackPanel>
+            <StackPanel Grid.Row="1"  Margin="10 22.5 10 10" VerticalAlignment="Center">
+                <TextBlock Height="50"
+                           Foreground="White"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           Text="Petname"/>
+                <TextBlock Height="30"
+                           Foreground="White"
+                           FontSize="18"
+                           HorizontalAlignment="Center"
+                           Text="Birthdate:"/>
+                <TextBlock Height="30"
+                           Foreground="White"
+                           FontSize="18"
+                           HorizontalAlignment="Center"
+                           Text="07/20/2003"/>
+                <TextBlock Height="30" Margin="0 50 0 0"
+                           Foreground="White"
+                           FontSize="18"
+                           HorizontalAlignment="Center"
+                           Text="For adoption"/>
+                <TextBlock Height="30" Margin="0 50 0 0"
+                           Foreground="White"
+                           FontSize="20"
+                           HorizontalAlignment="Center"
+                           Text="Php 7,200"/>
 
+                <Button Style="{StaticResource SecondaryButtonStyle}" Content="MANAGE INFO" Command="{Binding ConfirmCommand}"/>
+                <Button Style="{StaticResource TertiaryButtonStyle}" Content="UPDATE STATUS"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

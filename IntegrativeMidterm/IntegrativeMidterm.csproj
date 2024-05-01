@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MVVM\Model\AvailabilityIndicatorData.cs" />
+    <Compile Include="MVVM\Model\Filters\PetBreed.cs" />
+    <Compile Include="MVVM\Model\Filters\PetSpecies.cs" />
+    <Compile Include="MVVM\Model\Filters\PetSupplyType.cs" />
     <Compile Include="MVVM\Model\Pet.cs" />
     <Compile Include="MVVM\Model\SalePetReceipt.cs" />
     <Compile Include="MVVM\Model\SaleOverview.cs" />
@@ -75,8 +79,17 @@
     <Compile Include="userControl\CheckoutItems.xaml.cs">
       <DependentUpon>CheckoutItems.xaml</DependentUpon>
     </Compile>
+    <Compile Include="userControl\General\InputBar.xaml.cs">
+      <DependentUpon>InputBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="userControl\General\SearchBar.xaml.cs">
+      <DependentUpon>SearchBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="userControl\PetInventory\PetAvailabilityIndicator.xaml.cs">
       <DependentUpon>PetAvailabilityIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="userControl\PetInventory\PetListItem.xaml.cs">
+      <DependentUpon>PetListItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="userControl\SupplyItems.xaml.cs">
       <DependentUpon>SupplyItems.xaml</DependentUpon>
@@ -123,6 +136,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Style\ButtonStyleTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Style\ColorLibrary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -135,11 +152,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Style\ScrollViewStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="userControl\CheckoutItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="userControl\General\InputBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="userControl\General\SearchBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="userControl\PetInventory\PetAvailabilityIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="userControl\PetInventory\PetListItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
