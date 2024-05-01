@@ -13,6 +13,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Themes/Style/MenuButtonStyle.xaml"/>
                 <ResourceDictionary Source="/Themes/Style/ColorLibrary.xaml"/>
+                <ResourceDictionary Source="/Themes/Style/Dimensions.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
 

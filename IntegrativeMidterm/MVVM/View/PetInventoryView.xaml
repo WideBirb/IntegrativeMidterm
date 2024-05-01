@@ -4,9 +4,47 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
+             xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
+             xmlns:components="clr-namespace:IntegrativeMidterm.userControl.PetInventory"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="800" MinWidth="900">
+    <UserControl.DataContext>
+        <viewModel:PetInventoryViewModel/>
+    </UserControl.DataContext>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="25 25 12.5 25">
+            <Border Background="#2C2A3D"  CornerRadius="15"/>
+
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="12.5 25 25 25">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
             
+            <Border Grid.Row="0" Background="#2C2A3D" CornerRadius="15" Margin="0 0 0 12.5"/>
+            <StackPanel Grid.Row="0" Margin="10 10 10 22.5">
+                <ItemsControl
+                    ItemsSource="{Binding AvailabilityIndicators}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <components:PetAvailabilityIndicator/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <Border Grid.Row="1" Background="#2C2A3D" CornerRadius="15" Margin="0 12.5 0 0"/>
+            <StackPanel Grid.Row="1"  Margin="10 22.5 10 10">
+                
+            </StackPanel>
+
+        </Grid>
     </Grid>
 </UserControl>

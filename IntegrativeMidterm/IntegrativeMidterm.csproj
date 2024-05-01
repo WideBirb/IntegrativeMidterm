@@ -75,6 +75,9 @@
     <Compile Include="userControl\CheckoutItems.xaml.cs">
       <DependentUpon>CheckoutItems.xaml</DependentUpon>
     </Compile>
+    <Compile Include="userControl\PetInventory\PetAvailabilityIndicator.xaml.cs">
+      <DependentUpon>PetAvailabilityIndicator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="userControl\SupplyItems.xaml.cs">
       <DependentUpon>SupplyItems.xaml</DependentUpon>
     </Compile>
@@ -124,11 +127,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Style\Dimensions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Style\MenuButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="userControl\CheckoutItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="userControl\PetInventory\PetAvailabilityIndicator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

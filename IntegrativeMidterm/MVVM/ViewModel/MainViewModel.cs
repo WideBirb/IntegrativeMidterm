@@ -22,9 +22,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public CheckOutViewModel CheckOutVM { get; set; }
         public SuppliesInventoryViewModel SuppliesInventoryVM { get; set; }
         public TransactionHistoryViewModel TransactionHistoryVM { get; set; }
-        public TransactionHistoryViewModel PetCheckOutVM { get; set; }
-        public TransactionHistoryViewModel PetInventoryVM { get; set; }
-        public TransactionHistoryViewModel PetProfileVM { get; set; }
+        public PetCheckOutViewModel PetCheckOutVM { get; set; }
+        public PetInventoryViewModel PetInventoryVM { get; set; }
+        public PetProfileViewModel PetProfileVM { get; set; }
 
 
         private object _currentView;
@@ -59,6 +59,10 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             CheckOutVM = new CheckOutViewModel();
             SuppliesInventoryVM = new SuppliesInventoryViewModel();
             TransactionHistoryVM = new TransactionHistoryViewModel();
+
+            PetCheckOutVM = new PetCheckOutViewModel();
+            PetInventoryVM = new PetInventoryViewModel();
+            PetProfileVM = new PetProfileViewModel();
 
             CurrentView = DashboardVM;
             WindowNameText = "DASHBOARD";

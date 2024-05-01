@@ -4,4 +4,9 @@
     <SolidColorBrush x:Key="BackgroundColor">#22202f</SolidColorBrush>
     <SolidColorBrush x:Key="FontColorLight">white</SolidColorBrush>
     <SolidColorBrush x:Key="FontColorDark">black</SolidColorBrush>
+
+    <SolidColorBrush x:Key="MenuButtonColor">#22202f</SolidColorBrush>
+    <SolidColorBrush x:Key="MenuButtonHoveredColor">#2C2A3D</SolidColorBrush>
+    <SolidColorBrush x:Key="MenuButtonPressedColor">#1E1C29</SolidColorBrush>
+
 </ResourceDictionary>

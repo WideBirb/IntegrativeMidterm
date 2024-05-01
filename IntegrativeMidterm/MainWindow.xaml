@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:IntegrativeMidterm"
         xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000">
+        Title="MainWindow" Height="800" Width="1200" MinWidth="1200" MinHeight="800">
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
-    <Border Background="#22202f">
+    <Border Background="{StaticResource BackgroundColor}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
@@ -49,7 +49,7 @@
 
             <Border Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Background="#FF4FF14F"/>
+                Background="{StaticResource HeaderColor}"/>
 
 
             <StackPanel Grid.Row="1">
