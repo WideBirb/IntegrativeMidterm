@@ -26,5 +26,8 @@ namespace IntegrativeMidterm.MVVM.Model
         public int InStatusID { get; set; }
         public int InSupplyTypeID { get; set; }
         public int InPetTypeID { get; set; }
+
+        // OTHER OUTPUT
+        public string ImagePath { get; set; }
     }
 }
