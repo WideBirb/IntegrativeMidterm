@@ -12,6 +12,7 @@
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Themes/Style/MenuButtonStyle.xaml"/>
+                <ResourceDictionary Source="/Themes/Style/ColorLibrary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
 
@@ -31,6 +32,18 @@
 
             <DataTemplate DataType="{x:Type viewModel:TransactionHistoryViewModel}">
                 <view:TransactionHistoryView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:PetCheckOutViewModel}">
+                <view:PetCheckOutView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:PetInventoryViewModel}">
+                <view:PetInventoryView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:PetProfileViewModel}">
+                <view:PetProfileView/>
             </DataTemplate>
 
         </ResourceDictionary>

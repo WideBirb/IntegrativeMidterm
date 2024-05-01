@@ -54,31 +54,27 @@
 
             <StackPanel Grid.Row="1">
                 <RadioButton Content="Dashboard"
-                         Height="50"
-                         Foreground="White"
-                         FontSize="15"
                          Style="{StaticResource MenuButtonTheme}"
                          IsChecked="True"
                          Command="{Binding DashboardViewCommand}"/>
 
                 <RadioButton Content="Supplies Inventory"
-                         Height="50"
-                         Foreground="White"
-                         FontSize="15"
                          Style="{StaticResource MenuButtonTheme}"
                          Command="{Binding SuppliesViewCommand}"/>
 
+                <RadioButton Content="Pet Inventory"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding PetInventoryViewCommand}"/>
+
                 <RadioButton Content="Supplies Shop"
-                         Height="50"
-                         Foreground="White"
-                         FontSize="15"
                          Style="{StaticResource MenuButtonTheme}"
                          Command="{Binding CheckOutViewCommand}"/>
 
+                <RadioButton Content="Pet Shop"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding PetCheckOutViewCommand}"/>
+
                 <RadioButton Content="Transaction History"
-                         Height="50"
-                         Foreground="White"
-                         FontSize="15"
                          Style="{StaticResource MenuButtonTheme}"
                          Command="{Binding TransactionHistoryViewCommand}"/>
             </StackPanel>
