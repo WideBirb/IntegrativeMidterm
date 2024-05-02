@@ -51,7 +51,7 @@
                         VerticalAlignment="Center" 
                         Width="70">
                 <TextBlock Text="PHP" TextAlignment="Center"/>
-                <TextBlock Text="{Binding Quantity}" TextAlignment="Center" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding Price}" TextAlignment="Center" TextWrapping="Wrap"/>
             </StackPanel>
             
             

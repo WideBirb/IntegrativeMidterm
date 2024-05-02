@@ -40,35 +40,45 @@
                     />
 
             <StackPanel Grid.Row="1"
+                        x:Name="FilterButtons"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
 
                 <Button
+                    x:Name="DogFilterButton"
                     Width="150"
                     Height="50"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Content="Dog"
                     Margin="10"
+                    Command="{Binding filterItemsCommand }"
+                    CommandParameter="{Binding ElementName=DogFilterButton}"
                     />
 
                 <Button
+                    x:Name="CatFilterButton"
                     Width="150"
                     Height="50"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Content="Cat"
                     Margin="10"
+                    Command="{Binding filterItemsCommand }"
+                    CommandParameter="{Binding ElementName=CatFilterButton}"
                     />
 
                 <Button
+                    x:Name="BirdFilterButton"
                     Width="150"
                     Height="50"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Content="Bird"
                     Margin="10"
+                    Command="{Binding filterItemsCommand }"
+                    CommandParameter="{Binding ElementName=BirdFilterButton}"
                     />
 
             </StackPanel>
@@ -80,10 +90,10 @@
                           VerticalScrollBarVisibility="Auto"
                           Margin="0,15,0,15">
 
-                <ItemsControl
-                    IsEnabled="True"
-                ItemsSource="{Binding PetSupplyItems}"
-                    Background="PaleVioletRed">
+                <ItemsControl   x:Name="PetSupplyItemItemsControl"
+                                IsEnabled="True"
+                                ItemsSource="{Binding PetSupplyItems , UpdateSourceTrigger=PropertyChanged}"
+                                Background="PaleVioletRed">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Components:SupplyItems/>
@@ -125,7 +135,7 @@
                               Height="500">
                     
                     <ItemsControl   x:Name="CheckOutItemsControl"
-                                    ItemsSource="{Binding ShoppingCart}"
+                                    ItemsSource="{Binding ShoppingCart, UpdateSourceTrigger=PropertyChanged}"
                                     IsEnabled="True"
                                     HorizontalAlignment="Center">
                         <ItemsControl.ItemTemplate>
@@ -154,9 +164,11 @@
                     Grid.Row="1"
                     Width="300"
                     Height="60"
+                    FontSize="25"
                     Background="Pink"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
+                    TextAlignment="Right"
                     Margin="10"
                     />
 
