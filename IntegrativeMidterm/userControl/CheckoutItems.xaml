@@ -5,26 +5,98 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IntegrativeMidterm.userControl"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Border BorderBrush="LightGray" BorderThickness="1">
-        <StackPanel Height="60" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Width="120">
-                <TextBlock Text="{Binding Name}" TextAlignment="Center"/>
-                <TextBlock Text="{Binding ItemID}" TextAlignment="Center"/>
+             x:Name="root"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch">
+    
+    <Border BorderBrush="LightGray" Background="Azure" BorderThickness="1">
+
+        <Grid Height="80" Width="400">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="0.75*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Source="{Binding ImagePath}"
+                   Grid.Column="0"
+                   Width="70" 
+                   Height="70" 
+                   Stretch="Fill"/>
+
+            <StackPanel Orientation="Vertical" 
+                        Grid.Column="1" 
+                        VerticalAlignment="Center" >
+                <TextBlock Text="{Binding PetSupplyName}" TextAlignment="Left" FontWeight="Bold"/>
+                <TextBlock Text="{Binding SupplyType}" TextAlignment="Left"/>
+                <TextBlock Text="{Binding Species}" TextAlignment="Left"/>
+                <TextBlock x:Name="PetSupplyIDTextBox" Text="{Binding PetSupplyID}" TextAlignment="Left"/>
             </StackPanel>
 
-            <TextBlock Text="{Binding Price}" 
-                                            Width="75" 
-                                            VerticalAlignment="Center" 
-                                            HorizontalAlignment="Center" 
-                                            Margin="10,0,10,0"
-                                            TextAlignment="Center"/>
-            <StackPanel Width="120" Height="60" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Height="35" Width="35" Content="+" Margin="5,0,5,0"/>
-                <TextBlock x:Name="Quantity" Text="5" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0"/>
-                <Button Height="35" Width="35" Content="-" Margin="5,0,5,0"/>
+
+            <StackPanel Grid.Column="2"
+                        VerticalAlignment="Center">
+
+                <Button
+                    x:Name="AddQuantityButton"
+                    FontSize="7"
+                    Content="+"
+                    Height="15"
+                    Width="15"
+                    Margin="0,5,0,5"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.increaseQuantityCommand}"
+                    CommandParameter="{Binding ElementName=root}"
+                    />
+                <TextBlock 
+                        x:Name="QuantityTextBlock"
+                      TextWrapping="Wrap"
+                        Grid.Column="2"
+                        Text="{Binding Quantity}" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" 
+                        Margin="5,0,5,0"/>
+
+                <Button
+                    x:Name="RemoveQuantityButton"
+                    FontSize="7"
+                    Content="-"
+                    Height="15"
+                    Width="15"
+                    Margin="0,5,0,5"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.decreaseQuantityCommand}"
+                    CommandParameter="{Binding ElementName=root}"
+                    />
             </StackPanel>
 
-        </StackPanel>
+
+
+            <StackPanel Orientation="Vertical" 
+                        Grid.Column="3" 
+                        VerticalAlignment="Center" >
+                <TextBlock Text="PHP" TextAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Text="{Binding Price}" 
+                       Grid.Column="3"
+                        Width="75" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" 
+                        Margin="10,0,10,0"
+                        TextAlignment="Center"/>
+            </StackPanel>
+
+
+            <Button Grid.Column="4"
+                    Content="X"
+                    Margin="10"
+                    Background="Red"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.RemoveItemCommand}"
+                    CommandParameter="{Binding PetSupplyID}"/>
+
+
+
+
+        </Grid>
+        
     </Border>
 </UserControl>
