@@ -18,6 +18,7 @@ namespace IntegrativeMidterm.userControl.General
     public partial class SearchBar : UserControl
     {
         private bool _hasInput = false;
+
         public SearchBar()
         {
             InitializeComponent();
@@ -30,6 +31,15 @@ namespace IntegrativeMidterm.userControl.General
 
         public static readonly DependencyProperty InputTextProperty =
             DependencyProperty.Register("InputText", typeof(string), typeof(SearchBar));
+
+        public static readonly DependencyProperty TextChangedCommandProperty =
+            DependencyProperty.Register("TextChangedCommand", typeof(ICommand), typeof(SearchBar));
+
+        public ICommand TextChangedCommand
+        {
+            get { return (ICommand)GetValue(TextChangedCommandProperty); }
+            set { SetValue(TextChangedCommandProperty, value); }
+        }
 
         public string PlaceholderText
         {
@@ -50,6 +60,8 @@ namespace IntegrativeMidterm.userControl.General
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
+            TextChangedCommand?.Execute(((TextBox)sender).Text);
+
             if (((TextBox)sender).Text.Length == 0)
                 _hasInput = false;
             else

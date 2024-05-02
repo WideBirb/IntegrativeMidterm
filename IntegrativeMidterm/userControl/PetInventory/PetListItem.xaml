@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IntegrativeMidterm.userControl.PetInventory"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
                       d:DesignHeight="50" d:DesignWidth="550">
     <Grid Height="50" Margin="20 0 10 0">
         <Border Width="40" Margin="5" Background="White" HorizontalAlignment="Left">

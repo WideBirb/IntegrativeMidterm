@@ -12,6 +12,18 @@ namespace IntegrativeMidterm.Core
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private DataClassDataContext _petshopDB = null;
+        public DataClassDataContext PetshopDB
+        {
+            get { return _petshopDB; }
+            private set { _petshopDB = value; }
+        }
+
+        public ViewModelBase()
+        {
+            PetshopDB = new DataClassDataContext(Properties.Settings.Default.PetShopConnectionString);
+        }
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

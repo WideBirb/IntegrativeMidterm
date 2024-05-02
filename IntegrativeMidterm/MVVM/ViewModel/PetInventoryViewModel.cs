@@ -1,12 +1,16 @@
 ﻿using IntegrativeMidterm.Core;
 using IntegrativeMidterm.MVVM.Model;
 using IntegrativeMidterm.MVVM.Model.Filters;
+using IntegrativeMidterm.userControl.General;
+using IntegrativeMidterm.userControl.PetInventory;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace IntegrativeMidterm.MVVM.ViewModel
@@ -16,13 +20,12 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public ObservableCollection<AvailabilityIndicatorData> AvailabilityIndicators { get; set; }
         public ObservableCollection<Pet> PetsData { get; set; }
         public ObservableCollection<PetSpecies> PetSpeciesFilters { get; set; }
-        public RelayCommand ConfirmCommand => new RelayCommand(execute => ManageInformation());
 
+        public RelayCommand ConfirmCommand => new RelayCommand(execute => ManageInformation());
+        public RelayCommand FilterCommand { get; }
 
         private string _searchBarInput = string.Empty;
         private string _searchBarPlaceholderText = string.Empty;
-
-
 
         public string SearchBarInput
         {
@@ -35,10 +38,54 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             set { _searchBarPlaceholderText = value; OnPropertyChanged(); }
         }
 
+        private void Filter(object parameter)
+        {
+            if (PetsData == null) { return; }
+
+            PetsData.Clear();
+            InitializeData(parameter as string);
+        }
+
+        private void InitializeData(string filter = null)
+        {
+            ISingleResult<spGetAllPetsResult> retrievedData = PetshopDB.spGetAllPets(null, null, null, null);
+
+            foreach (spGetAllPetsResult item in retrievedData)
+            {
+                if (filter != null)
+                {
+                    if (!item.Name.ToLower().Contains(filter.ToLower()))
+                        continue;
+
+                    PetsData.Add(
+                    new Pet
+                    {
+                        PetName = item.Name,
+                        Breed = item.Breed,
+                        Gender = item.Gender,
+                        Age = item.Birthdate.ToShortDateString(),
+                        StatusColor = Brushes.Green,
+                    });
+                    continue;
+                }
+
+                PetsData.Add(
+                new Pet
+                {
+                    PetName = item.Name,
+                    Breed = item.Breed,
+                    Gender = item.Gender,
+                    Age = item.Birthdate.ToShortDateString(),
+                    StatusColor = Brushes.Green,
+                });
+            }
+        }
 
         public PetInventoryViewModel()
         {
             SearchBarPlaceholderText = "Search...";
+            SearchBarInput = "";
+            FilterCommand = new RelayCommand(Filter);
 
             AvailabilityIndicators = new ObservableCollection<AvailabilityIndicatorData>
             {
@@ -97,20 +144,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 }
             };
 
-            PetsData = new ObservableCollection<Pet>() { };
-
-            for (int i = 0; i < 25; ++i)
-            {
-                PetsData.Add(
-                new Pet
-                {
-                    PetName = "Blue",
-                    Breed = "Chow chow",
-                    Gender = "M",
-                    Age = "22mo.",
-                    StatusColor = Brushes.Green,
-                });
-            }
+            PetsData = new ObservableCollection<Pet>();
         }
 
         private void ManageInformation()

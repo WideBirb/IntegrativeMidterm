@@ -1,9 +1,11 @@
 ﻿using IntegrativeMidterm.Core;
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace IntegrativeMidterm.MVVM.ViewModel
 {
@@ -50,8 +52,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-
-
 
         public MainViewModel()
         {
@@ -104,6 +104,5 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 WindowNameText = "PET PROFILE";
             });
         }
-
     }
 }

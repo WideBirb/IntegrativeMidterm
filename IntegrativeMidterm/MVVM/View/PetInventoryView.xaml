@@ -21,10 +21,10 @@
         <Grid Grid.Column="0" Margin="25 25 12.5 25">
             <Border Background="#2C2A3D"  CornerRadius="15"/>
                 <StackPanel>
-                    <userControls:SearchBar
+                    <userControls:SearchBar TextChangedCommand="{Binding FilterCommand}"
                     VerticalAlignment="Top" Margin="0 0 0 0"
                     PlaceholderText="{Binding SearchBarPlaceholderText}"
-                    InputText="{Binding SearchBarInput}"/>
+                    InputText="{Binding SearchBarInput, Mode=TwoWay}"/>
 
                 <ScrollViewer
                     Style="{StaticResource ThinScrollViewerStyle}"
@@ -35,7 +35,9 @@
                         ItemsSource="{Binding PetSpeciesFilters}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Content="{Binding Description}" Style="{StaticResource FilterButtonStyle}"/>
+                                <Button Content="{Binding Description}"
+                                        Style="{StaticResource FilterButtonStyle}"/>
+                                <!--Command="{Binding DataContext.FilterCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"-->
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
