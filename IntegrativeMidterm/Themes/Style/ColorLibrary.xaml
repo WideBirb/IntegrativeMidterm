@@ -15,6 +15,7 @@
     <SolidColorBrush x:Key="MenuButtonPressedColor">#1E1C29</SolidColorBrush>
 
     <SolidColorBrush x:Key="PrimaryButtonColor">#0C6B37</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimaryButtonActiveColor">#0E753C</SolidColorBrush>
     <SolidColorBrush x:Key="PrimaryButtonHoveredColor">#0F8243</SolidColorBrush>
     <SolidColorBrush x:Key="PrimaryButtonPressedColor">#0B5E30</SolidColorBrush>
 

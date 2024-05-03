@@ -29,7 +29,7 @@
 
 
         <Style.Triggers>
-            <Trigger Property="IsChecked" Value="False">
+            <Trigger Property="IsPressed" Value="False">
                 <Setter Property="Background" Value="#22202f"/>
             </Trigger>
             <Trigger Property="IsChecked" Value="True">

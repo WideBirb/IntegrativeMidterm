@@ -13,15 +13,15 @@ namespace IntegrativeMidterm.MVVM.Model
         // FOR INPUT & OUTPUT IN ORDER
         public string PetName { get; set; }
         public string Gender { get; set; }
-        public string Birhdate { get; set; }
+        public DateTime Birhdate { get; set; }
         public string Species { get; set; }
         public string Breed { get; set; }
-        public string Price { get; set; }
+        public float Price { get; set; }
         // - Status
 
         // FOR OUTPUT
-        public string Status { get; set; }
-        public string Age { get; set; }
+        public int Status { get; set; }
+        public int Age { get; set; }
         public SolidColorBrush StatusColor { get; set; }
 
         // FOR INPUT ON ADDING TO TRANSACTIONS

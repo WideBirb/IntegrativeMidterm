@@ -13,6 +13,13 @@ namespace IntegrativeMidterm.MVVM.Model
         private SolidColorBrush _iconColor;
         private string _description;
         private int _count;
+        private int _id;
+        
+        public int ID
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         public SolidColorBrush IconColor
         {
