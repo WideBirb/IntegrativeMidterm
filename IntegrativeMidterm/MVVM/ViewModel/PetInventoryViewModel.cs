@@ -38,17 +38,86 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             set { _searchBarPlaceholderText = value; OnPropertyChanged(); }
         }
 
-        private void Filter(object parameter)
+        public PetInventoryViewModel()
+        {
+            SearchBarPlaceholderText = "Search...";
+            SearchBarInput = string.Empty;
+
+            FilterCommand = new RelayCommand(UpdateSearchResult);
+
+            AvailabilityIndicators = new ObservableCollection<AvailabilityIndicatorData>
+            {
+                new AvailabilityIndicatorData
+                {
+                    IconColor = Brushes.Green,
+                    Description = "Available",
+                    Count = 0
+                },
+                new AvailabilityIndicatorData
+                {
+                    IconColor = Brushes.Red,
+                    Description = "Reserved",
+                    Count = 0
+                },
+                new AvailabilityIndicatorData
+                {
+                    IconColor = Brushes.Yellow,
+                    Description = "Adopted",
+                    Count = 0
+                },
+                new AvailabilityIndicatorData
+                {
+                    IconColor = Brushes.Black,
+                    Description = "Deceased",
+                    Count = 0
+                }
+            };
+            PetSpeciesFilters = new ObservableCollection<PetSpecies>
+            {
+                new PetSpecies
+                {
+                    ID = 1,
+                    Description = "Cat"
+                },
+                new PetSpecies
+                {
+                    ID = 2,
+                    Description = "Dog"
+                },
+                new PetSpecies
+                {
+                    ID = 3,
+                    Description = "Bird"
+                },
+                new PetSpecies
+                {
+                    ID = 4,
+                    Description = "Shark"
+                },
+                new PetSpecies
+                {
+                    ID = 5,
+                    Description = "Dinosaur"
+                }
+            };
+            PetsData = new ObservableCollection<Pet>();
+
+            InitializeData();
+        }
+
+        private void UpdateSearchResult(object parameter)
         {
             if (PetsData == null) { return; }
 
             PetsData.Clear();
-            InitializeData(parameter as string);
+            GetSearchResults(parameter as string);
         }
 
-        private void InitializeData(string filter = null)
+        private void GetSearchResults(string filter = null)
         {
             ISingleResult<spGetAllPetsResult> retrievedData = PetshopDB.spGetAllPets(null, null, null, null);
+
+            if (retrievedData == null) { return; }
 
             foreach (spGetAllPetsResult item in retrievedData)
             {
@@ -81,70 +150,13 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             }
         }
 
-        public PetInventoryViewModel()
+        private async void InitializeData()
         {
-            SearchBarPlaceholderText = "Search...";
-            SearchBarInput = "";
-            FilterCommand = new RelayCommand(Filter);
-
-            AvailabilityIndicators = new ObservableCollection<AvailabilityIndicatorData>
+            while (PetshopDB.spGetAllPets(null, null, null, null) == null)
             {
-                new AvailabilityIndicatorData
-                {
-                    IconColor = Brushes.Green,
-                    Description = "Available",
-                    Count = 0
-                },
-                new AvailabilityIndicatorData
-                {
-                    IconColor = Brushes.Red,
-                    Description = "Reserved",
-                    Count = 0
-                },
-                new AvailabilityIndicatorData
-                {
-                    IconColor = Brushes.Yellow,
-                    Description = "Adopted",
-                    Count = 0
-                },
-                new AvailabilityIndicatorData
-                {
-                    IconColor = Brushes.Black,
-                    Description = "Deceased",
-                    Count = 0
-                }
-            };
-
-            PetSpeciesFilters = new ObservableCollection<PetSpecies>
-            {
-                new PetSpecies
-                {
-                    ID = 1,
-                    Description = "Cat"
-                },
-                new PetSpecies
-                {
-                    ID = 2,
-                    Description = "Dog"
-                },
-                new PetSpecies
-                {
-                    ID = 3,
-                    Description = "Bird"
-                },
-                new PetSpecies
-                {
-                    ID = 4,
-                    Description = "Shark"
-                },
-                new PetSpecies
-                {
-                    ID = 5,
-                    Description = "Dinosaur"
-                }
-            };
-
-            PetsData = new ObservableCollection<Pet>();
+                await Task.Delay(100);
+            }
+            GetSearchResults();
         }
 
         private void ManageInformation()
