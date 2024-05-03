@@ -80,7 +80,7 @@
                 <TextBlock
                     FontSize="25"
                     FontWeight="Bold"
-                    Foreground="White"
+                    Foreground="Red"
                     Text="{Binding Quantity}"
                     TextAlignment="Center" />
                 <TextBlock
@@ -97,7 +97,7 @@
                 Orientation="Vertical">
                 <TextBlock
                     FontSize="23"
-                    Foreground="White"
+                    Foreground="LimeGreen"
                     Text="PHP"
                     TextAlignment="Center" />
                 <TextBlock

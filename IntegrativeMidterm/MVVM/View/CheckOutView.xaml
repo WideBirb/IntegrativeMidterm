@@ -41,8 +41,12 @@
                     <ItemsControl ItemsSource="{Binding PetSpeciesFilters}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Content="{Binding Description}" Style="{StaticResource FilterButtonStyle}" />
-                                <!--  Command="{Binding DataContext.FilterCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  -->
+                                <Button
+                                    Command="{Binding DataContext.FilterPetTypesCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Content}"
+                                    Content="{Binding Description}"
+                                    Style="{StaticResource FilterButtonStyle}" />
+
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
@@ -58,24 +62,28 @@
 
                 <!--  Main  -->
 
-                <ScrollViewer
-                    Grid.Row="2"
-                    Margin="0,15,0,15"
-                    VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <ScrollViewer
+                        Grid.Row="2"
+                        Height="590"
+                        Margin="0,15,0,15"
+                        VerticalScrollBarVisibility="Auto">
 
-                    <ItemsControl
-                        x:Name="PetSupplyItemItemsControl"
-                        IsEnabled="True"
-                        ItemsSource="{Binding PetSupplyItems, UpdateSourceTrigger=PropertyChanged}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Components:SupplyItems />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                        <ItemsControl
+                            x:Name="PetSupplyItemItemsControl"
+                            IsEnabled="True"
+                            ItemsSource="{Binding PetSupplyItems, UpdateSourceTrigger=PropertyChanged}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Components:SupplyItems />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
 
-                    </ItemsControl>
+                        </ItemsControl>
 
-                </ScrollViewer>
+                    </ScrollViewer>
+                </Grid>
+
             </StackPanel>
 
 
