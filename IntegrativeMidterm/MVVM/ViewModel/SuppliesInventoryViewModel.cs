@@ -46,7 +46,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             if ((item.NameTextBox.Text == null) ||
                     (item.QuantityTextBox.Text == null) ||
                     (item.PriceTextBox.Text == null) ||
-                    (item.ImagePathTextBox == null) ||
                     (item.PetTypeComboBox.SelectedItem == null))
             {
                 MessageBox.Show("Please Fill out all the forms");

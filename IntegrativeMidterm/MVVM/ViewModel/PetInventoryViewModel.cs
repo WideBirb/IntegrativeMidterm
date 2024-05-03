@@ -87,7 +87,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             SearchBarInput = "";
             FilterCommand = new RelayCommand(Filter);
 
-            AvailabilityIndicators = new ObservableCollection<AvailabilityIndicatorData>
+
+
+			AvailabilityIndicators = new ObservableCollection<AvailabilityIndicatorData>
             {
                 new AvailabilityIndicatorData
                 {
@@ -145,7 +147,16 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             };
 
             PetsData = new ObservableCollection<Pet>();
-        }
+
+			PetsData.Add(new Pet
+			{
+				PetName = "xd",
+				Breed = "xd",
+				Gender = "xd",
+				Age = "asd",
+				StatusColor = Brushes.Green,
+			});
+		}
 
         private void ManageInformation()
         {

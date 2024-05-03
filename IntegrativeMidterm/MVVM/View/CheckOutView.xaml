@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
+             xmlns:userControls="clr-namespace:IntegrativeMidterm.userControl.General"
              xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
              xmlns:Components="clr-namespace:IntegrativeMidterm.userControl"
              mc:Ignorable="d" 
@@ -13,96 +14,65 @@
         <viewModel:CheckOutViewModel/>
     </UserControl.DataContext>
 
-    <Grid Grid.Row="1">
+    <Grid Grid.Row="1"
+          Margin="10,30,10,30">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.2*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <Border Background="#2C2A3D" CornerRadius="15"/>
         <!--Left Panel-->
         <Grid Grid.Row="1">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.1*"/>
-                <RowDefinition Height="0.1*"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+            <StackPanel>
+                <userControls:SearchBar TextChangedCommand="{Binding FilterCommand}"
+                 VerticalAlignment="Top" Margin="0 0 0 0"
+                 PlaceholderText="{Binding SearchBarPlaceholderText}"
+                 InputText="{Binding SearchBarInput, Mode=TwoWay}"/>
 
+                <ScrollViewer
+                     Style="{StaticResource ThinScrollViewerStyle}"
+                     Margin="25 -23 25 10"
+                     VerticalScrollBarVisibility="Disabled"
+                     HorizontalScrollBarVisibility="Auto">  
+                    <ItemsControl
+                            ItemsSource="{Binding PetSpeciesFilters}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Description}"
+                             Style="{StaticResource FilterButtonStyle}"/>
+                                <!--Command="{Binding DataContext.FilterCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"-->
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
 
-            <Border 
-                Grid.Row="0"
-                Width="550"
-                    Height="25"
-                    Background="Gray"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Margin="10"
-                    />
+                <!--Main-->
 
-            <StackPanel Grid.Row="1"
-                        x:Name="FilterButtons"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Orientation="Horizontal">
+                <ScrollViewer Grid.Row="2"
+               VerticalScrollBarVisibility="Auto"
+               Margin="0,15,0,15">
 
-                <Button
-                    x:Name="DogFilterButton"
-                    Width="150"
-                    Height="50"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="Dog"
-                    Margin="10"
-                    Command="{Binding filterItemsCommand }"
-                    CommandParameter="{Binding ElementName=DogFilterButton}"
-                    />
+                    <ItemsControl   x:Name="PetSupplyItemItemsControl"
+                     IsEnabled="True"
+                     ItemsSource="{Binding PetSupplyItems , UpdateSourceTrigger=PropertyChanged}"
+                     Background="PaleVioletRed">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Components:SupplyItems/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
 
-                <Button
-                    x:Name="CatFilterButton"
-                    Width="150"
-                    Height="50"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="Cat"
-                    Margin="10"
-                    Command="{Binding filterItemsCommand }"
-                    CommandParameter="{Binding ElementName=CatFilterButton}"
-                    />
+                    </ItemsControl>
 
-                <Button
-                    x:Name="BirdFilterButton"
-                    Width="150"
-                    Height="50"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="Bird"
-                    Margin="10"
-                    Command="{Binding filterItemsCommand }"
-                    CommandParameter="{Binding ElementName=BirdFilterButton}"
-                    />
-
+                </ScrollViewer>
             </StackPanel>
-
-
-            <!--Main-->
-
-            <ScrollViewer Grid.Row="2"
-                          VerticalScrollBarVisibility="Auto"
-                          Margin="0,15,0,15">
-
-                <ItemsControl   x:Name="PetSupplyItemItemsControl"
-                                IsEnabled="True"
-                                ItemsSource="{Binding PetSupplyItems , UpdateSourceTrigger=PropertyChanged}"
-                                Background="PaleVioletRed">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Components:SupplyItems/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-
-                </ItemsControl>
-
-            </ScrollViewer>
 
 
         </Grid>
@@ -133,7 +103,7 @@
                               Margin="0,15,0,15"
                               VerticalAlignment="Top"
                               Height="500">
-                    
+
                     <ItemsControl   x:Name="CheckOutItemsControl"
                                     ItemsSource="{Binding ShoppingCart, UpdateSourceTrigger=PropertyChanged}"
                                     IsEnabled="True"
@@ -180,9 +150,10 @@
 
 
                     <Button
+                        Style="{StaticResource PrimaryButtonStyle}"
                     Width="170"
                     Height="50"
-                    Background="Lime"
+                    Background="#FF00DE00"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Content="CONFIRM"
@@ -191,6 +162,7 @@
                     />
 
                     <Button
+                        Style="{StaticResource SecondaryButtonStyle}"
                     Width="100"
                     Height="50"
                     Background="Red"

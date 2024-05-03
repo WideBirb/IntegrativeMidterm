@@ -1,5 +1,6 @@
 ﻿using IntegrativeMidterm.Core;
 using IntegrativeMidterm.MVVM.Model;
+using IntegrativeMidterm.MVVM.Model.Filters;
 using IntegrativeMidterm.MVVM.View;
 using IntegrativeMidterm.userControl;
 using System;
@@ -17,8 +18,20 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 	class CheckOutViewModel : ViewModelBase
 	{
         private float totalPrice { get; set; }
+		private string _searchBarInput = string.Empty;
+		private string _searchBarPlaceholderText = string.Empty;
 
-        public float TotalPrice
+		public string SearchBarInput
+		{
+			get { return _searchBarInput; }
+			set { _searchBarInput = value; OnPropertyChanged(); }
+		}
+		public string SearchBarPlaceholderText
+		{
+			get { return _searchBarPlaceholderText; }
+			set { _searchBarPlaceholderText = value; OnPropertyChanged(); }
+		}
+		public float TotalPrice
         {
             get { return totalPrice; }
             set
@@ -29,6 +42,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         }
         public ObservableCollection<PetSupply> ShoppingCart { get; set; }
 		public ObservableCollection<PetSupply> PetSupplyItems { get; set; }
+		public ObservableCollection<PetSpecies> PetSpeciesFilters { get; set; }
 
 		public RelayCommand AddItemCommand { get; set; }
         public RelayCommand ConfirmPurchaseCommand { get; set; }
@@ -37,9 +51,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public RelayCommand increaseQuantityCommand { get; set; }
         public RelayCommand decreaseQuantityCommand { get; set; }
         public RelayCommand filterItemsCommand { get; set; }
-
-
         public RelayCommand AB => new RelayCommand(parameter => { MessageBox.Show("AB! AB! AB!"); });
+
 
 		private void increaseQuantity(object parameter)
 		{
@@ -148,6 +161,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public CheckOutViewModel()
         {
 
+			SearchBarPlaceholderText = "Search...";
+			SearchBarInput = "";
+
 			AddItemCommand = new RelayCommand(parameter => AddItem(parameter));
 			ConfirmPurchaseCommand = new RelayCommand(parameter => ConfirmPurchase(parameter));
 			CancelPurchaseCommand = new RelayCommand(parameter => CancelPurchase(parameter));
@@ -160,7 +176,38 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			ShoppingCart = new ObservableCollection<PetSupply>();
 			PetSupplyItems = new ObservableCollection<PetSupply>();
 
+
+
 			//MessageBox.Show(Path.Combine(baseDirectory, "Themes", "Images", "MyImage.jpg"));
+
+			PetSpeciesFilters = new ObservableCollection<PetSpecies>
+			{
+				new PetSpecies
+				{
+					ID = 1,
+					Description = "Cat"
+				},
+				new PetSpecies
+				{
+					ID = 2,
+					Description = "Dog"
+				},
+				new PetSpecies
+				{
+					ID = 3,
+					Description = "Bird"
+				},
+				new PetSpecies
+				{
+					ID = 4,
+					Description = "Shark"
+				},
+				new PetSpecies
+				{
+					ID = 5,
+					Description = "Dinosaur"
+				}
+			};
 
 			PetSupplyItems.Add(new PetSupply
 			{ 

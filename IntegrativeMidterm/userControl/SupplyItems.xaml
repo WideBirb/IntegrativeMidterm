@@ -8,8 +8,8 @@
              x:Name="root"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch">
-    
-    <Border Margin="5" BorderBrush="LightGray" BorderThickness="1" Background="LightGray">
+
+    <Border Margin="5" BorderBrush="LightGray" BorderThickness="1" Background="#2C2A3D">
 
         <Grid Height="70" Width="500">
             <Grid.ColumnDefinitions>
@@ -56,7 +56,8 @@
             
             
             <Button Grid.Column="4"
-                    Height="50"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Height="40"
                     Width="70" 
                     Content="ADD"
                     Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.AddItemCommand}"
