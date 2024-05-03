@@ -17,7 +17,7 @@
     <Grid Grid.Row="1"
           Margin="10,30,10,30">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.2*"/>
+            <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -61,8 +61,7 @@
 
                     <ItemsControl   x:Name="PetSupplyItemItemsControl"
                      IsEnabled="True"
-                     ItemsSource="{Binding PetSupplyItems , UpdateSourceTrigger=PropertyChanged}"
-                     Background="PaleVioletRed">
+                     ItemsSource="{Binding PetSupplyItems , UpdateSourceTrigger=PropertyChanged}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Components:SupplyItems/>
@@ -79,107 +78,92 @@
 
 
         <!--Right Panel-->
-        <Grid Grid.Row="1"
-                Grid.Column="1">
+        <Grid  Grid.Column="1">
+
+            <Border Background="#2C2A3D"
+                        Margin="10,0,10,0"
+                        CornerRadius="15">
+
+                <StackPanel>
+                    <TextBlock Text="YOUR ORDER"
+               Margin="0,10,0,0"
+               VerticalAlignment="Center"
+               Foreground="White"
+                   FontSize="21"
+                   TextAlignment="Center"/>
+
+                    <ScrollViewer Grid.Row="1"
+                  VerticalScrollBarVisibility="Auto"
+                  Margin="0,15,0,15"
+                  VerticalAlignment="Top"
+                  Height="550">
+
+                        <ItemsControl   x:Name="CheckOutItemsControl"
+                        ItemsSource="{Binding ShoppingCart, UpdateSourceTrigger=PropertyChanged}"
+                        IsEnabled="True"
+                        HorizontalAlignment="Center">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Components:CheckoutItems/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                    </ScrollViewer>
+
+                    <TextBlock
+            Text="{Binding TotalPrice}"
+            Grid.Row="1"
+            Width="300"
+            Height="60"
+            FontSize="25"
+            Background="Pink"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            TextAlignment="Right"
+            Margin="10"
+            />
 
 
-            <Grid Grid.Column="1"
-                  Grid.Row="1"
-                  VerticalAlignment="Top">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="8*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Text="YOUR ORDER"
-                           Margin="0,10,0,0"
-                           VerticalAlignment="Center"
-                           Foreground="White"
-                               FontSize="21"
-                               TextAlignment="Center"/>
-
-                <ScrollViewer Grid.Row="1"
-                              VerticalScrollBarVisibility="Auto"
-                              Margin="0,15,0,15"
-                              VerticalAlignment="Top"
-                              Height="500">
-
-                    <ItemsControl   x:Name="CheckOutItemsControl"
-                                    ItemsSource="{Binding ShoppingCart, UpdateSourceTrigger=PropertyChanged}"
-                                    IsEnabled="True"
-                                    HorizontalAlignment="Center">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Components:CheckoutItems/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                </ScrollViewer>
+                    <StackPanel Grid.Row="2"
+            Orientation="Horizontal"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center">
 
 
-            </Grid>
+                        <Button
+                    Style="{StaticResource PrimaryButtonStyle}"
+                            BorderBrush="White"
+                            BorderThickness="1.5"
+                Width="170"
+                Height="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="CONFIRM"
+                            FontWeight="Bold"
+                Margin="10,15,10,15"
+                    Command="{Binding ConfirmPurchaseCommand}"
+                />
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="0.2*"/>
-                    <RowDefinition Height="0.2*"/>
-                </Grid.RowDefinitions>
+                        <Button
+                    Style="{StaticResource SecondaryButtonStyle}"
+                            BorderBrush="White"
+                            BorderThickness="1.5"
+                Width="100"
+                Height="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="CANCEL"
+                            FontWeight=""
+                Margin="10,15,10,15"
+                    Command="{Binding CancelPurchaseCommand}"
+                />
+                    </StackPanel>
 
 
-
-                <TextBlock
-                    Text="{Binding TotalPrice}"
-                    Grid.Row="1"
-                    Width="300"
-                    Height="60"
-                    FontSize="25"
-                    Background="Pink"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    TextAlignment="Right"
-                    Margin="10"
-                    />
-
-
-                <StackPanel Grid.Row="2"
-                            Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
-
-
-                    <Button
-                        Style="{StaticResource PrimaryButtonStyle}"
-                    Width="170"
-                    Height="50"
-                    Background="#FF00DE00"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="CONFIRM"
-                    Margin="10"
-                        Command="{Binding ConfirmPurchaseCommand}"
-                    />
-
-                    <Button
-                        Style="{StaticResource SecondaryButtonStyle}"
-                    Width="100"
-                    Height="50"
-                    Background="Red"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="CANCEL"
-                    Margin="10"
-                        Command="{Binding CancelPurchaseCommand}"
-                    />
                 </StackPanel>
-
-
-
-            </Grid>
-
-
-
+            </Border>
+            
         </Grid>
 
     </Grid>

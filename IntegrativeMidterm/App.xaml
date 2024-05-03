@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="/Themes/Style/Dimensions.xaml"/>
                 <ResourceDictionary Source="/Themes/Style/ButtonStyleTemplates.xaml"/>
                 <ResourceDictionary Source="/Themes/Style/ScrollViewStyles.xaml"/>
+                <ResourceDictionary Source="/Themes/Style/PetSupplyStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
 
