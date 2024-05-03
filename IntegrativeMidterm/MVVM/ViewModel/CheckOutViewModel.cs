@@ -347,8 +347,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			InitializeData("");
 			HiddenPetSupplyItems = PetSupplyItems.ToList();
 			var dataToUpdate = from item in PetshopDB.spGetAllPetSupplies(null, null, null) select item;
-			foreach (var item in dataToUpdate)
-				MessageBox.Show(item.Product_name);
+			//foreach (var item in dataToUpdate)
+				//MessageBox.Show(item.Product_name);
 		}
 
     }
