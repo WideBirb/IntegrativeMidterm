@@ -180,6 +180,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 			//MessageBox.Show(Path.Combine(baseDirectory, "Themes", "Images", "MyImage.jpg"));
 
+
+
 			PetSpeciesFilters = new ObservableCollection<PetSpecies>
 			{
 				new PetSpecies

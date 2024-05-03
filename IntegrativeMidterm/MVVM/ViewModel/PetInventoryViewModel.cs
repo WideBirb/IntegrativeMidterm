@@ -148,14 +148,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
             PetsData = new ObservableCollection<Pet>();
 
-			PetsData.Add(new Pet
-			{
-				PetName = "xd",
-				Breed = "xd",
-				Gender = "xd",
-				Age = "asd",
-				StatusColor = Brushes.Green,
-			});
 		}
 
         private void ManageInformation()
