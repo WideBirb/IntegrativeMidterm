@@ -1,12 +1,202 @@
-﻿<UserControl x:Class="IntegrativeMidterm.MVVM.View.DashboardView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+﻿<UserControl
+    x:Class="IntegrativeMidterm.MVVM.View.DashboardView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
+    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <viewModel:DashboardViewModel />
+    </UserControl.DataContext>
+
     <Grid>
-            
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.25*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Border
+                Grid.Column="0"
+                Width="450"
+                Height="150"
+                Margin="25,25,25,25"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Background="#FFD23C3C"
+                BorderBrush="White"
+                BorderThickness="5"
+                CornerRadius="25">
+
+                <Border.Effect>
+                    <DropShadowEffect
+                        BlurRadius="45"
+                        Opacity="0.5"
+                        ShadowDepth="15" />
+                </Border.Effect>
+
+            </Border>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock
+                    Margin="70,35,25,0"
+                    HorizontalAlignment="Center"
+                    Panel.ZIndex="2"
+                    FontSize="45"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="LIFETIME PROFIT" />
+
+                <TextBlock
+                    Margin="70,5,25,5"
+                    HorizontalAlignment="Center"
+                    Panel.ZIndex="2"
+                    FontSize="45"
+                    FontWeight="Bold"
+                    Foreground="Lime"
+                    Text="PHP 248920842" />
+
+            </StackPanel>
+
+
+            <Border
+                Grid.Column="1"
+                Width="350"
+                Height="150"
+                Margin="25"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="{DynamicResource MenuButtonHoveredColor}"
+                BorderBrush="White"
+                BorderThickness="5"
+                CornerRadius="25">
+
+                <Border.Effect>
+                    <DropShadowEffect
+                        BlurRadius="45"
+                        Opacity="0.5"
+                        ShadowDepth="15" />
+                </Border.Effect>
+
+            </Border>
+
+            <StackPanel Grid.Column="1">
+                <TextBlock
+                    Margin="0,50,40,0"
+                    HorizontalAlignment="Center"
+                    Panel.ZIndex="2"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="RECENT TRANSACTION" />
+
+                <TextBlock
+                    Margin="0,5,40,0"
+                    HorizontalAlignment="Center"
+                    Panel.ZIndex="2"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Foreground="#FFFF5959"
+                    Text="05/04/2024 : 12:39 AM" />
+
+                <TextBlock
+                    Margin="0,5,40,0"
+                    HorizontalAlignment="Center"
+                    Panel.ZIndex="2"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Foreground="Lime"
+                    Text="PHP 5,829.50" />
+
+            </StackPanel>
+        </Grid>
+
+
+
+        <StackPanel Grid.Row="1">
+            <TextBlock
+                VerticalAlignment="Center"
+                FontSize="30"
+                FontWeight="Bold"
+                Foreground="White"
+                Text="FINANCE TRACKER"
+                TextAlignment="Center" />
+
+            <lvc:CartesianChart
+                Width="900"
+                Height="550"
+                Margin="25,15,25,15"
+                Foreground="White"
+                LegendLocation="Top">
+
+
+                <lvc:CartesianChart.DataTooltip>
+                    <lvc:DefaultTooltip Background="#2C2A3D" Foreground="#d5e2ff" />
+                </lvc:CartesianChart.DataTooltip>
+
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis
+                        Title="AMOUNT"
+                        FontSize="15"
+                        Foreground="White" />
+                </lvc:CartesianChart.AxisY>
+
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis
+                        Title="DATE"
+                        FontSize="15"
+                        Foreground="White"
+                        Labels="{Binding Labels}"
+                        MaxValue="6" />
+                </lvc:CartesianChart.AxisX>
+
+                <lvc:CartesianChart.Series>
+                    <lvc:LineSeries
+                        x:Name="PetSalesChart"
+                        Title="Pet Sales"
+                        PointForeground="White"
+                        PointGeometrySize="10"
+                        Stroke="{StaticResource PrimaryButtonColor}"
+                        StrokeThickness="2"
+                        Values="{Binding Values1}" />
+
+                    <lvc:LineSeries
+                        x:Name="SupplySalesChart"
+                        Title="Supply Sales"
+                        Foreground="White"
+                        PointForeground="White"
+                        PointGeometrySize="10"
+                        Stroke="{StaticResource SecondaryButtonColor}"
+                        StrokeThickness="2"
+                        Values="{Binding Values2}" />
+
+                    <lvc:LineSeries
+                        x:Name="ProfitChart"
+                        Title="Total Profit ( in Thousands )"
+                        Foreground="White"
+                        PointForeground="White"
+                        PointGeometrySize="10"
+                        Stroke="{StaticResource TertiaryButtonColor}"
+                        StrokeThickness="2"
+                        Values="{Binding Values3}" />
+
+                </lvc:CartesianChart.Series>
+
+            </lvc:CartesianChart>
+        </StackPanel>
+
+
     </Grid>
 </UserControl>
