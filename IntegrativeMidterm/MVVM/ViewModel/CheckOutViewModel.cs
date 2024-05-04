@@ -45,6 +45,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public string currentPetFilter { get; set; }
+        public bool isFiltering { get; set; } = false;
         public ObservableCollection<PetSupply> ShoppingCart { get; set; }
 		public ObservableCollection<PetSupply> PetSupplyItems { get; set; }
 		public List<PetSupply> HiddenPetSupplyItems { get; set; }
@@ -102,20 +105,20 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			string PetSupplyID = checkoutItems.PetSupplyIDTextBox.Text;
 			TextBlock quantityTextblock = checkoutItems.QuantityTextBlock;
 
-			foreach (PetSupply item in HiddenPetSupplyItems)
+			foreach (PetSupply item in ShoppingCart)
 				if (item.PetSupplyID == int.Parse(PetSupplyID))
+				{
 					newItem = item;
-
-			if (newItem.Quantity < 2)
-				return;
-			else
-			{
-                newItem.Quantity--;
-                quantityTextblock.Text = newItem.Quantity.ToString();
-                updateTotalCost();
-            }
-
-        }
+					if (newItem.Quantity == 1)
+						return;
+					else
+					{
+						newItem.Quantity--;
+						quantityTextblock.Text = newItem.Quantity.ToString();
+						updateTotalCost();
+					}
+				}
+		}
 
 		private void updateTotalCost()
 		{
@@ -182,8 +185,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			updateTotalCost();
 		}
 
-
-		
 		private void RemoveItem(object parameter)
 		{
 
@@ -257,19 +258,25 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 
 		private void updateProductQuantity()
-		{ 
-		
+		{
+			PetSupplyItems.Clear();
+			InitializeData("");
+			HiddenPetSupplyItems = PetSupplyItems.ToList();
 		}
 
 		private void filterPetType(object parameter)
 		{
+			
 			PetSupplyItems.Clear();
 			string petType = parameter as string;
 			ISingleResult<spGetAllPetSuppliesResult> retrievedData = PetshopDB.spGetAllPetSupplies(null, null, null);
 
-			foreach (spGetAllPetSuppliesResult item in retrievedData)
+			// if same filter is pressed again,
+			if (currentPetFilter == petType)
 			{
-				if (item.Species.ToLower() == (petType.ToLower()))
+				currentPetFilter = "";
+				foreach (spGetAllPetSuppliesResult item in retrievedData)
+				{
 					PetSupplyItems.Add(new PetSupply
 					{
 						PetSupplyName = item.Product_name,
@@ -283,21 +290,38 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 						InSupplyTypeID = 1,
 						InPetTypeID = 1,
 						ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
-
 					});
-				continue;
+				}
 			}
+			else
+			{
+				foreach (spGetAllPetSuppliesResult item in retrievedData)
+				{
+					if (item.Species.ToLower() == (petType.ToLower()))
+						PetSupplyItems.Add(new PetSupply
+						{
+							PetSupplyName = item.Product_name,
+							Quantity = item.Quantity,
+							Price = (float)item.Price,
+							PetSupplyID = item.ID,
+							Status = item.Status,
+							SupplyType = item.Type,
+							Species = item.Species,
+							InStatusID = 1,
+							InSupplyTypeID = 1,
+							InPetTypeID = 1,
+							ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
+
+						});
+					continue;
+				}
+				currentPetFilter = petType;
+			}
+
 		}
 
 		public CheckOutViewModel()
 		{
-			// for every item in shopping cart, get their quantity and ID
-			// loop the observable collection, minus the quantity if ID is matching
-			// 
-
-			
-
-			
 
 			SearchBarPlaceholderText = "Search...";
 			SearchBarInput = "";
