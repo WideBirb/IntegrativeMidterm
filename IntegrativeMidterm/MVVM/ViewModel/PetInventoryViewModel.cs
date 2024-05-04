@@ -33,9 +33,15 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         private int? _breedFilter = null;
         private int? _availabilityFilter = null;
         private string _genderFilter = null;
-
         RadioButton _activeFilterButton = null;
-        
+
+        private string _petName;
+        private string _birthdate;
+        private string _petStatus;
+        private string _price;
+        private string _customer;
+
+
         public string SearchBarInput
         {
             get { return _searchBarInput; }
@@ -46,6 +52,38 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             get { return _searchBarPlaceholderText; }
             set { _searchBarPlaceholderText = value; OnPropertyChanged(); }
         }
+
+
+        public string PetName
+        {
+            get { return _petName; }
+            set { _petName = value; }
+        }
+
+        public string Birthdate
+        {
+            get { return _birthdate; }
+            set { _birthdate = value; }
+        }
+
+        public string PetStatus
+        {
+            get { return _petStatus; }
+            set { _petStatus = value; }
+        }
+
+        public string Price
+        {
+            get { return _price; }
+            set { _price = value; }
+        }
+
+        public string Customer
+        {
+            get { return _customer; }
+            set { _customer = value; }
+        }
+
 
         public PetInventoryViewModel()
         {
@@ -58,6 +96,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
             InitializeData();
         }
+
 
         private void SetSpeciesFilter(object sender)
         {

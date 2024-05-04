@@ -6,57 +6,109 @@
              xmlns:local="clr-namespace:IntegrativeMidterm.userControl.PetInventory"
              mc:Ignorable="d"
                       d:DesignHeight="50" d:DesignWidth="550">
-    <Grid Height="50" Margin="20 0 10 0">
-        <Border Width="40" Margin="5" Background="White" HorizontalAlignment="Left">
-            <Image Source="{Binding ImagePath}"/>
-        </Border>
-        <Grid Margin="45 0 25 0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            
-            <TextBlock
-                Grid.Column="0"
-                Text="{Binding PetName}"
-                HorizontalAlignment="Left"
-                Margin="15 0 10 0"
-                Foreground="{StaticResource FontColorLight}"
-                FontSize="18"
-                VerticalAlignment="Center"/>
-            <TextBlock
-                Grid.Column="1"
-                Text="{Binding Breed}"
-                HorizontalAlignment="Left"
-                Margin="10 0 10 0"
-                Foreground="{StaticResource FontColorLight}"
-                FontSize="18"
-                VerticalAlignment="Center"/>
-            <TextBlock
-                Grid.Column="2"
-                Text="{Binding Gender}"
-                HorizontalAlignment="Center"
-                Margin="10 0 10 0"
-                Foreground="{StaticResource FontColorLight}"
-                FontSize="18"
-                VerticalAlignment="Center"/>
-            <TextBlock
-                Grid.Column="3"
-                Text="{Binding Age}"
-                HorizontalAlignment="Left"
-                Margin="10 0 10 0"
-                Foreground="{StaticResource FontColorLight}"
-                FontSize="18"
-                VerticalAlignment="Center"/>
-        </Grid>
+    <RadioButton Height="50"
+            Margin="20 0 10 0"
+            Background="Transparent"
+            BorderThickness="0"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch">
+        <RadioButton.Template>
+            <ControlTemplate TargetType="RadioButton">
+                <Border x:Name="RadioBorder" CornerRadius="15">
+                    <Grid IsHitTestVisible="True" Background="Transparent">
+                        <Border Width="35"
+                                Margin="7.5"
+                                Background="White"
+                                CornerRadius="7.5"
+                                HorizontalAlignment="Left">
+                            <Image Source="{Binding ImagePath}"/>
+                        </Border>
+                        <Grid Margin="45 0 36.5 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
 
-        <Border
-        Width="25"
-        Height="25"
-        Background="{Binding StatusColor}"
-        CornerRadius="12.5"
-        HorizontalAlignment="Right"/>
-    </Grid>
+                            <TextBlock
+                            Grid.Column="0"
+                            Text="{Binding PetName}"
+                            HorizontalAlignment="Left"
+                            Margin="20 0 10 0"
+                            Foreground="{StaticResource FontColorLight}"
+                            FontSize="18"
+                            VerticalAlignment="Center"/>
+                            <TextBlock
+                            Grid.Column="1"
+                            Text="{Binding Breed}"
+                            HorizontalAlignment="Left"
+                            Margin="10 0 10 0"
+                            Foreground="{StaticResource FontColorLight}"
+                            FontSize="18"
+                            VerticalAlignment="Center"/>
+                            <TextBlock
+                            Grid.Column="2"
+                            Text="{Binding Gender}"
+                            HorizontalAlignment="Center"
+                            Margin="10 0 10 0"
+                            Foreground="{StaticResource FontColorLight}"
+                            FontSize="18"
+                            VerticalAlignment="Center"/>
+                            <TextBlock
+                            Grid.Column="3"
+                            Text="{Binding Age}"
+                            HorizontalAlignment="Left"
+                            Margin="10 0 10 0"
+                            Foreground="{StaticResource FontColorLight}"
+                            FontSize="18"
+                            VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <Border
+                        Width="25"
+                        Height="25"
+                        Background="{Binding StatusColor}"
+                        CornerRadius="12.5"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 11.5 0"/>
+                    </Grid>
+                </Border>
+
+                <ControlTemplate.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="True"/>
+                            <Condition Property="IsChecked" Value="False"/>
+                        </MultiTrigger.Conditions>
+                        <Setter TargetName="RadioBorder" Property="Background" Value="#2FFFFFFF"/>
+                    </MultiTrigger>
+
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsPressed" Value="True"/>
+                            <Condition Property="IsChecked" Value="False"/>
+                        </MultiTrigger.Conditions>
+                        <Setter TargetName="RadioBorder" Property="Background" Value="#1FFFFFFF"/>
+                    </MultiTrigger>
+
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsPressed" Value="True"/>
+                            <Condition Property="IsChecked" Value="True"/>
+                        </MultiTrigger.Conditions>
+                        <Setter TargetName="RadioBorder" Property="Background" Value="#1FFFFFFF"/>
+                    </MultiTrigger>
+
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsPressed" Value="False"/>
+                            <Condition Property="IsChecked" Value="True"/>
+                        </MultiTrigger.Conditions>
+                        <Setter TargetName="RadioBorder" Property="Background" Value="#3FFFFFFF"/>
+                    </MultiTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </RadioButton.Template>
+    </RadioButton>
 </UserControl>
