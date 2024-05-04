@@ -1,53 +1,55 @@
-﻿<Application x:Class="IntegrativeMidterm.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:IntegrativeMidterm"
-             xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
-             xmlns:view="clr-namespace:IntegrativeMidterm.MVVM.View"
-             StartupUri="MainWindow.xaml">
+﻿<Application
+    x:Class="IntegrativeMidterm.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:IntegrativeMidterm"
+    xmlns:view="clr-namespace:IntegrativeMidterm.MVVM.View"
+    xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
+    StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
 
-            <!--THEMES-->
+            <!--  THEMES  -->
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/Style/MenuButtonStyle.xaml"/>
-                <ResourceDictionary Source="/Themes/Style/ColorLibrary.xaml"/>
-                <ResourceDictionary Source="/Themes/Style/Dimensions.xaml"/>
-                <ResourceDictionary Source="/Themes/Style/ButtonStyleTemplates.xaml"/>
-                <ResourceDictionary Source="/Themes/Style/ScrollViewStyles.xaml"/>
-                <ResourceDictionary Source="/Themes/Style/PetSupplyStyles.xaml"/>
+                <ResourceDictionary Source="/Themes/Style/MenuButtonStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Style/ColorLibrary.xaml" />
+                <ResourceDictionary Source="/Themes/Style/Dimensions.xaml" />
+                <ResourceDictionary Source="/Themes/Style/ButtonStyleTemplates.xaml" />
+                <ResourceDictionary Source="/Themes/Style/ScrollViewStyles.xaml" />
+                <ResourceDictionary Source="/Themes/Style/PetSupplyStyles.xaml" />
+                <ResourceDictionary Source="/Themes/Style/DatagridStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
 
-            <!--VIEWS-->
+            <!--  VIEWS  -->
 
             <DataTemplate DataType="{x:Type viewModel:CheckOutViewModel}">
-                <view:CheckOutView/>
+                <view:CheckOutView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
-                <view:DashboardView/>
+                <view:DashboardView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:SuppliesInventoryViewModel}">
-                <view:SuppliesInventoryView/>
+                <view:SuppliesInventoryView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:TransactionHistoryViewModel}">
-                <view:TransactionHistoryView/>
+                <view:TransactionHistoryView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:PetCheckOutViewModel}">
-                <view:PetCheckOutView/>
+                <view:PetCheckOutView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:PetInventoryViewModel}">
-                <view:PetInventoryView/>
+                <view:PetInventoryView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:PetProfileViewModel}">
-                <view:PetProfileView/>
+                <view:PetProfileView />
             </DataTemplate>
 
         </ResourceDictionary>

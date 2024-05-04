@@ -10,5 +10,10 @@ namespace IntegrativeMidterm.MVVM.Model.Filters
     {
         public int ID { get; set; }
         public string Description { get; set; }
-    }
+
+		public static implicit operator PetSupplyType(PetSupply v)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
