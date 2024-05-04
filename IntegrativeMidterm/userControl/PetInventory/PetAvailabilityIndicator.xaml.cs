@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrativeMidterm.userControl.General;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,23 @@ namespace IntegrativeMidterm.userControl.PetInventory
 {
     public partial class PetAvailabilityIndicator : UserControl
     {
+        public static readonly DependencyProperty SelectedCommandProperty =
+            DependencyProperty.Register("SelectedCommand", typeof(ICommand), typeof(PetAvailabilityIndicator));
+
+        public ICommand SelectedCommand
+        {
+            get { return (ICommand)GetValue(SelectedCommandProperty); }
+            set { SetValue(SelectedCommandProperty, value); }
+        }
+
         public PetAvailabilityIndicator()
         {
             InitializeComponent();
+        }
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedCommand?.Execute(sender);
         }
     }
 }

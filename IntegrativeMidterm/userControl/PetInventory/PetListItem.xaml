@@ -7,11 +7,13 @@
              mc:Ignorable="d"
                       d:DesignHeight="50" d:DesignWidth="550">
     <RadioButton Height="50"
-            Margin="20 0 10 0"
-            Background="Transparent"
-            BorderThickness="0"
-            HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch">
+                 Margin="20 0 10 0"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 HorizontalContentAlignment="Stretch"
+                 VerticalContentAlignment="Stretch"
+                 Click="RadioButton_Click"
+                 Tag="{Binding ID}">
         <RadioButton.Template>
             <ControlTemplate TargetType="RadioButton">
                 <Border x:Name="RadioBorder" CornerRadius="15">

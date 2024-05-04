@@ -12,7 +12,9 @@
             Background="Transparent"
             BorderThickness="0"
             HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch">
+            VerticalContentAlignment="Stretch"
+            Click="RadioButton_Click"
+            Tag="{Binding ID}">
         <RadioButton.Template>
             <ControlTemplate TargetType="RadioButton">
                 <Border x:Name="RadioBorder" Padding="10 0 10 0" CornerRadius="15">

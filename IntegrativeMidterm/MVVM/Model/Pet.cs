@@ -10,17 +10,20 @@ namespace IntegrativeMidterm.MVVM.Model
 {
     internal class Pet
     {
+        public int ID { get; set; }
+
         // FOR INPUT & OUTPUT IN ORDER
         public string PetName { get; set; }
         public string Gender { get; set; }
         public DateTime Birhdate { get; set; }
         public string Species { get; set; }
         public string Breed { get; set; }
+        public string Status { get; set; }
         public float Price { get; set; }
         // - Status
 
         // FOR OUTPUT
-        public int Status { get; set; }
+        public int StatusID { get; set; }
         public int Age { get; set; }
         public SolidColorBrush StatusColor { get; set; }
 
