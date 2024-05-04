@@ -101,6 +101,18 @@
       <Column Name="[Home Address]" Member="Home_Address" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.tblPetSupplies" Member="tblPetSupplies">
+    <Type Name="tblPetSupply">
+      <Column Name="pet_supply_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pet_supply_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="image_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="pet_supply_status_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pet_supply_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="pet_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
   <Function Name="dbo.spAddGeneralStatus" Method="spAddGeneralStatus">
     <Parameter Name="Description" Parameter="description" Type="System.String" DbType="VarChar(50)" />
     <Return Type="System.Int32" />

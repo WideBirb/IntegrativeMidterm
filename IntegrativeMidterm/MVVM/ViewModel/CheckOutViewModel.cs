@@ -63,6 +63,43 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public RelayCommand AB => new RelayCommand(parameter => { MessageBox.Show("AB! AB! AB!"); });
 		public RelayCommand FilterCommand { get; }
 
+		public int determineSupplyType(string supplyType)
+		{
+			if (supplyType == "food")
+				return 1;
+			else if (supplyType == "hygiene")
+				return 2;
+			else if (supplyType == "toys")
+				return 3;
+			else if (supplyType == "grooming")
+				return 4;
+			else if (supplyType == "accessories")
+				return 5;
+			else if (supplyType == "medication")
+				return 6;
+			else if (supplyType == "decoration")
+				return 7;
+			else if (supplyType == "feeding")
+				return 8;
+			else
+				return 9;
+		}
+
+		public int determinePetType(string petType)
+		{
+
+			if (petType == "dog")
+				return 1;
+			else if (petType == "cat")
+				return 2;
+			else if (petType == "bird")
+				return 3;
+			else if (petType == "fish")
+				return 4;
+			else
+				return 5;
+		}
+
 		private void increaseQuantity(object parameter)
 		{
             PetSupply newItem = new PetSupply();
@@ -175,7 +212,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 							InStatusID = 1,
 							InSupplyTypeID = 1,
 							InPetTypeID = 1,
-							ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
+							ImagePath = item.ImagePath
 						};
 					}
 				}
@@ -232,7 +269,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 						InStatusID = 1,
 						InSupplyTypeID = 1,
 						InPetTypeID = 1,
-						ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
+						ImagePath = item.Image_path
 
 					});
 					continue;
@@ -251,7 +288,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 					InStatusID = 1,
 					InSupplyTypeID = 1,
 					InPetTypeID = 1,
-					ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
+					ImagePath = item.Image_path
 				});
 			}
 		}
@@ -289,7 +326,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 						InStatusID = 1,
 						InSupplyTypeID = 1,
 						InPetTypeID = 1,
-						ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
+						ImagePath = item.Image_path
 					});
 				}
 			}
@@ -310,7 +347,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 							InStatusID = 1,
 							InSupplyTypeID = 1,
 							InPetTypeID = 1,
-							ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
+							ImagePath = item.Image_path
 
 						});
 					continue;

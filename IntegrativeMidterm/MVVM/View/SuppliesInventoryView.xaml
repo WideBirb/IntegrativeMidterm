@@ -14,7 +14,7 @@
         <viewModel:SuppliesInventoryViewModel />
     </UserControl.DataContext>
 
-    <Grid Margin="0,45,0,0">
+    <Grid Margin="0,100,0,0">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*" />
@@ -23,45 +23,57 @@
 
 
         <DataGrid
+            x:Name="myDataGrid"
             Grid.Column="0"
             Width="600"
-            Height="625"
+            Height="620"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             AutoGenerateColumns="False"
             CanUserAddRows="False"
             CanUserDeleteRows="False"
+            CellEditEnding="DataGrid_CellEditEnding"
             ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}"
-            FontSize="17"
+            FontSize="15"
             ItemsSource="{Binding SupplyItems}"
             RowStyle="{DynamicResource DataGridRowStyle}"
             SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
-                <DataGridTextColumn
-                    Width="1*"
+                <!--<DataGridTextColumn
+                    Width="0.4*"
                     Binding="{Binding PetSupplyID}"
-                    Header="Item ID"
-                    IsReadOnly="True" />
+                    Header="ID"
+                    IsReadOnly="True" />-->
                 <DataGridTextColumn
                     Width="1*"
                     Binding="{Binding PetSupplyName}"
-                    Header="Name" />
+                    Header="Name"
+                    IsReadOnly="True" />
                 <DataGridTextColumn
-                    Width="1*"
+                    Width="0.5*"
                     Binding="{Binding Quantity}"
-                    Header="Quantity" />
+                    Header="QTY"
+                    IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="1*"
                     Binding="{Binding Price}"
-                    Header="Price" />
+                    Header="Price"
+                    IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="1*"
                     Binding="{Binding Species}"
-                    Header="Pet Type" />
+                    Header="Pet Type"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="1*"
+                    Binding="{Binding SupplyType}"
+                    Header="S.Type"
+                    IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="1*"
                     Binding="{Binding ImagePath}"
-                    Header="Pet Type" />
+                    Header="Image URL"
+                    IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
 
@@ -75,28 +87,10 @@
             <StackPanel
                 x:Name="TextBoxContainer"
                 Grid.Column="1"
-                Margin="35,10,0,15"
+                Margin="5,10,0,15"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top">
 
-                <Label
-                    Width="250"
-                    Content="   ENTER DATA"
-                    FontSize="25"
-                    Foreground="White" />
-
-                <Label
-                    Width="250"
-                    Content="Item ID"
-                    FontSize="18"
-                    Foreground="White" />
-                <TextBox
-                    x:Name="ItemIDTextBox"
-                    Width="250"
-                    Margin="5,0,5,15"
-                    Background="Gray"
-                    FontSize="18"
-                    IsReadOnly="True" />
                 <Label
                     Content="Name"
                     FontSize="18"
@@ -138,39 +132,66 @@
                     FontSize="18" />
 
                 <Label
+                    Content="Supply Type"
+                    FontSize="18"
+                    Foreground="White" />
+
+                <TextBox
+                    x:Name="SupplyTypeTextBox"
+                    Width="250"
+                    Margin="5,0,5,15"
+                    FontSize="18" />
+
+                <Label
                     Content="Image URL"
                     FontSize="18"
                     Foreground="White" />
                 <TextBox
                     x:Name="ImageURLTextBox"
                     Width="250"
-                    Margin="5,0,5,15"
+                    Margin="5,0,5,5"
                     FontSize="18" />
             </StackPanel>
 
             <StackPanel
                 Grid.Row="1"
-                Margin="35,0,0,0"
+                Margin="5,0,0,0"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-
+                VerticalAlignment="Center"
+                Orientation="Vertical">
                 <Button
                     Name="Hello"
-                    Width="125"
-                    Height="50"
-                    Margin="0,0,0,0"
+                    Width="190"
+                    Height="45"
+                    Margin="5,0,10,10"
                     Command="{Binding AddCommand}"
                     CommandParameter="{Binding ElementName=root}"
                     Content="ADD"
                     Style="{StaticResource PrimaryButtonStyle}" />
+
+
                 <Button
-                    Width="125"
-                    Height="50"
-                    Margin="0,10,0,0"
+                    Width="190"
+                    Height="45"
+                    Margin="5,0,10,10"
+                    Command="{Binding UpdateCommand}"
+                    CommandParameter="{Binding ElementName=root}"
+                    Content="UPDATE"
+                    Style="{StaticResource TertiaryButtonStyle}" />
+
+                <Button
+                    Width="190"
+                    Height="45"
+                    Margin="5,0,10,0"
                     Command="{Binding DeleteCommand}"
                     Content="DELETE"
                     Style="{StaticResource SecondaryButtonStyle}" />
+
+
             </StackPanel>
+
+
+
 
 
 

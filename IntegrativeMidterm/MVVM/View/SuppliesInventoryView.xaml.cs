@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IntegrativeMidterm.Core;
+using IntegrativeMidterm.MVVM.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,14 +18,22 @@ using System.Windows.Shapes;
 
 namespace IntegrativeMidterm.MVVM.View
 {
-    /// <summary>
-    /// Interaction logic for SuppliesInventoryView.xaml
-    /// </summary>
-    public partial class SuppliesInventoryView : UserControl
+	/// <summary>
+	/// Interaction logic for SuppliesInventoryView.xaml
+	/// </summary>
+	/// 
+	public partial class SuppliesInventoryView : UserControl
     {
-        public SuppliesInventoryView()
+		private DataClassDataContext _petshopDB = null;
+		public DataClassDataContext PetshopDB
+		{
+			get { return _petshopDB; }
+			private set { _petshopDB = value; }
+		}
+		public SuppliesInventoryView()
         {
-            InitializeComponent();
+			PetshopDB = new DataClassDataContext(Properties.Settings.Default.PetShopConnectionString);
+			InitializeComponent();
         }
 
         private static readonly Regex _regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
@@ -43,5 +53,10 @@ namespace IntegrativeMidterm.MVVM.View
             e.Handled = !IsTextAllowed(e.Text);
             if (e.Text.Length == 0) { return; }
         }
+
+		private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+		{
+			
+		}
     }
 }

@@ -30,6 +30,9 @@ namespace IntegrativeMidterm
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InserttblPetSupply(tblPetSupply instance);
+    partial void UpdatetblPetSupply(tblPetSupply instance);
+    partial void DeletetblPetSupply(tblPetSupply instance);
     #endregion
 		
 		public DataClassDataContext() : 
@@ -131,6 +134,14 @@ namespace IntegrativeMidterm
 			get
 			{
 				return this.GetTable<vwStaff>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tblPetSupply> tblPetSupplies
+		{
+			get
+			{
+				return this.GetTable<tblPetSupply>();
 			}
 		}
 		
@@ -1676,6 +1687,236 @@ namespace IntegrativeMidterm
 				{
 					this._Home_Address = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblPetSupplies")]
+	public partial class tblPetSupply : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _pet_supply_id;
+		
+		private string _pet_supply_name;
+		
+		private int _quantity;
+		
+		private string _image_path;
+		
+		private double _price;
+		
+		private System.Nullable<int> _pet_supply_status_id;
+		
+		private int _pet_supply_type_id;
+		
+		private int _pet_type_id;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onpet_supply_idChanging(int value);
+    partial void Onpet_supply_idChanged();
+    partial void Onpet_supply_nameChanging(string value);
+    partial void Onpet_supply_nameChanged();
+    partial void OnquantityChanging(int value);
+    partial void OnquantityChanged();
+    partial void Onimage_pathChanging(string value);
+    partial void Onimage_pathChanged();
+    partial void OnpriceChanging(double value);
+    partial void OnpriceChanged();
+    partial void Onpet_supply_status_idChanging(System.Nullable<int> value);
+    partial void Onpet_supply_status_idChanged();
+    partial void Onpet_supply_type_idChanging(int value);
+    partial void Onpet_supply_type_idChanged();
+    partial void Onpet_type_idChanging(int value);
+    partial void Onpet_type_idChanged();
+    #endregion
+		
+		public tblPetSupply()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_supply_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int pet_supply_id
+		{
+			get
+			{
+				return this._pet_supply_id;
+			}
+			set
+			{
+				if ((this._pet_supply_id != value))
+				{
+					this.Onpet_supply_idChanging(value);
+					this.SendPropertyChanging();
+					this._pet_supply_id = value;
+					this.SendPropertyChanged("pet_supply_id");
+					this.Onpet_supply_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_supply_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string pet_supply_name
+		{
+			get
+			{
+				return this._pet_supply_name;
+			}
+			set
+			{
+				if ((this._pet_supply_name != value))
+				{
+					this.Onpet_supply_nameChanging(value);
+					this.SendPropertyChanging();
+					this._pet_supply_name = value;
+					this.SendPropertyChanged("pet_supply_name");
+					this.Onpet_supply_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantity", DbType="Int NOT NULL")]
+		public int quantity
+		{
+			get
+			{
+				return this._quantity;
+			}
+			set
+			{
+				if ((this._quantity != value))
+				{
+					this.OnquantityChanging(value);
+					this.SendPropertyChanging();
+					this._quantity = value;
+					this.SendPropertyChanged("quantity");
+					this.OnquantityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_image_path", DbType="VarChar(MAX)")]
+		public string image_path
+		{
+			get
+			{
+				return this._image_path;
+			}
+			set
+			{
+				if ((this._image_path != value))
+				{
+					this.Onimage_pathChanging(value);
+					this.SendPropertyChanging();
+					this._image_path = value;
+					this.SendPropertyChanged("image_path");
+					this.Onimage_pathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_price", DbType="Float NOT NULL")]
+		public double price
+		{
+			get
+			{
+				return this._price;
+			}
+			set
+			{
+				if ((this._price != value))
+				{
+					this.OnpriceChanging(value);
+					this.SendPropertyChanging();
+					this._price = value;
+					this.SendPropertyChanged("price");
+					this.OnpriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_supply_status_id", DbType="Int")]
+		public System.Nullable<int> pet_supply_status_id
+		{
+			get
+			{
+				return this._pet_supply_status_id;
+			}
+			set
+			{
+				if ((this._pet_supply_status_id != value))
+				{
+					this.Onpet_supply_status_idChanging(value);
+					this.SendPropertyChanging();
+					this._pet_supply_status_id = value;
+					this.SendPropertyChanged("pet_supply_status_id");
+					this.Onpet_supply_status_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_supply_type_id", DbType="Int NOT NULL")]
+		public int pet_supply_type_id
+		{
+			get
+			{
+				return this._pet_supply_type_id;
+			}
+			set
+			{
+				if ((this._pet_supply_type_id != value))
+				{
+					this.Onpet_supply_type_idChanging(value);
+					this.SendPropertyChanging();
+					this._pet_supply_type_id = value;
+					this.SendPropertyChanged("pet_supply_type_id");
+					this.Onpet_supply_type_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_type_id", DbType="Int NOT NULL")]
+		public int pet_type_id
+		{
+			get
+			{
+				return this._pet_type_id;
+			}
+			set
+			{
+				if ((this._pet_type_id != value))
+				{
+					this.Onpet_type_idChanging(value);
+					this.SendPropertyChanging();
+					this._pet_type_id = value;
+					this.SendPropertyChanged("pet_type_id");
+					this.Onpet_type_idChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
