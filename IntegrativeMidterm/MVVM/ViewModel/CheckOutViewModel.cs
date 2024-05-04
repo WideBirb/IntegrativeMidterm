@@ -1,24 +1,42 @@
 ﻿using IntegrativeMidterm.Core;
 using IntegrativeMidterm.MVVM.Model;
+using IntegrativeMidterm.MVVM.Model.Filters;
 using IntegrativeMidterm.MVVM.View;
 using IntegrativeMidterm.userControl;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Linq;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using static System.Net.WebRequestMethods;
 
 namespace IntegrativeMidterm.MVVM.ViewModel
 {
 	class CheckOutViewModel : ViewModelBase
 	{
         private float totalPrice { get; set; }
+		private string _searchBarInput = string.Empty;
+		private string _searchBarPlaceholderText = string.Empty;
 
-        public float TotalPrice
+		public string SearchBarInput
+		{
+			get { return _searchBarInput; }
+			set { _searchBarInput = value; OnPropertyChanged(); }
+		}
+		public string SearchBarPlaceholderText
+		{
+			get { return _searchBarPlaceholderText; }
+			set { _searchBarPlaceholderText = value; OnPropertyChanged(); }
+		}
+		public float TotalPrice
         {
             get { return totalPrice; }
             set
@@ -29,6 +47,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         }
         public ObservableCollection<PetSupply> ShoppingCart { get; set; }
 		public ObservableCollection<PetSupply> PetSupplyItems { get; set; }
+		public List<PetSupply> HiddenPetSupplyItems { get; set; }
+		public ObservableCollection<PetSpecies> PetSpeciesFilters { get; set; }
 
 		public RelayCommand AddItemCommand { get; set; }
         public RelayCommand ConfirmPurchaseCommand { get; set; }
@@ -36,10 +56,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public RelayCommand RemoveItemCommand { get; set; }
         public RelayCommand increaseQuantityCommand { get; set; }
         public RelayCommand decreaseQuantityCommand { get; set; }
-        public RelayCommand filterItemsCommand { get; set; }
-
-
+        public RelayCommand FilterPetTypesCommand { get; set; }
         public RelayCommand AB => new RelayCommand(parameter => { MessageBox.Show("AB! AB! AB!"); });
+		public RelayCommand FilterCommand { get; }
 
 		private void increaseQuantity(object parameter)
 		{
@@ -50,13 +69,28 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             string PetSupplyID = checkoutItems.PetSupplyIDTextBox.Text;
 			TextBlock quantityTextblock = checkoutItems.QuantityTextBlock;
 
-            foreach (PetSupply item in PetSupplyItems)
-                if (item.PetSupplyID == int.Parse(PetSupplyID))
-                    newItem = item;
+			int maxQuantity = 0;
 
-			newItem.Quantity++;
-			quantityTextblock.Text = newItem.Quantity.ToString();
-			updateTotalCost();
+			foreach (PetSupply item in HiddenPetSupplyItems)
+				if (item.PetSupplyID == int.Parse(PetSupplyID))
+					if (int.Parse(quantityTextblock.Text) == item.Quantity)
+						maxQuantity = item.Quantity;
+
+			foreach (PetSupply item in ShoppingCart)
+				if (item.PetSupplyID == int.Parse(PetSupplyID))
+				{
+					newItem = item;
+					if (newItem.Quantity == maxQuantity)
+						return;
+					else
+					{
+						newItem.Quantity++;
+						quantityTextblock.Text = newItem.Quantity.ToString();
+						updateTotalCost();
+					}
+						
+				}
+
 		}
 
 		private void decreaseQuantity(object parameter)
@@ -68,7 +102,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			string PetSupplyID = checkoutItems.PetSupplyIDTextBox.Text;
 			TextBlock quantityTextblock = checkoutItems.QuantityTextBlock;
 
-			foreach (PetSupply item in PetSupplyItems)
+			foreach (PetSupply item in HiddenPetSupplyItems)
 				if (item.PetSupplyID == int.Parse(PetSupplyID))
 					newItem = item;
 
@@ -117,16 +151,38 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 			// Find the PetSupply object from the Petsupplyitems and put it in the shopping cart
 			foreach (PetSupply item in PetSupplyItems)
+			{
+				// need new initialization because changing the property also changes the object it copies from
 				if (item.PetSupplyID == int.Parse(PetSupplyID.ToString()))
-					newItem = item;
+				{
+					// if out of stock then do nothing
+					if (item.Quantity < 1)
+						return;
+					else
+					{
+						newItem = new PetSupply()
+						{
+							PetSupplyName = item.PetSupplyName,
+							Quantity = 1,
+							Price = (float)item.Price,
+							PetSupplyID = item.PetSupplyID,
+							Status = item.Status,
+							SupplyType = item.SupplyType,
+							Species = item.Species,
+							InStatusID = 1,
+							InSupplyTypeID = 1,
+							InPetTypeID = 1,
+							ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
+						};
+					}
+				}
+			}
 
-
-			// Change the Quantity to default
-			newItem.Quantity = 1;
 			ShoppingCart.Add(newItem);
 			updateTotalCost();
-
 		}
+
+
 		
 		private void RemoveItem(object parameter)
 		{
@@ -144,72 +200,155 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			updateTotalCost();
 		}
 
+		private void Filter(object parameter)
+		{
+			if (PetSupplyItems == null) { return; }
 
-        public CheckOutViewModel()
-        {
+			PetSupplyItems.Clear();
+			InitializeData(parameter as string);
+		}
 
+		private void InitializeData(string filter = null)
+		{
+			ISingleResult<spGetAllPetSuppliesResult> retrievedData = PetshopDB.spGetAllPetSupplies(null,null,null);
+
+			foreach (spGetAllPetSuppliesResult item in retrievedData)
+			{
+				if (filter != null)
+				{
+					if (!item.Product_name.ToLower().Contains(filter.ToLower()))
+						continue;
+
+					PetSupplyItems.Add(new PetSupply
+					{
+						PetSupplyName = item.Product_name,
+						Quantity = item.Quantity,
+						Price = (float)item.Price,
+						PetSupplyID = item.ID,
+						Status = item.Status,
+						SupplyType = item.Type,
+						Species = item.Species,
+						InStatusID = 1,
+						InSupplyTypeID = 1,
+						InPetTypeID = 1,
+						ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
+
+					});
+					continue;
+				}
+
+				PetSupplyItems.Add(
+				new PetSupply
+				{
+					PetSupplyName = item.Product_name,
+					Quantity = item.Quantity,
+					Price = (float)item.Price,
+					PetSupplyID = item.ID,
+					Status = item.Status,
+					SupplyType = item.Type,
+					Species = item.Species,
+					InStatusID = 1,
+					InSupplyTypeID = 1,
+					InPetTypeID = 1,
+					ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
+				});
+			}
+		}
+
+
+		private void updateProductQuantity()
+		{ 
+		
+		}
+
+		private void filterPetType(object parameter)
+		{
+			PetSupplyItems.Clear();
+			string petType = parameter as string;
+			ISingleResult<spGetAllPetSuppliesResult> retrievedData = PetshopDB.spGetAllPetSupplies(null, null, null);
+
+			foreach (spGetAllPetSuppliesResult item in retrievedData)
+			{
+				if (item.Species.ToLower() == (petType.ToLower()))
+					PetSupplyItems.Add(new PetSupply
+					{
+						PetSupplyName = item.Product_name,
+						Quantity = item.Quantity,
+						Price = (float)item.Price,
+						PetSupplyID = item.ID,
+						Status = item.Status,
+						SupplyType = item.Type,
+						Species = item.Species,
+						InStatusID = 1,
+						InSupplyTypeID = 1,
+						InPetTypeID = 1,
+						ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
+
+					});
+				continue;
+			}
+		}
+
+		public CheckOutViewModel()
+		{
+			// for every item in shopping cart, get their quantity and ID
+			// loop the observable collection, minus the quantity if ID is matching
+			// 
+
+			
+
+			
+
+			SearchBarPlaceholderText = "Search...";
+			SearchBarInput = "";
+
+			FilterCommand = new RelayCommand(parameter => Filter(parameter));
 			AddItemCommand = new RelayCommand(parameter => AddItem(parameter));
 			ConfirmPurchaseCommand = new RelayCommand(parameter => ConfirmPurchase(parameter));
 			CancelPurchaseCommand = new RelayCommand(parameter => CancelPurchase(parameter));
 			RemoveItemCommand = new RelayCommand(parameter => RemoveItem(parameter));
 			increaseQuantityCommand = new RelayCommand(parameter => increaseQuantity(parameter));
 			decreaseQuantityCommand = new RelayCommand(parameter => decreaseQuantity(parameter));
-
-			string baseDirectory = System.IO.Directory.GetParent(System.IO.Directory.GetParent(System.IO.Directory.GetParent(Environment.CurrentDirectory).ToString()).ToString()).ToString();
+			FilterPetTypesCommand = new RelayCommand(parameter => filterPetType(parameter));
 
 			ShoppingCart = new ObservableCollection<PetSupply>();
 			PetSupplyItems = new ObservableCollection<PetSupply>();
 
-			//MessageBox.Show(Path.Combine(baseDirectory, "Themes", "Images", "MyImage.jpg"));
-
-			PetSupplyItems.Add(new PetSupply
-			{ 
-				PetSupplyName = "Soap",
-				Quantity = 50,
-				Price = 199.99f,
-				PetSupplyID = 16598230,
-				Status = "Available",
-				SupplyType = "Food",
-				Species = "Cat",
-				InStatusID = 1,
-				InSupplyTypeID = 1,
-				InPetTypeID = 1,
-				ImagePath = Path.Combine(baseDirectory, "Themes", "Images", "MyImage.jpg")
-
-			});
-
-			PetSupplyItems.Add(new PetSupply
+			PetSpeciesFilters = new ObservableCollection<PetSpecies>
 			{
-				PetSupplyName = "Bleach",
-				Quantity = 50,
-				Price = 299.99f,
-				PetSupplyID = 53498230,
-				Status = "Available",
-				SupplyType = "Food",
-				Species = "Dog",
-				InStatusID = 1,
-				InSupplyTypeID = 1,
-				InPetTypeID = 1,
-				ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
+				new PetSpecies
+				{
+					ID = 1,
+					Description = "Cat"
+				},
+				new PetSpecies
+				{
+					ID = 2,
+					Description = "Dog"
+				},
+				new PetSpecies
+				{
+					ID = 3,
+					Description = "Bird"
+				},
+				new PetSpecies
+				{
+					ID = 4,
+					Description = "Shark"
+				},
+				new PetSpecies
+				{
+					ID = 5,
+					Description = "Dinosaur"
+				}
+			};
 
-			});
-
-			PetSupplyItems.Add(new PetSupply
-			{
-				PetSupplyName = "Leash",
-				Quantity = 50,
-				Price = 399.99f,
-				PetSupplyID = 36598230,
-				Status = "Available",
-				SupplyType = "Food",
-				Species = "Bird",
-				InStatusID = 1,
-				InSupplyTypeID = 1,
-				InPetTypeID = 1,
-				ImagePath = "C:\\Users\\Brid G\\Source\\Repos\\IntegrativeMidterm\\IntegrativeMidterm\\Themes\\Images\\MyImage.jpg"
-
-			});
-
+			
+			InitializeData("");
+			HiddenPetSupplyItems = PetSupplyItems.ToList();
+			var dataToUpdate = from item in PetshopDB.spGetAllPetSupplies(null, null, null) select item;
+			//foreach (var item in dataToUpdate)
+				//MessageBox.Show(item.Product_name);
 		}
 
     }

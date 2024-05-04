@@ -1,212 +1,222 @@
-﻿<UserControl x:Class="IntegrativeMidterm.MVVM.View.CheckOutView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
-             xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
-             xmlns:Components="clr-namespace:IntegrativeMidterm.userControl"
-             mc:Ignorable="d" 
-             HorizontalAlignment="Stretch"
-             VerticalAlignment="Stretch">
+﻿<UserControl
+    x:Class="IntegrativeMidterm.MVVM.View.CheckOutView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Components="clr-namespace:IntegrativeMidterm.userControl"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:userControls="clr-namespace:IntegrativeMidterm.userControl.General"
+    xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewModel:CheckOutViewModel/>
+        <viewModel:CheckOutViewModel />
     </UserControl.DataContext>
 
-    <Grid Grid.Row="1">
+    <Grid Grid.Row="1" Margin="10,30,10,30">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.2*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="1.3*" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <!--Left Panel-->
+        <Border Background="#2C2A3D" CornerRadius="15" />
+        <!--  Left Panel  -->
         <Grid Grid.Row="1">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.1*"/>
-                <RowDefinition Height="0.1*"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+            <StackPanel>
+                <userControls:SearchBar
+                    Margin="0,0,0,0"
+                    VerticalAlignment="Top"
+                    InputText="{Binding SearchBarInput, Mode=TwoWay}"
+                    PlaceholderText="{Binding SearchBarPlaceholderText}"
+                    TextChangedCommand="{Binding FilterCommand}" />
 
+                <ScrollViewer
+                    Margin="25,-23,25,10"
+                    HorizontalScrollBarVisibility="Auto"
+                    Style="{StaticResource ThinScrollViewerStyle}"
+                    VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding PetSpeciesFilters}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Command="{Binding DataContext.FilterPetTypesCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Content}"
+                                    Content="{Binding Description}"
+                                    Style="{StaticResource FilterButtonStyle}" />
 
-            <Border 
-                Grid.Row="0"
-                Width="550"
-                    Height="25"
-                    Background="Gray"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Margin="10"
-                    />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
 
-            <StackPanel Grid.Row="1"
-                        x:Name="FilterButtons"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Orientation="Horizontal">
+                <!--  Main  -->
 
-                <Button
-                    x:Name="DogFilterButton"
-                    Width="150"
-                    Height="50"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="Dog"
-                    Margin="10"
-                    Command="{Binding filterItemsCommand }"
-                    CommandParameter="{Binding ElementName=DogFilterButton}"
-                    />
+                <Grid>
+                    <ScrollViewer
+                        Grid.Row="2"
+                        Height="590"
+                        Margin="0,15,0,15"
+                        VerticalScrollBarVisibility="Auto">
 
-                <Button
-                    x:Name="CatFilterButton"
-                    Width="150"
-                    Height="50"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="Cat"
-                    Margin="10"
-                    Command="{Binding filterItemsCommand }"
-                    CommandParameter="{Binding ElementName=CatFilterButton}"
-                    />
+                        <ItemsControl
+                            x:Name="PetSupplyItemItemsControl"
+                            IsEnabled="True"
+                            ItemsSource="{Binding PetSupplyItems, UpdateSourceTrigger=PropertyChanged}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Components:SupplyItems />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
 
-                <Button
-                    x:Name="BirdFilterButton"
-                    Width="150"
-                    Height="50"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="Bird"
-                    Margin="10"
-                    Command="{Binding filterItemsCommand }"
-                    CommandParameter="{Binding ElementName=BirdFilterButton}"
-                    />
+                        </ItemsControl>
+
+                    </ScrollViewer>
+                </Grid>
 
             </StackPanel>
-
-
-            <!--Main-->
-
-            <ScrollViewer Grid.Row="2"
-                          VerticalScrollBarVisibility="Auto"
-                          Margin="0,15,0,15">
-
-                <ItemsControl   x:Name="PetSupplyItemItemsControl"
-                                IsEnabled="True"
-                                ItemsSource="{Binding PetSupplyItems , UpdateSourceTrigger=PropertyChanged}"
-                                Background="PaleVioletRed">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Components:SupplyItems/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-
-                </ItemsControl>
-
-            </ScrollViewer>
 
 
         </Grid>
 
 
-        <!--Right Panel-->
-        <Grid Grid.Row="1"
-                Grid.Column="1">
+        <!--  Right Panel  -->
+        <Grid Grid.Column="1">
+
+            <Border
+                Margin="10,0,10,0"
+                Background="#2C2A3D"
+                CornerRadius="15">
+
+                <StackPanel>
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="21"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Text="YOUR ORDER"
+                        TextAlignment="Center" />
+
+                    <ScrollViewer
+                        Grid.Row="1"
+                        Height="550"
+                        Margin="5,15,5,15"
+                        VerticalAlignment="Top"
+                        VerticalScrollBarVisibility="Auto">
+
+                        <ItemsControl
+                            x:Name="CheckOutItemsControl"
+                            HorizontalAlignment="Center"
+                            IsEnabled="True"
+                            ItemsSource="{Binding ShoppingCart, UpdateSourceTrigger=PropertyChanged}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Components:CheckoutItems />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                    </ScrollViewer>
+
+                    <Separator
+                        Margin="25,0,25,0"
+                        Background="White"
+                        BorderBrush="White"
+                        BorderThickness="5" />
 
 
-            <Grid Grid.Column="1"
-                  Grid.Row="1"
-                  VerticalAlignment="Top">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="8*"/>
-                </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Row="1"
+                        Width="300"
+                        Height="30"
+                        Margin="25,5,10,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FlowDirection="RightToLeft"
+                        FontSize="23"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Text=": TOTAL"
+                        TextAlignment="Right" />
 
-                <TextBlock Text="YOUR ORDER"
-                           Margin="0,10,0,0"
-                           VerticalAlignment="Center"
-                           Foreground="White"
-                               FontSize="21"
-                               TextAlignment="Center"/>
-
-                <ScrollViewer Grid.Row="1"
-                              VerticalScrollBarVisibility="Auto"
-                              Margin="0,15,0,15"
-                              VerticalAlignment="Top"
-                              Height="500">
-                    
-                    <ItemsControl   x:Name="CheckOutItemsControl"
-                                    ItemsSource="{Binding ShoppingCart, UpdateSourceTrigger=PropertyChanged}"
-                                    IsEnabled="True"
-                                    HorizontalAlignment="Center">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Components:CheckoutItems/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                </ScrollViewer>
+                    <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal">
 
 
-            </Grid>
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="0.2*"/>
-                    <RowDefinition Height="0.2*"/>
-                </Grid.RowDefinitions>
-
-
-
-                <TextBlock
-                    Text="{Binding TotalPrice}"
-                    Grid.Row="1"
-                    Width="300"
-                    Height="60"
-                    FontSize="25"
-                    Background="Pink"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    TextAlignment="Right"
-                    Margin="10"
-                    />
-
-
-                <StackPanel Grid.Row="2"
-                            Orientation="Horizontal"
+                        <TextBlock
+                            Grid.Row="1"
+                            Height="30"
+                            Margin="45,0,10,5"
+                            HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
+                            FontSize="23"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="{Binding TotalPrice}"
+                            TextAlignment="Right" />
+
+                        <TextBlock
+                            Grid.Row="1"
+                            Width="150"
+                            Height="30"
+                            Margin="10,0,25,5"
+                            FontSize="23"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="PHP"
+                            TextAlignment="Left" />
+                    </StackPanel>
 
 
-                    <Button
-                    Width="170"
-                    Height="50"
-                    Background="Lime"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="CONFIRM"
-                    Margin="10"
-                        Command="{Binding ConfirmPurchaseCommand}"
-                    />
 
-                    <Button
-                    Width="100"
-                    Height="50"
-                    Background="Red"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="CANCEL"
-                    Margin="10"
-                        Command="{Binding CancelPurchaseCommand}"
-                    />
+
+                    <StackPanel
+                        Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+
+
+                        <Button
+                            Width="170"
+                            Height="50"
+                            Margin="10,15,10,15"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            BorderBrush="White"
+                            BorderThickness="1.5"
+                            Command="{Binding ConfirmPurchaseCommand}"
+                            Content="CONFIRM"
+                            FontWeight="Bold"
+                            Style="{StaticResource PrimaryButtonStyle}" />
+
+                        <Button
+                            Width="100"
+                            Height="50"
+                            Margin="10,15,10,15"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            BorderBrush="White"
+                            BorderThickness="1.5"
+                            Command="{Binding CancelPurchaseCommand}"
+                            Content="CANCEL"
+                            FontWeight="Bold"
+                            Style="{StaticResource SecondaryButtonStyle}" />
+                    </StackPanel>
+
+
                 </StackPanel>
-
-
-
-            </Grid>
-
-
+            </Border>
 
         </Grid>
 

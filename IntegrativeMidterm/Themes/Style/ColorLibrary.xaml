@@ -16,11 +16,13 @@
     
     <SolidColorBrush x:Key="SupplyItemsBG">#FF413E5B</SolidColorBrush>
 
+    <SolidColorBrush x:Key="SupplyItemsBG">#FF413E5B</SolidColorBrush>
+
     <SolidColorBrush x:Key="PrimaryButtonColor">#0C6B37</SolidColorBrush>
     <SolidColorBrush x:Key="PrimaryButtonActiveColor">#0E753C</SolidColorBrush>
     <SolidColorBrush x:Key="PrimaryButtonHoveredColor">#0F8243</SolidColorBrush>
     <SolidColorBrush x:Key="PrimaryButtonPressedColor">#0B5E30</SolidColorBrush>
-
+    
     <SolidColorBrush x:Key="SecondaryButtonColor">#BC2023</SolidColorBrush>
     <SolidColorBrush x:Key="SecondaryButtonHoveredColor">#D12427</SolidColorBrush>
     <SolidColorBrush x:Key="SecondaryButtonPressedColor">#A31C1E</SolidColorBrush>
