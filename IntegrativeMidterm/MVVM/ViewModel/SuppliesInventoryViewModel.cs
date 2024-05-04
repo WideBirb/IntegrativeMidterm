@@ -93,7 +93,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                     Price = (float)item.Price,
                     PetSupplyID = item.ID,
                     Status = item.Status,
-                    SupplyType = item.Type,
+                    SupplyType = item.Species,
                     Species = item.Species,
                     InStatusID = 1,
                     InSupplyTypeID = 1,
