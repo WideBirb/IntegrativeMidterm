@@ -20,7 +20,10 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         
 		public ObservableCollection<PetSupply> SupplyItems { get; set; }
 
-        public RelayCommand AddCommand => new RelayCommand(parameter => AddItem(parameter));
+		public RelayCommand CopyCommand => new RelayCommand(parameter => copySelectedItems(parameter), canExecute => SelectedItem != null);
+
+		public RelayCommand ClearCommand => new RelayCommand(parameter => clearTextbox((StackPanel)parameter));
+		public RelayCommand AddCommand => new RelayCommand(parameter => AddItem(parameter));
 
 		public RelayCommand UpdateCommand => new RelayCommand(execute => UpdateItem(execute), canExecute => SelectedItem != null);
 
@@ -91,23 +94,41 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 			foreach (spGetAllPetSuppliesResult item in retrievedData)
 			{
-				SupplyItems.Add(new PetSupply
+				//STATUS ID = 2 IS ARCHIVED
+				if (item.Status_ID == 2)
+					continue;
+				else
 				{
-					PetSupplyName = item.Product_name,
-					Quantity = item.Quantity,
-					Price = (float)item.Price,
-					PetSupplyID = item.ID,
-					Status = item.Status,
-					SupplyType = item.Supply_Type,
-					Species = item.Species,
-					InStatusID = item.Status_ID,
-					InSupplyTypeID = item.ID,
-					InPetTypeID = item.Species_ID,
-					ImagePath = item.Image_path
+					SupplyItems.Add(new PetSupply
+					{
+						PetSupplyName = item.Product_name,
+						Quantity = item.Quantity,
+						Price = (float)item.Price,
+						PetSupplyID = item.ID,
+						Status = item.Status,
+						SupplyType = item.Supply_Type,
+						Species = item.Species,
+						InStatusID = item.Status_ID,
+						InSupplyTypeID = item.ID,
+						InPetTypeID = item.Species_ID,
+						ImagePath = item.Image_path
 
-				});
+					});
+				}
+
 			}
 
+		}
+
+		private void copySelectedItems(object parameter)
+		{ 
+			SuppliesInventoryView view = (SuppliesInventoryView)parameter;		
+			view.NameTextBox.Text = selectedItem.PetSupplyName;
+			view.QuantityTextBox.Text = selectedItem.Quantity.ToString();
+			view.PriceTextBox.Text = selectedItem.Price.ToString();
+			view.PetTypeTextBox.Text = selectedItem.Species;
+			view.SupplyTypeTextBox.Text = selectedItem.SupplyType;
+			view.ImageURLTextBox.Text = selectedItem.ImagePath;
 		}
 
 		private void AddItem(object parameter)
@@ -180,20 +201,22 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         private void DeleteItem()
 
         {
-			var rowtoDelete = from s in PetshopDB.tblPetSupplies where s.pet_supply_id == selectedItem.PetSupplyID select s;
-			// Remove the data
-			PetshopDB.tblPetSupplies.DeleteAllOnSubmit(rowtoDelete);
-			// Submit changes to the database
-			try
-			{
-				PetshopDB.SubmitChanges();
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Error deleting data: " + ex.Message);
-				// Handle the exception appropriately
-			}
+			//var rowtoDelete = from s in PetshopDB.tblPetSupplies where s.pet_supply_id == selectedItem.PetSupplyID select s;
+			//// Remove the data
+			//PetshopDB.tblPetSupplies.DeleteAllOnSubmit(rowtoDelete);
+			//// Submit changes to the database
+			//try
+			//{
+			//	PetshopDB.SubmitChanges();
+			//}
+			//catch (Exception ex)
+			//{
+			//	MessageBox.Show("Error deleting data: " + ex.Message);
+			//	// Handle the exception appropriately
+			//}
 
+			//STATUS ID = 2 IS ARCHIVED
+			PetshopDB.spSetPetSupplyStatus(selectedItem.PetSupplyID, 2);
 			SupplyItems.Remove(selectedItem);
 			MessageBox.Show("Data Deleted Successfully");
 		}
@@ -232,6 +255,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 						determinePetType(selectedItem.Species),
 						selectedItem.Price,
 						selectedItem.Quantity,
+						1,
 						selectedItem.ImagePath
 					);
 

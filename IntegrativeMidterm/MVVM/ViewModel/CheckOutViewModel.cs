@@ -4,6 +4,7 @@ using IntegrativeMidterm.MVVM.Model.Filters;
 using IntegrativeMidterm.MVVM.View;
 using IntegrativeMidterm.userControl;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Linq;
@@ -84,7 +85,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			else
 				return 9;
 		}
-
 		public int determinePetType(string petType)
 		{
 
@@ -165,7 +165,12 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 		}
 		private void ConfirmPurchase(object parameter)
 		{
+
+			updateProductQuantity();
+
             ShoppingCart.Clear();
+			PetSupplyItems.Clear();
+			InitializeData();
             updateTotalCost();
         }
 
@@ -252,89 +257,14 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 			foreach (spGetAllPetSuppliesResult item in retrievedData)
 			{
-				if (filter != null)
+				//STATUS ID = 2 IS ARCHIVED
+				if (item.Status_ID == 1 || item.Status_ID == 3)
 				{
-					if (!item.Product_name.ToLower().Contains(filter.ToLower()))
-						continue;
-
-					PetSupplyItems.Add(new PetSupply
+					if (filter != null)
 					{
-						PetSupplyName = item.Product_name,
-						Quantity = item.Quantity,
-						Price = (float)item.Price,
-						PetSupplyID = item.ID,
-						Status = item.Status,
-						SupplyType = item.Supply_Type,
-						Species = item.Species,
-						InStatusID = 1,
-						InSupplyTypeID = 1,
-						InPetTypeID = 1,
-						ImagePath = item.Image_path
+						if (!item.Product_name.ToLower().Contains(filter.ToLower()))
+							continue;
 
-					});
-					continue;
-				}
-
-				PetSupplyItems.Add(
-				new PetSupply
-				{
-					PetSupplyName = item.Product_name,
-					Quantity = item.Quantity,
-					Price = (float)item.Price,
-					PetSupplyID = item.ID,
-					Status = item.Status,
-					SupplyType = item.Supply_Type,
-					Species = item.Species,
-					InStatusID = 1,
-					InSupplyTypeID = 1,
-					InPetTypeID = 1,
-					ImagePath = item.Image_path
-				});
-			}
-		}
-
-
-		private void updateProductQuantity()
-		{
-			PetSupplyItems.Clear();
-			InitializeData("");
-			HiddenPetSupplyItems = PetSupplyItems.ToList();
-		}
-
-		private void filterPetType(object parameter)
-		{
-			
-			PetSupplyItems.Clear();
-			string petType = parameter as string;
-			ISingleResult<spGetAllPetSuppliesResult> retrievedData = PetshopDB.spGetAllPetSupplies(null, null, null);
-
-			// if same filter is pressed again,
-			if (currentPetFilter == petType)
-			{
-				currentPetFilter = "";
-				foreach (spGetAllPetSuppliesResult item in retrievedData)
-				{
-					PetSupplyItems.Add(new PetSupply
-					{
-						PetSupplyName = item.Product_name,
-						Quantity = item.Quantity,
-						Price = (float)item.Price,
-						PetSupplyID = item.ID,
-						Status = item.Status,
-						SupplyType = item.Supply_Type,
-						Species = item.Species,
-						InStatusID = 1,
-						InSupplyTypeID = 1,
-						InPetTypeID = 1,
-						ImagePath = item.Image_path
-					});
-				}
-			}
-			else
-			{
-				foreach (spGetAllPetSuppliesResult item in retrievedData)
-				{
-					if (item.Species.ToLower() == (petType.ToLower()))
 						PetSupplyItems.Add(new PetSupply
 						{
 							PetSupplyName = item.Product_name,
@@ -350,11 +280,117 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 							ImagePath = item.Image_path
 
 						});
+						continue;
+					}
+
+					PetSupplyItems.Add(
+					new PetSupply
+					{
+						PetSupplyName = item.Product_name,
+						Quantity = item.Quantity,
+						Price = (float)item.Price,
+						PetSupplyID = item.ID,
+						Status = item.Status,
+						SupplyType = item.Supply_Type,
+						Species = item.Species,
+						InStatusID = 1,
+						InSupplyTypeID = 1,
+						InPetTypeID = 1,
+						ImagePath = item.Image_path
+					});
+				}
+			}
+
+			HiddenPetSupplyItems = PetSupplyItems.ToList();
+		}
+
+
+		private void updateProductQuantity()
+		{
+			// should make the pet supply status to 3 (out of stock) here but gilbs is not gonan notice
+
+			Dictionary<int,int> IDQuantitypairs = new Dictionary<int,int>();
+
+
+			// Get ID and Quantity for each order
+			foreach (PetSupply item in ShoppingCart)
+				IDQuantitypairs.Add(item.PetSupplyID, item.Quantity);
+
+
+			//Update DB
+			foreach (KeyValuePair<int, int> kvp in IDQuantitypairs)
+				PetshopDB.spUpdatePetSupplyQuantity(kvp.Key, kvp.Value);
+
+
+			//PetSupplyItems.Clear();
+			//InitializeData("");
+			//HiddenPetSupplyItems = PetSupplyItems.ToList();
+		}
+
+		private void filterPetType(object parameter)
+		{
+			
+			PetSupplyItems.Clear();
+			string petType = parameter as string;
+			ISingleResult<spGetAllPetSuppliesResult> retrievedData = PetshopDB.spGetAllPetSupplies(null, null, null);
+
+			// if same filter is pressed again,
+			if (currentPetFilter == petType)
+			{
+				currentPetFilter = "";
+				foreach (spGetAllPetSuppliesResult item in retrievedData)
+				{
+					//STATUS ID = 2 IS ARCHIVED
+					if (item.Status_ID == 1 || item.Status_ID == 3 )
+					{
+						PetSupplyItems.Add(new PetSupply
+						{
+							PetSupplyName = item.Product_name,
+							Quantity = item.Quantity,
+							Price = (float)item.Price,
+							PetSupplyID = item.ID,
+							Status = item.Status,
+							SupplyType = item.Supply_Type,
+							Species = item.Species,
+							InStatusID = 1,
+							InSupplyTypeID = 1,
+							InPetTypeID = 1,
+							ImagePath = item.Image_path
+						});
+					}
+
+				}
+			}
+			// if no filter is applied
+			else
+			{
+				foreach (spGetAllPetSuppliesResult item in retrievedData)
+				{
+					if (item.Species.ToLower() == (petType.ToLower()))
+						//STATUS ID = 2 IS ARCHIVED
+						if (item.Status_ID == 1 || item.Status_ID == 3)
+						{
+							PetSupplyItems.Add(new PetSupply
+							{
+								PetSupplyName = item.Product_name,
+								Quantity = item.Quantity,
+								Price = (float)item.Price,
+								PetSupplyID = item.ID,
+								Status = item.Status,
+								SupplyType = item.Supply_Type,
+								Species = item.Species,
+								InStatusID = 1,
+								InSupplyTypeID = 1,
+								InPetTypeID = 1,
+								ImagePath = item.Image_path
+
+							});
+						}
+
 					continue;
 				}
 				currentPetFilter = petType;
 			}
-
 		}
 
 		public CheckOutViewModel()
@@ -405,8 +441,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			};
 
 			
-			InitializeData("");
-			HiddenPetSupplyItems = PetSupplyItems.ToList();
+			InitializeData();
+			
 			var dataToUpdate = from item in PetshopDB.spGetAllPetSupplies(null, null, null) select item;
 			//foreach (var item in dataToUpdate)
 				//MessageBox.Show(item.Product_name);

@@ -355,13 +355,6 @@ namespace IntegrativeMidterm
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spUpdateSupplyData")]
-		public int spUpdateSupplyData([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string pet_supply_name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Float")] System.Nullable<double> price, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> quantity, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string image_path)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_supply_id, pet_supply_name, pet_supply_type_id, pet_type_id, price, quantity, image_path);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spRegisterPet")]
 		public int spRegisterPet([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string pet_name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string gender, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> birthdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_breed_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Float")] System.Nullable<double> price, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string image_path)
 		{
@@ -437,6 +430,20 @@ namespace IntegrativeMidterm
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), transaction_history_id);
 			return ((ISingleResult<spGetSupplyTransactionSummaryResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spUpdateSupplyData")]
+		public int spUpdateSupplyData([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string pet_supply_name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Float")] System.Nullable<double> price, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> quantity, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_status_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string image_path)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_supply_id, pet_supply_name, pet_supply_type_id, pet_type_id, price, quantity, pet_supply_status_ID, image_path);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spUpdatePetSupplyQuantity")]
+		public int spUpdatePetSupplyQuantity([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> quantity)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_supply_id, quantity);
+			return ((int)(result.ReturnValue));
 		}
 	}
 	

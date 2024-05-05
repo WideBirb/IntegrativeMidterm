@@ -433,16 +433,6 @@
     <Parameter Name="image_path" Type="System.String" DbType="VarChar(MAX)" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.spUpdateSupplyData" Method="spUpdateSupplyData">
-    <Parameter Name="pet_supply_id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="pet_supply_name" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="pet_supply_type_id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="pet_type_id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="price" Type="System.Double" DbType="Float" />
-    <Parameter Name="quantity" Type="System.Int32" DbType="Int" />
-    <Parameter Name="image_path" Type="System.String" DbType="VarChar(MAX)" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.spRegisterPet" Method="spRegisterPet">
     <Parameter Name="pet_name" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="gender" Type="System.String" DbType="VarChar(50)" />
@@ -544,5 +534,21 @@
       <Column Name="[Supply Type ID]" Member="Supply_Type_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="[Species ID]" Member="Species_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.spUpdateSupplyData" Method="spUpdateSupplyData">
+    <Parameter Name="pet_supply_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="pet_supply_name" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="pet_supply_type_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="pet_type_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="price" Type="System.Double" DbType="Float" />
+    <Parameter Name="quantity" Type="System.Int32" DbType="Int" />
+    <Parameter Name="pet_supply_status_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="image_path" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spUpdatePetSupplyQuantity" Method="spUpdatePetSupplyQuantity">
+    <Parameter Name="pet_supply_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="quantity" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>

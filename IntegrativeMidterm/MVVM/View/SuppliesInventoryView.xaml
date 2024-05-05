@@ -26,7 +26,7 @@
             x:Name="myDataGrid"
             Grid.Column="0"
             Width="600"
-            Height="620"
+            Height="690"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             AutoGenerateColumns="False"
@@ -37,7 +37,7 @@
             FontSize="15"
             ItemsSource="{Binding SupplyItems}"
             RowStyle="{DynamicResource DataGridRowStyle}"
-            SelectedItem="{Binding SelectedItem}">
+            SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
             <DataGrid.Columns>
                 <!--<DataGridTextColumn
                     Width="0.4*"
@@ -48,32 +48,32 @@
                     Width="1*"
                     Binding="{Binding PetSupplyName}"
                     Header="Name"
-                    IsReadOnly="True" />
+                    IsReadOnly="False" />
                 <DataGridTextColumn
                     Width="0.5*"
                     Binding="{Binding Quantity}"
                     Header="QTY"
-                    IsReadOnly="True" />
+                    IsReadOnly="False" />
                 <DataGridTextColumn
                     Width="1*"
                     Binding="{Binding Price}"
                     Header="Price"
-                    IsReadOnly="True" />
+                    IsReadOnly="False" />
                 <DataGridTextColumn
                     Width="1*"
                     Binding="{Binding Species}"
                     Header="Pet Type"
-                    IsReadOnly="True" />
+                    IsReadOnly="False" />
                 <DataGridTextColumn
                     Width="1*"
                     Binding="{Binding SupplyType}"
                     Header="S.Type"
-                    IsReadOnly="True" />
+                    IsReadOnly="False" />
                 <DataGridTextColumn
                     Width="1*"
                     Binding="{Binding ImagePath}"
                     Header="Image URL"
-                    IsReadOnly="True" />
+                    IsReadOnly="False" />
             </DataGrid.Columns>
         </DataGrid>
 
@@ -90,6 +90,27 @@
                 Margin="5,10,0,15"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top">
+
+                <Button
+                    Width="200"
+                    Height="25"
+                    Margin="5,0,10,10"
+                    Command="{Binding ClearCommand}"
+                    CommandParameter="{Binding ElementName=TextBoxContainer}"
+                    Content="CLEAR ALL FORMS"
+                    FontSize="17"
+                    Style="{StaticResource SecondaryButtonStyle}" />
+
+                <Button
+                    Width="200"
+                    Height="25"
+                    Margin="5,0,10,10"
+                    Command="{Binding CopyCommand}"
+                    CommandParameter="{Binding ElementName=root}"
+                    Content="COPY SELECTED ITEM"
+                    FontSize="17"
+                    Style="{StaticResource TertiaryButtonStyle}" />
+
 
                 <Label
                     Content="Name"
