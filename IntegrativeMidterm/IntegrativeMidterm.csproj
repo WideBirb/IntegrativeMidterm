@@ -96,6 +96,9 @@
     <Compile Include="userControl\General\SearchBar.xaml.cs">
       <DependentUpon>SearchBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="userControl\Overlay\PetProfile.xaml.cs">
+      <DependentUpon>PetProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="userControl\PetInventory\PetAvailabilityIndicator.xaml.cs">
       <DependentUpon>PetAvailabilityIndicator.xaml</DependentUpon>
     </Compile>
@@ -184,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="userControl\General\SearchBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="userControl\Overlay\PetProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

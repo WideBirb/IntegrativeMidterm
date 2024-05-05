@@ -22,7 +22,7 @@
                 Text="{Binding EntryLabel, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
             <TextBlock x:Name="tbPlaceholder"
                    Foreground="{StaticResource FontColorLightInactive}"
-                   Visibility="Visible"
+                   Visibility="{Binding PlaceholderVisibility, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}"
                    VerticalAlignment="Center"
                    Padding="20 0 10 0"
                    FontSize="18"
@@ -30,13 +30,14 @@
                    Text="{Binding PlaceholderText, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
             <Image/>
             <TextBox Background="Transparent"
-                 BorderThickness="0"
-                 VerticalAlignment="Center"
-                 Padding="18 0 10 0"
-                 FontSize="18"
+                     BorderThickness="0"
+                     VerticalAlignment="Center"
+                     Padding="18 0 10 0"
+                     FontSize="18"
+                     CaretBrush="White"
                      Foreground="White"
-                 Text="{Binding InputText, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                 GotFocus="InputBar_GotFocus" LostFocus="InputBar_LostFocus" TextChanged="InputBar_TextChanged"/>
+                     Text="{Binding InputText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                     GotFocus="InputBar_GotFocus" LostFocus="InputBar_LostFocus" TextChanged="InputBar_TextChanged"/>
         </Grid>
     </Border>
 </UserControl>

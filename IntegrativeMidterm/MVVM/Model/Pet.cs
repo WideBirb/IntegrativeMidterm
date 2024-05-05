@@ -15,7 +15,7 @@ namespace IntegrativeMidterm.MVVM.Model
         // FOR INPUT & OUTPUT IN ORDER
         public string PetName { get; set; }
         public string Gender { get; set; }
-        public DateTime Birhdate { get; set; }
+        public DateTime Birthdate { get; set; }
         public string Species { get; set; }
         public string Breed { get; set; }
         public string Status { get; set; }

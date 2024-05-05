@@ -29,6 +29,9 @@ namespace IntegrativeMidterm.userControl.General
         public static readonly DependencyProperty PlaceholderTextProperty =
             DependencyProperty.Register("PlaceholderText", typeof(string), typeof(InputBar));
 
+        public static readonly DependencyProperty PlaceholderVisibilityProperty =
+            DependencyProperty.Register("PlaceholderVisibility", typeof(Visibility), typeof(InputBar));
+
         public static readonly DependencyProperty EntryLabelProperty =
             DependencyProperty.Register("EntryLabel", typeof(string), typeof(InputBar));
 
@@ -57,6 +60,11 @@ namespace IntegrativeMidterm.userControl.General
         {
             get { return (string)GetValue(InputTextProperty); }
             set { SetValue(InputTextProperty, value); }
+        }
+        public Visibility PlaceholderVisibility
+        {
+            get { return (Visibility)GetValue(PlaceholderVisibilityProperty); }
+            set { SetValue(PlaceholderVisibilityProperty, value); }
         }
 
         private void InputBar_GotFocus(object sender, RoutedEventArgs e)
