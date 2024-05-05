@@ -3,6 +3,7 @@ using IntegrativeMidterm.MVVM.Model;
 using IntegrativeMidterm.MVVM.Model.Filters;
 using IntegrativeMidterm.userControl.General;
 using IntegrativeMidterm.userControl.PetInventory;
+using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -47,13 +48,11 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
         private string _birthdayLabel = string.Empty;
         private Visibility _profileOptionsVisibility = Visibility.Collapsed;
-        
         public Visibility ProfileOptionsVisibility
         {
             get { return _profileOptionsVisibility;; }
             set { _profileOptionsVisibility = value; OnPropertyChanged(); }
         }
-
         //-----------------------------------------------------------------//
 
         public string SearchBarInput
@@ -134,7 +133,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             int age = 0;
             float price = 0;
 
-            ISingleResult<spGetAllPetsResult> retrievedData =PetshopDB.spGetAllPets(
+            ISingleResult<spGetAllPetsResult> retrievedData = PetshopDB.spGetAllPets(
                 _speciesFilter,
                 null,
                 null,
@@ -161,12 +160,16 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                         ID = item.ID,
                         PetName = item.Name,
                         Breed = item.Breed,
+                        Species = item.Species,
                         Gender = item.Gender,
                         Age = age.ToString() + "mo.",
                         Price = price,
                         Birhdate = item.Birthdate,
                         Status = item.Status,
-                        StatusColor = GetStatusColor(statusID)
+                        StatusColor = GetStatusColor(statusID),
+                        BreedID = item.Breed_ID,
+                        SpeciesID = item.Species_ID,
+                        ImagePath = item.Image_path
                     });
                     UpdateAvailabilityCount(statusID);
                     continue;
@@ -177,12 +180,16 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                     ID = item.ID,
                     PetName = item.Name,
                     Breed = item.Breed,
+                    Species = item.Species,
                     Gender = item.Gender,
                     Age = age.ToString() + "mo.",
                     Price = price,
                     Birhdate = item.Birthdate,
                     Status = item.Status,
-                    StatusColor = GetStatusColor(statusID)
+                    StatusColor = GetStatusColor(statusID),
+                    BreedID = item.Breed_ID,
+                    SpeciesID = item.Species_ID,
+                    ImagePath = item.Image_path
                 });
                 UpdateAvailabilityCount(statusID);
             }
@@ -354,7 +361,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             BirthdayLabel = "Birthday:";
             Birthdate = chosenPet.Birhdate.ToString("MMMM d, yyyy");
             PetStatus = chosenPet.Status;
-            Price = "Php " + Math.Round(chosenPet.Price, 2).ToString();
+            Price = "Php " + Math.Round(chosenPet.Price, 2).ToString("#,##0.00");
 
             ProfileOptionsVisibility = Visibility.Visible;
         }

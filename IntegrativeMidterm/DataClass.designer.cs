@@ -181,13 +181,6 @@ namespace IntegrativeMidterm
 			return ((ISingleResult<spGetMedicalTypesResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spGetPetBreeds")]
-		public ISingleResult<spGetPetBreedsResult> spGetPetBreeds()
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
-			return ((ISingleResult<spGetPetBreedsResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spGetPetData")]
 		public ISingleResult<spGetPetDataResult> spGetPetData([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_id)
 		{
@@ -354,6 +347,13 @@ namespace IntegrativeMidterm
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_supply_type_id, pet_type_id, pet_supply_status_id);
 			return ((ISingleResult<spGetAllPetSuppliesResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spGetPetBreeds")]
+		public ISingleResult<spGetPetBreedsResult> spGetPetBreeds([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_type_id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_type_id);
+			return ((ISingleResult<spGetPetBreedsResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -1568,50 +1568,6 @@ namespace IntegrativeMidterm
 				if ((this._price != value))
 				{
 					this._price = value;
-				}
-			}
-		}
-	}
-	
-	public partial class spGetPetBreedsResult
-	{
-		
-		private int _pet_breed_id;
-		
-		private string _description;
-		
-		public spGetPetBreedsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_breed_id", DbType="Int NOT NULL")]
-		public int pet_breed_id
-		{
-			get
-			{
-				return this._pet_breed_id;
-			}
-			set
-			{
-				if ((this._pet_breed_id != value))
-				{
-					this._pet_breed_id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_description", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string description
-		{
-			get
-			{
-				return this._description;
-			}
-			set
-			{
-				if ((this._description != value))
-				{
-					this._description = value;
 				}
 			}
 		}
@@ -3508,6 +3464,68 @@ namespace IntegrativeMidterm
 				if ((this._Species_ID != value))
 				{
 					this._Species_ID = value;
+				}
+			}
+		}
+	}
+	
+	public partial class spGetPetBreedsResult
+	{
+		
+		private int _pet_breed_id;
+		
+		private System.Nullable<int> _pet_type_id;
+		
+		private string _description;
+		
+		public spGetPetBreedsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_breed_id", DbType="Int NOT NULL")]
+		public int pet_breed_id
+		{
+			get
+			{
+				return this._pet_breed_id;
+			}
+			set
+			{
+				if ((this._pet_breed_id != value))
+				{
+					this._pet_breed_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_type_id", DbType="Int")]
+		public System.Nullable<int> pet_type_id
+		{
+			get
+			{
+				return this._pet_type_id;
+			}
+			set
+			{
+				if ((this._pet_type_id != value))
+				{
+					this._pet_type_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_description", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string description
+		{
+			get
+			{
+				return this._description;
+			}
+			set
+			{
+				if ((this._description != value))
+				{
+					this._description = value;
 				}
 			}
 		}

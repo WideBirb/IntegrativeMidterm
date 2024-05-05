@@ -13,7 +13,7 @@
     MinHeight="950"
     mc:Ignorable="d">
     <Window.DataContext>
-        <viewModel:MainViewModel />
+        <viewModel:MainViewModel/>
     </Window.DataContext>
 
     <Border Background="{StaticResource BackgroundColor}">

@@ -29,6 +29,8 @@ namespace IntegrativeMidterm.MVVM.Model
 
         // FOR INPUT ON ADDING TO TRANSACTIONS
         public int InTransactionHistoryID { get; set; }
+        public int SpeciesID { get; set; }
+        public int BreedID { get; set; }
 
         // OTHER OUTPUT
         public string ImagePath { get; set; }

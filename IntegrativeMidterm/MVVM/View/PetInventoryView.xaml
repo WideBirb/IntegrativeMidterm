@@ -133,5 +133,7 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
+
+        <ContentControl Grid.ColumnSpan="2" Content="{Binding ProfileView}"/>
     </Grid>
 </UserControl>

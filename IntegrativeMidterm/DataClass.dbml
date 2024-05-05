@@ -155,12 +155,6 @@
       <Column Name="price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.spGetPetBreeds" Method="spGetPetBreeds">
-    <ElementType Name="spGetPetBreedsResult">
-      <Column Name="pet_breed_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="description" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.spGetPetData" Method="spGetPetData">
     <Parameter Name="pet_id" Type="System.Int32" DbType="Int" />
     <ElementType Name="spGetPetDataResult">
@@ -430,6 +424,14 @@
       <Column Name="[Status ID]" Member="Status_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="[Supply Type ID]" Member="Supply_Type_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="[Species ID]" Member="Species_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spGetPetBreeds" Method="spGetPetBreeds">
+    <Parameter Name="pet_type_id" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spGetPetBreedsResult">
+      <Column Name="pet_breed_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="pet_type_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>
