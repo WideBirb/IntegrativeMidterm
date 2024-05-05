@@ -41,7 +41,7 @@
                     <ItemsControl ItemsSource="{Binding PetSpeciesFilters}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button 
+                                <Button
                                     Command="{Binding DataContext.FilterPetTypesCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Content}"
                                     Content="{Binding Description}"
@@ -60,11 +60,26 @@
                     </ItemsControl>
                 </ScrollViewer>
 
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="25,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="{Binding CurrentPetFilter, StringFormat=FILTER: {0}}"
+                    TextAlignment="Left" />
+
                 <!--  Main  -->
 
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="78*" />
+                        <ColumnDefinition Width="835*" />
+                    </Grid.ColumnDefinitions>
                     <ScrollViewer
-                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
                         Height="590"
                         Margin="0,15,0,15"
                         VerticalScrollBarVisibility="Auto">

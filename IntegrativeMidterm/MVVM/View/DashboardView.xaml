@@ -66,7 +66,7 @@
                     FontSize="45"
                     FontWeight="Bold"
                     Foreground="Lime"
-                    Text="PHP 248920842" />
+                    Text="{Binding LifetimeProfit, StringFormat=PHP: {0}}" />
 
             </StackPanel>
 
@@ -103,22 +103,22 @@
                     Text="RECENT TRANSACTION" />
 
                 <TextBlock
-                    Margin="0,5,40,0"
+                    Margin="0,2,40,0"
                     HorizontalAlignment="Center"
                     Panel.ZIndex="2"
                     FontSize="25"
                     FontWeight="Bold"
                     Foreground="#FFFF5959"
-                    Text="05/04/2024 : 12:39 AM" />
+                    Text="{Binding RecentSaleDate}" />
 
                 <TextBlock
-                    Margin="0,5,40,0"
+                    Margin="0,2,40,0"
                     HorizontalAlignment="Center"
                     Panel.ZIndex="2"
                     FontSize="25"
                     FontWeight="Bold"
                     Foreground="Lime"
-                    Text="PHP 5,829.50" />
+                    Text="{Binding RecentSaleCost, StringFormat=PHP: {0}}" />
 
             </StackPanel>
         </Grid>
@@ -165,32 +165,32 @@
                 <lvc:CartesianChart.Series>
                     <lvc:LineSeries
                         x:Name="PetSalesChart"
-                        Title="Pet Sales"
+                        Title="Quantity Sold"
                         PointForeground="White"
                         PointGeometrySize="10"
                         Stroke="{StaticResource PrimaryButtonColor}"
                         StrokeThickness="2"
-                        Values="{Binding Values1}" />
+                        Values="{Binding SupplyAmountSold}" />
 
                     <lvc:LineSeries
                         x:Name="SupplySalesChart"
-                        Title="Supply Sales"
+                        Title="Supply Sales ( in Thousands )"
                         Foreground="White"
                         PointForeground="White"
                         PointGeometrySize="10"
                         Stroke="{StaticResource SecondaryButtonColor}"
                         StrokeThickness="2"
-                        Values="{Binding Values2}" />
+                        Values="{Binding SupplySales}" />
 
                     <lvc:LineSeries
                         x:Name="ProfitChart"
-                        Title="Total Profit ( in Thousands )"
+                        Title=" Pet Sales ( in Thousands )"
                         Foreground="White"
                         PointForeground="White"
                         PointGeometrySize="10"
                         Stroke="{StaticResource TertiaryButtonColor}"
                         StrokeThickness="2"
-                        Values="{Binding Values3}" />
+                        Values="{Binding PetSales}" />
 
                 </lvc:CartesianChart.Series>
 

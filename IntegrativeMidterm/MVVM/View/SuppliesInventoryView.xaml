@@ -14,68 +14,81 @@
         <viewModel:SuppliesInventoryViewModel />
     </UserControl.DataContext>
 
-    <Grid Margin="0,100,0,0">
+    <Grid Margin="0,90,0,0">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="6*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
 
-        <DataGrid
-            x:Name="myDataGrid"
-            Grid.Column="0"
-            Width="600"
-            Height="690"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            AutoGenerateColumns="False"
-            CanUserAddRows="False"
-            CanUserDeleteRows="False"
-            CellEditEnding="DataGrid_CellEditEnding"
-            ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}"
-            FontSize="15"
-            ItemsSource="{Binding SupplyItems}"
-            RowStyle="{DynamicResource DataGridRowStyle}"
-            SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-            <DataGrid.Columns>
-                <!--<DataGridTextColumn
-                    Width="0.4*"
-                    Binding="{Binding PetSupplyID}"
-                    Header="ID"
-                    IsReadOnly="True" />-->
-                <DataGridTextColumn
-                    Width="1*"
-                    Binding="{Binding PetSupplyName}"
-                    Header="Name"
-                    IsReadOnly="False" />
-                <DataGridTextColumn
-                    Width="0.5*"
-                    Binding="{Binding Quantity}"
-                    Header="QTY"
-                    IsReadOnly="False" />
-                <DataGridTextColumn
-                    Width="1*"
-                    Binding="{Binding Price}"
-                    Header="Price"
-                    IsReadOnly="False" />
-                <DataGridTextColumn
-                    Width="1*"
-                    Binding="{Binding Species}"
-                    Header="Pet Type"
-                    IsReadOnly="False" />
-                <DataGridTextColumn
-                    Width="1*"
-                    Binding="{Binding SupplyType}"
-                    Header="S.Type"
-                    IsReadOnly="False" />
-                <DataGridTextColumn
-                    Width="1*"
-                    Binding="{Binding ImagePath}"
-                    Header="Image URL"
-                    IsReadOnly="False" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <Border Margin="-25,0,15,0" CornerRadius="15">
+
+            <Border.Effect>
+                <DropShadowEffect
+                    BlurRadius="45"
+                    Opacity="0.5"
+                    ShadowDepth="15" />
+            </Border.Effect>
+
+            <DataGrid
+                x:Name="myDataGrid"
+                Grid.Column="0"
+                Width="550"
+                Height="700"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                AutoGenerateColumns="False"
+                BorderBrush="White"
+                BorderThickness="3"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                CellEditEnding="DataGrid_CellEditEnding"
+                ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}"
+                FontSize="15"
+                ItemsSource="{Binding SupplyItems}"
+                RowStyle="{DynamicResource DataGridRowStyle}"
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                <DataGrid.Columns>
+                    <!--<DataGridTextColumn
+            Width="0.4*"
+            Binding="{Binding PetSupplyID}"
+            Header="ID"
+            IsReadOnly="True" />-->
+                    <DataGridTextColumn
+                        Width="1*"
+                        Binding="{Binding PetSupplyName}"
+                        Header="Name"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="0.5*"
+                        Binding="{Binding Quantity}"
+                        Header="QTY"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="1*"
+                        Binding="{Binding Price}"
+                        Header="Price"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="1*"
+                        Binding="{Binding Species}"
+                        Header="Pet Type"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="1*"
+                        Binding="{Binding SupplyType}"
+                        Header="S.Type"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="1*"
+                        Binding="{Binding ImagePath}"
+                        Header="Image URL"
+                        IsReadOnly="False" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
 
 
         <Grid Grid.Column="1" VerticalAlignment="Top">
@@ -116,31 +129,25 @@
                     Content="Name"
                     FontSize="18"
                     Foreground="White" />
-                <TextBox
-                    x:Name="NameTextBox"
-                    Width="250"
-                    Margin="5,0,5,15"
-                    FontSize="18" />
+                <TextBox x:Name="NameTextBox" Style="{StaticResource TextBoxBase}" />
                 <Label
                     Content="Quantity"
                     FontSize="18"
                     Foreground="White" />
                 <TextBox
                     x:Name="QuantityTextBox"
-                    Width="250"
                     Margin="5,0,5,15"
-                    FontSize="18"
-                    PreviewTextInput="QuantityTextBox_PreviewTextInput" />
+                    PreviewTextInput="QuantityTextBox_PreviewTextInput"
+                    Style="{StaticResource TextBoxBase}" />
                 <Label
                     Content="Price"
                     FontSize="18"
                     Foreground="White" />
                 <TextBox
                     x:Name="PriceTextBox"
-                    Width="250"
                     Margin="5,0,5,15"
-                    FontSize="18"
-                    PreviewTextInput="PriceTextBox_PreviewTextInput" />
+                    PreviewTextInput="PriceTextBox_PreviewTextInput"
+                    Style="{StaticResource TextBoxBase}" />
 
                 <Label
                     Content="Pet Type"
@@ -148,9 +155,8 @@
                     Foreground="White" />
                 <TextBox
                     x:Name="PetTypeTextBox"
-                    Width="250"
                     Margin="5,0,5,15"
-                    FontSize="18" />
+                    Style="{StaticResource TextBoxBase}" />
 
                 <Label
                     Content="Supply Type"
@@ -159,9 +165,8 @@
 
                 <TextBox
                     x:Name="SupplyTypeTextBox"
-                    Width="250"
                     Margin="5,0,5,15"
-                    FontSize="18" />
+                    Style="{StaticResource TextBoxBase}" />
 
                 <Label
                     Content="Image URL"
@@ -169,9 +174,8 @@
                     Foreground="White" />
                 <TextBox
                     x:Name="ImageURLTextBox"
-                    Width="250"
                     Margin="5,0,5,5"
-                    FontSize="18" />
+                    Style="{StaticResource TextBoxBase}" />
             </StackPanel>
 
             <StackPanel

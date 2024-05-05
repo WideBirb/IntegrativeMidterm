@@ -65,14 +65,6 @@ namespace IntegrativeMidterm
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<vwAllTransaction> vwAllTransactions
-		{
-			get
-			{
-				return this.GetTable<vwAllTransaction>();
-			}
-		}
-		
 		public System.Data.Linq.Table<vwCustomer> vwCustomers
 		{
 			get
@@ -142,6 +134,14 @@ namespace IntegrativeMidterm
 			get
 			{
 				return this.GetTable<tblPetSupply>();
+			}
+		}
+		
+		public System.Data.Linq.Table<vwAllTransaction> vwAllTransactions
+		{
+			get
+			{
+				return this.GetTable<vwAllTransaction>();
 			}
 		}
 		
@@ -445,122 +445,12 @@ namespace IntegrativeMidterm
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_supply_id, quantity);
 			return ((int)(result.ReturnValue));
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwAllTransactions")]
-	public partial class vwAllTransaction
-	{
 		
-		private int _Transaction_ID;
-		
-		private System.Nullable<double> _Total_Cost;
-		
-		private System.Nullable<int> _Quantity_Sold;
-		
-		private System.DateTime _Process_Date;
-		
-		private string _Transaction_type;
-		
-		private string _Staff;
-		
-		public vwAllTransaction()
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spSelectLatestTransactionHistoryID")]
+		public ISingleResult<spSelectLatestTransactionHistoryIDResult> spSelectLatestTransactionHistoryID()
 		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Transaction ID]", Storage="_Transaction_ID", DbType="Int NOT NULL")]
-		public int Transaction_ID
-		{
-			get
-			{
-				return this._Transaction_ID;
-			}
-			set
-			{
-				if ((this._Transaction_ID != value))
-				{
-					this._Transaction_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Total Cost]", Storage="_Total_Cost", DbType="Float")]
-		public System.Nullable<double> Total_Cost
-		{
-			get
-			{
-				return this._Total_Cost;
-			}
-			set
-			{
-				if ((this._Total_Cost != value))
-				{
-					this._Total_Cost = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Quantity Sold]", Storage="_Quantity_Sold", DbType="Int")]
-		public System.Nullable<int> Quantity_Sold
-		{
-			get
-			{
-				return this._Quantity_Sold;
-			}
-			set
-			{
-				if ((this._Quantity_Sold != value))
-				{
-					this._Quantity_Sold = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Process Date]", Storage="_Process_Date", DbType="DateTime NOT NULL")]
-		public System.DateTime Process_Date
-		{
-			get
-			{
-				return this._Process_Date;
-			}
-			set
-			{
-				if ((this._Process_Date != value))
-				{
-					this._Process_Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Transaction type]", Storage="_Transaction_type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Transaction_type
-		{
-			get
-			{
-				return this._Transaction_type;
-			}
-			set
-			{
-				if ((this._Transaction_type != value))
-				{
-					this._Transaction_type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Staff", DbType="VarChar(102) NOT NULL", CanBeNull=false)]
-		public string Staff
-		{
-			get
-			{
-				return this._Staff;
-			}
-			set
-			{
-				if ((this._Staff != value))
-				{
-					this._Staff = value;
-				}
-			}
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<spSelectLatestTransactionHistoryIDResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -1924,6 +1814,159 @@ namespace IntegrativeMidterm
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwAllTransactions")]
+	public partial class vwAllTransaction
+	{
+		
+		private int _Transaction_ID;
+		
+		private System.Nullable<double> _Total_Cost;
+		
+		private System.Nullable<int> _Quantity_Sold;
+		
+		private System.DateTime _Process_Date;
+		
+		private string _Transaction_Type;
+		
+		private string _Staff;
+		
+		private System.Nullable<int> _Staff_ID;
+		
+		private System.Nullable<int> _Transaction_Type_ID;
+		
+		public vwAllTransaction()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Transaction ID]", Storage="_Transaction_ID", DbType="Int NOT NULL")]
+		public int Transaction_ID
+		{
+			get
+			{
+				return this._Transaction_ID;
+			}
+			set
+			{
+				if ((this._Transaction_ID != value))
+				{
+					this._Transaction_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Total Cost]", Storage="_Total_Cost", DbType="Float")]
+		public System.Nullable<double> Total_Cost
+		{
+			get
+			{
+				return this._Total_Cost;
+			}
+			set
+			{
+				if ((this._Total_Cost != value))
+				{
+					this._Total_Cost = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Quantity Sold]", Storage="_Quantity_Sold", DbType="Int")]
+		public System.Nullable<int> Quantity_Sold
+		{
+			get
+			{
+				return this._Quantity_Sold;
+			}
+			set
+			{
+				if ((this._Quantity_Sold != value))
+				{
+					this._Quantity_Sold = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Process Date]", Storage="_Process_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Process_Date
+		{
+			get
+			{
+				return this._Process_Date;
+			}
+			set
+			{
+				if ((this._Process_Date != value))
+				{
+					this._Process_Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Transaction Type]", Storage="_Transaction_Type", DbType="VarChar(50)")]
+		public string Transaction_Type
+		{
+			get
+			{
+				return this._Transaction_Type;
+			}
+			set
+			{
+				if ((this._Transaction_Type != value))
+				{
+					this._Transaction_Type = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Staff", DbType="VarChar(102)")]
+		public string Staff
+		{
+			get
+			{
+				return this._Staff;
+			}
+			set
+			{
+				if ((this._Staff != value))
+				{
+					this._Staff = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Staff ID]", Storage="_Staff_ID", DbType="Int")]
+		public System.Nullable<int> Staff_ID
+		{
+			get
+			{
+				return this._Staff_ID;
+			}
+			set
+			{
+				if ((this._Staff_ID != value))
+				{
+					this._Staff_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Transaction Type ID]", Storage="_Transaction_Type_ID", DbType="Int")]
+		public System.Nullable<int> Transaction_Type_ID
+		{
+			get
+			{
+				return this._Transaction_Type_ID;
+			}
+			set
+			{
+				if ((this._Transaction_Type_ID != value))
+				{
+					this._Transaction_Type_ID = value;
+				}
 			}
 		}
 	}
@@ -5079,6 +5122,32 @@ namespace IntegrativeMidterm
 				if ((this._Species_ID != value))
 				{
 					this._Species_ID = value;
+				}
+			}
+		}
+	}
+	
+	public partial class spSelectLatestTransactionHistoryIDResult
+	{
+		
+		private System.Nullable<int> _Column1;
+		
+		public spSelectLatestTransactionHistoryIDResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="", Storage="_Column1", DbType="Int")]
+		public System.Nullable<int> Column1
+		{
+			get
+			{
+				return this._Column1;
+			}
+			set
+			{
+				if ((this._Column1 != value))
+				{
+					this._Column1 = value;
 				}
 			}
 		}

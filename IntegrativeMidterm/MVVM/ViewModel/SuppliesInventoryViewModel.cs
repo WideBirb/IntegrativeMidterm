@@ -30,6 +30,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 		public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteItem(), canExecute => SelectedItem != null);
 		//can only execute when selecteditem is not null
 
+
+		// SPTransactionCreate , staff = 1, custmer id = null
+		// Kunin mo yung id ng ginawa mo
 		public SuppliesInventoryViewModel()
         {
 

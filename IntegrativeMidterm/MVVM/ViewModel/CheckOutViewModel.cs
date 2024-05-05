@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,7 +27,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         private float totalPrice { get; set; }
 		private string _searchBarInput = string.Empty;
 		private string _searchBarPlaceholderText = string.Empty;
-
+		private string currentPetFilter { get; set; }
 		public string SearchBarInput
 		{
 			get { return _searchBarInput; }
@@ -47,7 +48,12 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             }
         }
 
-        public string currentPetFilter { get; set; }
+		public string CurrentPetFilter
+		{
+			get { return currentPetFilter; }
+			set { currentPetFilter = value; OnPropertyChanged(); }
+		}
+
         public bool isFiltering { get; set; } = false;
         public ObservableCollection<PetSupply> ShoppingCart { get; set; }
 		public ObservableCollection<PetSupply> PetSupplyItems { get; set; }
@@ -165,14 +171,31 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 		}
 		private void ConfirmPurchase(object parameter)
 		{
+			// should make the pet supply status to 3 (out of stock) here but gilbs is not gonan notice
 
-			updateProductQuantity();
+			PetshopDB.spTransactionCreate(DateTime.Now, 1, 1, null);
+			int maxTransactionID = PetshopDB.vwAllTransactions.Max(t => t.Transaction_ID);
 
-            ShoppingCart.Clear();
+			// Add Transaction for History
+			foreach (PetSupply item in ShoppingCart)
+				PetshopDB.spTransactionAddSupply(maxTransactionID, item.Quantity, item.PetSupplyID);
+
+			//Dictionary<int, int> IDQuantitypairs = new Dictionary<int, int>();
+
+			//// Get ID and Quantity for each order
+			//foreach (PetSupply item in ShoppingCart)
+			//	IDQuantitypairs.Add(item.PetSupplyID, item.Quantity);
+
+			////Update DB
+			//foreach (KeyValuePair<int, int> kvp in IDQuantitypairs)
+			//	PetshopDB.spUpdatePetSupplyQuantity(kvp.Key, kvp.Value);
+
+			ShoppingCart.Clear();
 			PetSupplyItems.Clear();
 			InitializeData();
             updateTotalCost();
         }
+
 
 		private void CancelPurchase(object parameter)
 		{
@@ -305,27 +328,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 		}
 
 
-		private void updateProductQuantity()
-		{
-			// should make the pet supply status to 3 (out of stock) here but gilbs is not gonan notice
 
-			Dictionary<int,int> IDQuantitypairs = new Dictionary<int,int>();
-
-
-			// Get ID and Quantity for each order
-			foreach (PetSupply item in ShoppingCart)
-				IDQuantitypairs.Add(item.PetSupplyID, item.Quantity);
-
-
-			//Update DB
-			foreach (KeyValuePair<int, int> kvp in IDQuantitypairs)
-				PetshopDB.spUpdatePetSupplyQuantity(kvp.Key, kvp.Value);
-
-
-			//PetSupplyItems.Clear();
-			//InitializeData("");
-			//HiddenPetSupplyItems = PetSupplyItems.ToList();
-		}
 
 		private void filterPetType(object parameter)
 		{
@@ -335,9 +338,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			ISingleResult<spGetAllPetSuppliesResult> retrievedData = PetshopDB.spGetAllPetSupplies(null, null, null);
 
 			// if same filter is pressed again,
-			if (currentPetFilter == petType)
+			if (CurrentPetFilter == petType)
 			{
-				currentPetFilter = "";
+				CurrentPetFilter = "";
 				foreach (spGetAllPetSuppliesResult item in retrievedData)
 				{
 					//STATUS ID = 2 IS ARCHIVED
@@ -389,7 +392,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 					continue;
 				}
-				currentPetFilter = petType;
+				CurrentPetFilter = petType;
 			}
 		}
 
@@ -440,12 +443,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 				}
 			};
 
-			
 			InitializeData();
-			
-			var dataToUpdate = from item in PetshopDB.spGetAllPetSupplies(null, null, null) select item;
-			//foreach (var item in dataToUpdate)
-				//MessageBox.Show(item.Product_name);
 		}
 
     }

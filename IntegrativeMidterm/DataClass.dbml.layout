@@ -2,12 +2,6 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12, 11" name="DataClass">
   <DataContextMoniker Name="/DataClassDataContext" />
   <nestedChildShapes>
-    <classShape Id="3a3966d6-9974-45a4-bd04-699621b4d072" absoluteBounds="0.75, 0.75, 2, 1.9631982421875">
-      <DataClassMoniker Name="/DataClassDataContext/vwAllTransaction" />
-      <nestedChildShapes>
-        <elementListCompartment Id="8048ad8f-71fd-4d58-af39-d9e65e15832a" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="11b80381-2870-41bb-b3f7-a5e4211eff57" absoluteBounds="3.75, 0.75, 2, 2.5401025390625005">
       <DataClassMoniker Name="/DataClassDataContext/vwCustomer" />
       <nestedChildShapes>
@@ -56,10 +50,16 @@
         <elementListCompartment Id="9f9f42ef-5256-4999-8672-b49f28b01427" absoluteBounds="9.765, 1.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="89403595-7c05-42e1-9221-8bc14100198c" absoluteBounds="1.625, 3, 2, 2.3478011067708335">
+    <classShape Id="89403595-7c05-42e1-9221-8bc14100198c" absoluteBounds="0.5, 2.875, 2, 2.3478011067708335">
       <DataClassMoniker Name="/DataClassDataContext/tblPetSupply" />
       <nestedChildShapes>
-        <elementListCompartment Id="75c9eb1a-0a70-4db1-88fa-2a9e032ef6ff" absoluteBounds="1.6400000000000001, 3.46, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="75c9eb1a-0a70-4db1-88fa-2a9e032ef6ff" absoluteBounds="0.51500000000000012, 3.335, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="94a701ec-f05a-401e-96b4-e5155494af47" absoluteBounds="1.25, 0.5, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/DataClassDataContext/vwAllTransaction" />
+      <nestedChildShapes>
+        <elementListCompartment Id="eaa5afcc-e9be-4da6-af95-003fee297a63" absoluteBounds="1.2650000000000001, 0.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
