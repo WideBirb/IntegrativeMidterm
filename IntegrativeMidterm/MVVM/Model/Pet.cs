@@ -24,7 +24,7 @@ namespace IntegrativeMidterm.MVVM.Model
 
         // FOR OUTPUT
         public int StatusID { get; set; }
-        public int Age { get; set; }
+        public string Age { get; set; }
         public SolidColorBrush StatusColor { get; set; }
 
         // FOR INPUT ON ADDING TO TRANSACTIONS

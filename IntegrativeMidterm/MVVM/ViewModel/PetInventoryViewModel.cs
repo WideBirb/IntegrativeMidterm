@@ -24,11 +24,10 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
         public RelayCommand ConfirmCommand => new RelayCommand(execute => ManageInformation());
         public RelayCommand SearchCommand => new RelayCommand(parameter => UpdateSearchResult(parameter));
-        public RelayCommand FilterCommand => new RelayCommand(parameter => SetSpeciesFilter(parameter));
 
+        public RelayCommand FilterCommand => new RelayCommand(parameter => SetSpeciesFilter(parameter));
         public RelayCommand AvailabilityCommand => new RelayCommand(parameter => SetAvailabilityFilter(parameter));
         public RelayCommand ResultSelectCommand => new RelayCommand(parameter => SetResultSelection(parameter));
-        
 
         private string _searchBarInput = string.Empty;
         private string _searchBarPlaceholderText = string.Empty;
@@ -75,25 +74,21 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             get { return _petName; }
             set { _petName = value; OnPropertyChanged(); }
         }
-
         public string Birthdate
         {
             get { return _birthdate; }
             set { _birthdate = value; OnPropertyChanged(); }
         }
-
         public string PetStatus
         {
             get { return _petStatus; }
             set { _petStatus = value; OnPropertyChanged(); }
         }
-
         public string Price
         {
             get { return _price; }
             set { _price = value; OnPropertyChanged(); }
         }
-
         public string Customer
         {
             get { return _customer; }
@@ -133,6 +128,12 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         }
         private void GetSearchResults(string filter = null)
         {
+            int statusID = 0;
+            DateTime currentDateTime = DateTime.Now;
+            DateTime previousDateTime = DateTime.Now;
+            int age = 0;
+            float price = 0;
+
             ISingleResult<spGetAllPetsResult> retrievedData =PetshopDB.spGetAllPets(
                 _speciesFilter,
                 null,
@@ -140,13 +141,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 _availabilityFilter);
 
             if (retrievedData == null) { return; }
-
             ResetAvailabilityCount();
-            DateTime currentDateTime = DateTime.Now;
-            DateTime previousDateTime = DateTime.Now;
-            int statusID = 0;
-            float price = 0;
-            int age = 0;
 
             foreach (spGetAllPetsResult item in retrievedData)
             {
@@ -161,14 +156,13 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                     if (!item.Name.ToLower().Contains(filter.ToLower()))
                         continue;
 
-                    PetsData.Add(
-                    new Pet
+                    PetsData.Add(new Pet
                     {
                         ID = item.ID,
                         PetName = item.Name,
                         Breed = item.Breed,
                         Gender = item.Gender,
-                        Age = age,
+                        Age = age.ToString() + "mo.",
                         Price = price,
                         Birhdate = item.Birthdate,
                         Status = item.Status,
@@ -178,14 +172,13 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                     continue;
                 }
 
-                PetsData.Add(
-                new Pet
+                PetsData.Add(new Pet
                 {
                     ID = item.ID,
                     PetName = item.Name,
                     Breed = item.Breed,
                     Gender = item.Gender,
-                    Age = age,
+                    Age = age.ToString() + "mo.",
                     Price = price,
                     Birhdate = item.Birthdate,
                     Status = item.Status,
@@ -352,7 +345,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             if (_activeResultButton != null)
                 _activeResultButton.IsChecked = false;
             _activeResultButton = button;
-
 
             var chosenPet = PetsData.FirstOrDefault(item => item.ID == (int)button.Tag);
             if (chosenPet == null)

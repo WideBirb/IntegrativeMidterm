@@ -37,8 +37,16 @@ namespace IntegrativeMidterm.userControl.General
             DependencyProperty.Register("BackgroundColor", typeof(string), typeof(InputBar));
 
         public static readonly DependencyProperty BorderColorProperty =
-            DependencyProperty.Register("BackgroundColor", typeof(string), typeof(InputBar));
-        
+            DependencyProperty.Register("BorderColor", typeof(string), typeof(InputBar));
+
+        public static readonly DependencyProperty TextChangedCommandProperty =
+            DependencyProperty.Register("TextChangedCommand", typeof(ICommand), typeof(InputBar));
+
+        public ICommand TextChangedCommand
+        {
+            get { return (ICommand)GetValue(TextChangedCommandProperty); }
+            set { SetValue(TextChangedCommandProperty, value); }
+        }
         public string PlaceholderText
         {
             get { return (string)GetValue(PlaceholderTextProperty); }
@@ -67,6 +75,8 @@ namespace IntegrativeMidterm.userControl.General
 
         private void InputBar_TextChanged(object sender, TextChangedEventArgs e)
         {
+            TextChangedCommand?.Execute(((TextBox)sender).Text);
+
             if (((TextBox)sender).Text.Length == 0)
                 _hasInput = false;
             else
