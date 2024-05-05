@@ -30,9 +30,10 @@
                         BorderThickness="0"
                         Margin="0 0 0 12.5"
                         Width="200"
-                        Height="200">
+                        Height="200"
+                        ClipToBounds="True">
                     <Border.Clip>
-                        <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,200,200" />
+                        <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,200,200"/>
                     </Border.Clip>
                     <Image Stretch="UniformToFill" Source="{Binding ProfileImagePath, Mode=TwoWay}"
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>

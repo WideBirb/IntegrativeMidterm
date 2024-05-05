@@ -416,6 +416,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             Breed = chosenPet.Breed;
             VaccinationDate = "N/A";
             DewormDate = "N/A";
+            ProfileImagePath = chosenPet.ImagePath;
+
             if (chosenPet.Gender == "M")
             {
                 IsGenderMale = true; IsGenderFemale = false;
