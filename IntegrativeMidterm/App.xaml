@@ -18,7 +18,7 @@
                 <ResourceDictionary Source="/Themes/Style/ButtonStyleTemplates.xaml" />
                 <ResourceDictionary Source="/Themes/Style/ScrollViewStyles.xaml" />
                 <ResourceDictionary Source="/Themes/Style/PetSupplyStyles.xaml" />
-                <ResourceDictionary Source="/Themes/Style/DatagridStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Style/DataGridStyle.xaml" />
                 <ResourceDictionary Source="/Themes/Style/ComboBoxStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

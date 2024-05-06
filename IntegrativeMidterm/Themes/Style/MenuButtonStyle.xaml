@@ -97,6 +97,7 @@
     </Style>
 
     <Style x:Key="TextBoxBase" TargetType="{x:Type TextBox}">
+        <Setter Property="CaretBrush" Value="White"/>
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="230" />
         <Setter Property="BorderThickness" Value="3" />

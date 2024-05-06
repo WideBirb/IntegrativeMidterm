@@ -12,6 +12,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Win32;
+using System.IO;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Text.RegularExpressions;
 
 namespace IntegrativeMidterm.MVVM.ViewModel
 {
@@ -21,13 +26,11 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 		public ObservableCollection<PetSupply> SupplyItems { get; set; }
 
 		public RelayCommand CopyCommand => new RelayCommand(parameter => copySelectedItems(parameter), canExecute => SelectedItem != null);
-
 		public RelayCommand ClearCommand => new RelayCommand(parameter => clearTextbox((StackPanel)parameter));
 		public RelayCommand AddCommand => new RelayCommand(parameter => AddItem(parameter));
-
 		public RelayCommand UpdateCommand => new RelayCommand(execute => UpdateItem(execute), canExecute => SelectedItem != null);
-
 		public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteItem(), canExecute => SelectedItem != null);
+		public RelayCommand UploadImageCommand => new RelayCommand(parameter => UploadImage());
 		//can only execute when selecteditem is not null
 
 
@@ -35,10 +38,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 		// Kunin mo yung id ng ginawa mo
 		public SuppliesInventoryViewModel()
         {
-
             SupplyItems = new ObservableCollection<PetSupply>();
             InitializeData();
-
     	}
 
         private PetSupply selectedItem;
@@ -51,8 +52,14 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
+		private string _profileImagePath = string.Empty;
+		public string ProfileImagePath
+		{
+			get { return _profileImagePath; }
+			set { _profileImagePath = value; OnPropertyChanged(); }
+		}
 
-        Random random = new Random();
+		Random random = new Random();
 
 		public int determineSupplyType(string supplyType)
 		{
@@ -123,6 +130,27 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 		}
 
+		private void UploadImage()
+		{
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = "Image Files (*.jpg; *.jpeg; *.png; *.gif)|*.jpg; *.jpeg; *.png; *.gif|All Files (*.*)|*.*";
+
+			if (openFileDialog.ShowDialog() == true)
+			{
+				string selectedFilePath = openFileDialog.FileName;
+
+				string fileName = Guid.NewGuid().ToString() + Path.GetExtension(selectedFilePath);
+
+				string destinationDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PetImages");
+				Directory.CreateDirectory(destinationDirectory);
+
+				string destinationFilePath = Path.Combine(destinationDirectory, fileName);
+				File.Copy(selectedFilePath, destinationFilePath);
+
+				ProfileImagePath = (new BitmapImage(new Uri(destinationFilePath))).ToString();
+			}
+		}
+
 		private void copySelectedItems(object parameter)
 		{ 
 			SuppliesInventoryView view = (SuppliesInventoryView)parameter;		
@@ -130,8 +158,15 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			view.QuantityTextBox.Text = selectedItem.Quantity.ToString();
 			view.PriceTextBox.Text = selectedItem.Price.ToString();
 			view.PetTypeTextBox.Text = selectedItem.Species;
-			view.SupplyTypeTextBox.Text = selectedItem.SupplyType;
-			view.ImageURLTextBox.Text = selectedItem.ImagePath;
+			//view.SupplyTypeTextBox.Text = selectedItem.SupplyType;
+			//view.ImageURLTextBox.Text = selectedItem.ImagePath;
+		}
+
+		private void clearTextbox(StackPanel container)
+		{
+			foreach (var child in container.Children)
+				if (child is TextBox textBox)
+					textBox.Text = "";
 		}
 
 		private void AddItem(object parameter)
@@ -141,29 +176,25 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			if (item.NameTextBox.Text == string.Empty ||
 				item.QuantityTextBox.Text == string.Empty ||
 				item.PriceTextBox.Text == string.Empty ||
-				item.SupplyTypeTextBox.Text == string.Empty ||
-				item.PetTypeTextBox.Text == string.Empty ||
-				item.ImageURLTextBox.Text == string.Empty)
+				item.PetTypeTextBox.Text == string.Empty)
+				//item.SupplyTypeTextBox.Text == string.Empty ||
+				//item.ImageURLTextBox.Text == string.Empty)
 			{
 
 				MessageBox.Show("Please fill up all the forms");
 			}
             else
             {
-
-
 				//Add to DB
 				PetshopDB.spAddPetSupply
 					(
 						item.NameTextBox.Text,
-						determineSupplyType(item.SupplyTypeTextBox.Text),
+						1,//determineSupplyType(item.SupplyTypeTextBox.Text),
 						determinePetType(item.PetTypeTextBox.Text),
 						float.TryParse(item.PriceTextBox.Text, out float price2) ? price2 : 999.99f,
 						int.TryParse(item.QuantityTextBox.Text, out int quantity2) ? quantity2 : 0,
-						item.ImageURLTextBox.Text
+						ProfileImagePath //item.ImageURLTextBox.Text
 					);
-
-
 
 				// ADD TO MEMORY
 				SupplyItems.Add(new PetSupply
@@ -172,17 +203,16 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 					Quantity = int.TryParse(item.QuantityTextBox.Text, out int quantity) ? quantity : 0,
 					Price = float.TryParse(item.PriceTextBox.Text, out float price) ? price : 0.0f,
 					PetSupplyID = random.Next(),//int.Parse(item.ItemIDTextBox.Text),
-					SupplyType = item.SupplyTypeTextBox.Text.ToLower(),
+					SupplyType = "cat", /*item.SupplyTypeTextBox.Text.ToLower(),*/
 					Species = item.PetTypeTextBox.Text.ToLower(),
-					InSupplyTypeID = determineSupplyType(item.SupplyTypeTextBox.Text.ToLower()),
+					InSupplyTypeID = 1, /*determineSupplyType(item.SupplyTypeTextBox.Text.ToLower()),*/
 					InPetTypeID = determinePetType(item.PetTypeTextBox.Text.ToLower()),
-					ImagePath = item.ImageURLTextBox.Text,
+					ImagePath = ProfileImagePath, //item.ImageURLTextBox.Text,
 
 					Status = "Available",
 					InStatusID = 2
 
 				});
-
 
 				clearTextbox(item.TextBoxContainer);
 				item.myDataGrid.ItemsSource = null;
@@ -193,31 +223,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 		}
 
-
-        private void clearTextbox(StackPanel container)
-        {
-			foreach (var child in container.Children)
-				if (child is TextBox textBox)
-                    textBox.Text = "";
-		}
-
         private void DeleteItem()
 
         {
-			//var rowtoDelete = from s in PetshopDB.tblPetSupplies where s.pet_supply_id == selectedItem.PetSupplyID select s;
-			//// Remove the data
-			//PetshopDB.tblPetSupplies.DeleteAllOnSubmit(rowtoDelete);
-			//// Submit changes to the database
-			//try
-			//{
-			//	PetshopDB.SubmitChanges();
-			//}
-			//catch (Exception ex)
-			//{
-			//	MessageBox.Show("Error deleting data: " + ex.Message);
-			//	// Handle the exception appropriately
-			//}
-
 			//STATUS ID = 2 IS ARCHIVED
 			PetshopDB.spSetPetSupplyStatus(selectedItem.PetSupplyID, 2);
 			SupplyItems.Remove(selectedItem);
@@ -234,9 +242,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			if (item.NameTextBox.Text == string.Empty ||
 				item.QuantityTextBox.Text == string.Empty ||
 				item.PriceTextBox.Text == string.Empty ||
-				item.SupplyTypeTextBox.Text == string.Empty ||
-				item.PetTypeTextBox.Text == string.Empty ||
-				item.ImageURLTextBox.Text == string.Empty)
+				item.PetTypeTextBox.Text == string.Empty)
+				//item.SupplyTypeTextBox.Text == string.Empty ||
+				//item.ImageURLTextBox.Text == string.Empty)
 			{
 
 				MessageBox.Show("Please fill up all the forms");
@@ -246,9 +254,10 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 				selectedItem.PetSupplyName = item.NameTextBox.Text;
 				selectedItem.Quantity = int.Parse(item.QuantityTextBox.Text);
 				selectedItem.Price = float.Parse(item.PriceTextBox.Text);
-				selectedItem.SupplyType = item.SupplyTypeTextBox.Text;
 				selectedItem.Species = item.PetTypeTextBox.Text;
-				selectedItem.ImagePath = item.ImageURLTextBox.Text;
+				selectedItem.ImagePath = ProfileImagePath;
+				//selectedItem.SupplyType = item.SupplyTypeTextBox.Text;
+				//selectedItem.ImagePath = item.ImageURLTextBox.Text;
 
 				PetshopDB.spUpdateSupplyData
 					(

@@ -54,7 +54,13 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			set { currentPetFilter = value; OnPropertyChanged(); }
 		}
 
-        public bool isFiltering { get; set; } = false;
+		private int? _speciesFilter = null;
+		private int? _availabilityFilter = null;
+		RadioButton _activeFilterButton = null;
+		RadioButton _activeAvailabilityButton = null;
+		RadioButton _activeResultButton = null;
+
+		public bool isFiltering { get; set; } = false;
         public ObservableCollection<PetSupply> ShoppingCart { get; set; }
 		public ObservableCollection<PetSupply> PetSupplyItems { get; set; }
 		public List<PetSupply> HiddenPetSupplyItems { get; set; }
@@ -194,6 +200,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			PetSupplyItems.Clear();
 			InitializeData();
             updateTotalCost();
+
+			MessageBox.Show("Check Out Success!");
         }
 
 
@@ -202,6 +210,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 			ShoppingCart.Clear();
             updateTotalCost();
+			MessageBox.Show("Order Cancelled");
         }
 
 		private void AddItem(object parameter)
@@ -266,6 +275,78 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			updateTotalCost();
 		}
 
+
+		private void SetSpeciesFilter(object sender)
+		{
+			PetSupplyItems.Clear();
+			ISingleResult<spGetAllPetSuppliesResult> retrievedData = PetshopDB.spGetAllPetSupplies(null, null, null);
+			RadioButton button = sender as RadioButton;
+			string petType = button.Tag as string;
+			string filter;
+
+			if (_activeFilterButton == button)
+			{
+				_activeFilterButton.IsChecked = false;
+				_activeFilterButton = null;
+
+				foreach (spGetAllPetSuppliesResult item in retrievedData)
+				{
+					//STATUS ID = 2 IS ARCHIVED
+					if (item.Status_ID == 1 || item.Status_ID == 3)
+					{
+						PetSupplyItems.Add(new PetSupply
+						{
+							PetSupplyName = item.Product_name,
+							Quantity = item.Quantity,
+							Price = (float)item.Price,
+							PetSupplyID = item.ID,
+							Status = item.Status,
+							SupplyType = item.Supply_Type,
+							Species = item.Species,
+							InStatusID = 1,
+							InSupplyTypeID = 1,
+							InPetTypeID = 1,
+							ImagePath = item.Image_path
+						});
+					}
+				}
+
+			}
+			else
+			{
+				if (_activeFilterButton != null)
+					_activeFilterButton.IsChecked = false;
+
+				filter = button.Content.ToString().ToLower();
+				_activeFilterButton = button;
+
+				foreach (spGetAllPetSuppliesResult item in retrievedData)
+				{
+					if (item.Species.ToLower() == (petType.ToLower()))
+						//STATUS ID = 2 IS ARCHIVED
+						if (item.Status_ID == 1 || item.Status_ID == 3)
+						{
+							PetSupplyItems.Add(new PetSupply
+							{
+								PetSupplyName = item.Product_name,
+								Quantity = item.Quantity,
+								Price = (float)item.Price,
+								PetSupplyID = item.ID,
+								Status = item.Status,
+								SupplyType = item.Supply_Type,
+								Species = item.Species,
+								InStatusID = 1,
+								InSupplyTypeID = 1,
+								InPetTypeID = 1,
+								ImagePath = item.Image_path
+
+							});
+						}
+				}
+
+			}
+
+		}
 		private void Filter(object parameter)
 		{
 			if (PetSupplyItems == null) { return; }
@@ -334,7 +415,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 		{
 			
 			PetSupplyItems.Clear();
-			string petType = parameter as string;
+			RadioButton a = parameter as RadioButton;
+			string petType = a.Content.ToString();
 			ISingleResult<spGetAllPetSuppliesResult> retrievedData = PetshopDB.spGetAllPetSupplies(null, null, null);
 
 			// if same filter is pressed again,
@@ -367,31 +449,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			// if no filter is applied
 			else
 			{
-				foreach (spGetAllPetSuppliesResult item in retrievedData)
-				{
-					if (item.Species.ToLower() == (petType.ToLower()))
-						//STATUS ID = 2 IS ARCHIVED
-						if (item.Status_ID == 1 || item.Status_ID == 3)
-						{
-							PetSupplyItems.Add(new PetSupply
-							{
-								PetSupplyName = item.Product_name,
-								Quantity = item.Quantity,
-								Price = (float)item.Price,
-								PetSupplyID = item.ID,
-								Status = item.Status,
-								SupplyType = item.Supply_Type,
-								Species = item.Species,
-								InStatusID = 1,
-								InSupplyTypeID = 1,
-								InPetTypeID = 1,
-								ImagePath = item.Image_path
-
-							});
-						}
-
-					continue;
-				}
+				
 				CurrentPetFilter = petType;
 			}
 		}
@@ -409,7 +467,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			RemoveItemCommand = new RelayCommand(parameter => RemoveItem(parameter));
 			increaseQuantityCommand = new RelayCommand(parameter => increaseQuantity(parameter));
 			decreaseQuantityCommand = new RelayCommand(parameter => decreaseQuantity(parameter));
-			FilterPetTypesCommand = new RelayCommand(parameter => filterPetType(parameter));
+			FilterPetTypesCommand = new RelayCommand(parameter => SetSpeciesFilter(parameter));
 
 			ShoppingCart = new ObservableCollection<PetSupply>();
 			PetSupplyItems = new ObservableCollection<PetSupply>();
