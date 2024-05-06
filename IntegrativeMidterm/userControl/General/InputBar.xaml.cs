@@ -21,43 +21,50 @@ namespace IntegrativeMidterm.userControl.General
         public InputBar()
         {
             InitializeComponent();
-            PlaceholderText = "";
-            InputText = "";
-            BackgroundColor = new SolidColorBrush(Colors.White);
-            BorderColor = new SolidColorBrush(Colors.Black);
+            PlaceholderText = string.Empty;
+            InputText = string.Empty;
+            EntryLabel = string.Empty;
         }
 
         public static readonly DependencyProperty PlaceholderTextProperty =
             DependencyProperty.Register("PlaceholderText", typeof(string), typeof(InputBar));
 
+        public static readonly DependencyProperty PlaceholderVisibilityProperty =
+            DependencyProperty.Register("PlaceholderVisibility", typeof(Visibility), typeof(InputBar));
+
+        public static readonly DependencyProperty EntryLabelProperty =
+            DependencyProperty.Register("EntryLabel", typeof(string), typeof(InputBar));
+
         public static readonly DependencyProperty InputTextProperty =
             DependencyProperty.Register("InputText", typeof(string), typeof(InputBar));
 
-        public static readonly DependencyProperty BackgroundColorProperty =
-            DependencyProperty.Register("BackgroundColor", typeof(string), typeof(InputBar));
+        public static readonly DependencyProperty TextChangedCommandProperty =
+            DependencyProperty.Register("TextChangedCommand", typeof(ICommand), typeof(InputBar));
 
-        public static readonly DependencyProperty BorderColorProperty =
-            DependencyProperty.Register("BackgroundColor", typeof(string), typeof(InputBar));
-        
+        public ICommand TextChangedCommand
+        {
+            get { return (ICommand)GetValue(TextChangedCommandProperty); }
+            set { SetValue(TextChangedCommandProperty, value); }
+        }
         public string PlaceholderText
         {
             get { return (string)GetValue(PlaceholderTextProperty); }
             set { SetValue(PlaceholderTextProperty, value); }
+        }
+        public string EntryLabel
+        {
+            get { return (string)GetValue(EntryLabelProperty); }
+            set { SetValue(EntryLabelProperty, value); }
         }
         public string InputText
         {
             get { return (string)GetValue(InputTextProperty); }
             set { SetValue(InputTextProperty, value); }
         }
-        public SolidColorBrush BackgroundColor
+        public Visibility PlaceholderVisibility
         {
-            get { return (SolidColorBrush)GetValue(BackgroundColorProperty); }
-            set { SetValue(BackgroundColorProperty, value); }
-        }
-        public SolidColorBrush BorderColor
-        {
-            get { return (SolidColorBrush)GetValue(BorderColorProperty); }
-            set { SetValue(BorderColorProperty, value); }
+            get { return (Visibility)GetValue(PlaceholderVisibilityProperty); }
+            set { SetValue(PlaceholderVisibilityProperty, value); }
         }
 
         private void InputBar_GotFocus(object sender, RoutedEventArgs e)
@@ -67,6 +74,8 @@ namespace IntegrativeMidterm.userControl.General
 
         private void InputBar_TextChanged(object sender, TextChangedEventArgs e)
         {
+            TextChangedCommand?.Execute(((TextBox)sender).Text);
+
             if (((TextBox)sender).Text.Length == 0)
                 _hasInput = false;
             else

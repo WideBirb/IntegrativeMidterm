@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace IntegrativeMidterm.MVVM.View
+namespace IntegrativeMidterm.userControl.Overlay
 {
     /// <summary>
-    /// Interaction logic for PetProfileView.xaml
+    /// Interaction logic for PetProfile.xaml
     /// </summary>
-    public partial class PetProfileView : UserControl
+    public partial class PetProfile : UserControl
     {
-        public PetProfileView()
+        public PetProfile()
         {
             InitializeComponent();
         }

@@ -7,14 +7,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Height="40" Margin="25"
-            Background="{Binding BackroundColor, RelativeSource={RelativeSource AncestorType=UserControl}}"
-            BorderBrush="{Binding BorderColor, RelativeSource={RelativeSource AncestorType=UserControl}}"
-            BorderThickness="1"
+            Background="Transparent"
+            BorderBrush="White"
+            BorderThickness="2"
             CornerRadius="10">
         <Grid>
+            <TextBlock
+                VerticalAlignment="Top" HorizontalAlignment="Left"
+                Background="{StaticResource ViewBorderBG}"
+                Foreground="{StaticResource FontColorLight}"
+                FontSize="15"
+                Margin="15 -12 0 0"
+                Padding="7 0 7 0"
+                Text="{Binding EntryLabel, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
             <TextBlock x:Name="tbPlaceholder"
                    Foreground="{StaticResource FontColorLightInactive}"
-                   Visibility="Visible"
+                   Visibility="{Binding PlaceholderVisibility, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}"
                    VerticalAlignment="Center"
                    Padding="20 0 10 0"
                    FontSize="18"
@@ -22,12 +30,14 @@
                    Text="{Binding PlaceholderText, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
             <Image/>
             <TextBox Background="Transparent"
-                 BorderThickness="0"
-                 VerticalAlignment="Center"
-                 Padding="18 0 10 0"
-                 FontSize="18"
-                 Text="{Binding InputText, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                 GotFocus="InputBar_GotFocus" LostFocus="InputBar_LostFocus" TextChanged="InputBar_TextChanged"/>
+                     BorderThickness="0"
+                     VerticalAlignment="Center"
+                     Padding="18 0 10 0"
+                     FontSize="18"
+                     CaretBrush="White"
+                     Foreground="White"
+                     Text="{Binding InputText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                     GotFocus="InputBar_GotFocus" LostFocus="InputBar_LostFocus" TextChanged="InputBar_TextChanged"/>
         </Grid>
     </Border>
 </UserControl>

@@ -26,8 +26,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public TransactionHistoryViewModel TransactionHistoryVM { get; set; }
         public PetCheckOutViewModel PetCheckOutVM { get; set; }
         public PetInventoryViewModel PetInventoryVM { get; set; }
-        public PetProfileViewModel PetProfileVM { get; set; }
-
 
         private object _currentView;
 
@@ -62,7 +60,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
             PetCheckOutVM = new PetCheckOutViewModel();
             PetInventoryVM = new PetInventoryViewModel();
-            PetProfileVM = new PetProfileViewModel();
 
             CurrentView = DashboardVM;
             WindowNameText = "DASHBOARD";
@@ -97,11 +94,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             {
                 CurrentView = PetInventoryVM;
                 WindowNameText = "PET INVENTORY";
-            });
-            PetProfileViewCommand = new RelayCommand(o =>
-            {
-                CurrentView = PetProfileVM;
-                WindowNameText = "PET PROFILE";
             });
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrativeMidterm.userControl.General;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +16,25 @@ using System.Windows.Shapes;
 
 namespace IntegrativeMidterm.userControl.PetInventory
 {
-    /// <summary>
-    /// Interaction logic for PetListItem.xaml
-    /// </summary>
     public partial class PetListItem : UserControl
     {
+        public static readonly DependencyProperty SelectedCommandProperty =
+            DependencyProperty.Register("SelectedCommand", typeof(ICommand), typeof(PetListItem));
+
+        public ICommand SelectedCommand
+        {
+            get { return (ICommand)GetValue(SelectedCommandProperty); }
+            set { SetValue(SelectedCommandProperty, value); }
+        }
+
         public PetListItem()
         {
             InitializeComponent();
+        }
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedCommand?.Execute(sender);
         }
     }
 }

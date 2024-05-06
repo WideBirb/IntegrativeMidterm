@@ -30,9 +30,6 @@ namespace IntegrativeMidterm
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InserttblPetSupply(tblPetSupply instance);
-    partial void UpdatetblPetSupply(tblPetSupply instance);
-    partial void DeletetblPetSupply(tblPetSupply instance);
     #endregion
 		
 		public DataClassDataContext() : 
@@ -63,86 +60,6 @@ namespace IntegrativeMidterm
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<vwCustomer> vwCustomers
-		{
-			get
-			{
-				return this.GetTable<vwCustomer>();
-			}
-		}
-		
-		public System.Data.Linq.Table<vwMedicalHistory> vwMedicalHistories
-		{
-			get
-			{
-				return this.GetTable<vwMedicalHistory>();
-			}
-		}
-		
-		public System.Data.Linq.Table<vwPet> vwPets
-		{
-			get
-			{
-				return this.GetTable<vwPet>();
-			}
-		}
-		
-		public System.Data.Linq.Table<vwPetSupply> vwPetSupplies
-		{
-			get
-			{
-				return this.GetTable<vwPetSupply>();
-			}
-		}
-		
-		public System.Data.Linq.Table<vwPetSupplyTransaction> vwPetSupplyTransactions
-		{
-			get
-			{
-				return this.GetTable<vwPetSupplyTransaction>();
-			}
-		}
-		
-		public System.Data.Linq.Table<vwPetSupplyTransactionSummary> vwPetSupplyTransactionSummaries
-		{
-			get
-			{
-				return this.GetTable<vwPetSupplyTransactionSummary>();
-			}
-		}
-		
-		public System.Data.Linq.Table<vwPetTransaction> vwPetTransactions
-		{
-			get
-			{
-				return this.GetTable<vwPetTransaction>();
-			}
-		}
-		
-		public System.Data.Linq.Table<vwStaff> vwStaffs
-		{
-			get
-			{
-				return this.GetTable<vwStaff>();
-			}
-		}
-		
-		public System.Data.Linq.Table<tblPetSupply> tblPetSupplies
-		{
-			get
-			{
-				return this.GetTable<tblPetSupply>();
-			}
-		}
-		
-		public System.Data.Linq.Table<vwAllTransaction> vwAllTransactions
-		{
-			get
-			{
-				return this.GetTable<vwAllTransaction>();
-			}
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spAddGeneralStatus")]
@@ -222,20 +139,6 @@ namespace IntegrativeMidterm
 			return ((ISingleResult<spGetAllMedicalHistoriesResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spGetAllPets")]
-		public ISingleResult<spGetAllPetsResult> spGetAllPets([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_breed_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string gender, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_status_id)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_type_id, pet_breed_id, gender, pet_status_id);
-			return ((ISingleResult<spGetAllPetsResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spGetAllPetSupplies")]
-		public ISingleResult<spGetAllPetSuppliesResult> spGetAllPetSupplies([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_status_id)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_supply_type_id, pet_type_id, pet_supply_status_id);
-			return ((ISingleResult<spGetAllPetSuppliesResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spGetAllPetSupplyTransactions")]
 		public ISingleResult<spGetAllPetSupplyTransactionsResult> spGetAllPetSupplyTransactions([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> from_date, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> to_date)
 		{
@@ -276,13 +179,6 @@ namespace IntegrativeMidterm
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
 			return ((ISingleResult<spGetMedicalTypesResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spGetPetBreeds")]
-		public ISingleResult<spGetPetBreedsResult> spGetPetBreeds()
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
-			return ((ISingleResult<spGetPetBreedsResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spGetPetData")]
@@ -352,6 +248,13 @@ namespace IntegrativeMidterm
 		public int spRegisterCustomer([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string first_name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string middle_name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string last_name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string gender, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> birthdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string contact_number, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string email_address, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string address, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string image_path)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), first_name, middle_name, last_name, gender, birthdate, contact_number, email_address, address, image_path);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spUpdateSupplyData")]
+		public int spUpdateSupplyData([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string pet_supply_name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Float")] System.Nullable<double> price, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> quantity, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string image_path)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_supply_id, pet_supply_name, pet_supply_type_id, pet_type_id, price, quantity, image_path);
 			return ((int)(result.ReturnValue));
 		}
 		
@@ -432,1542 +335,25 @@ namespace IntegrativeMidterm
 			return ((ISingleResult<spGetSupplyTransactionSummaryResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spUpdateSupplyData")]
-		public int spUpdateSupplyData([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string pet_supply_name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Float")] System.Nullable<double> price, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> quantity, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_status_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string image_path)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spGetAllPets")]
+		public ISingleResult<spGetAllPetsResult> spGetAllPets([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_breed_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string gender, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_status_id)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_supply_id, pet_supply_name, pet_supply_type_id, pet_type_id, price, quantity, pet_supply_status_ID, image_path);
-			return ((int)(result.ReturnValue));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_type_id, pet_breed_id, gender, pet_status_id);
+			return ((ISingleResult<spGetAllPetsResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spUpdatePetSupplyQuantity")]
-		public int spUpdatePetSupplyQuantity([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> quantity)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spGetAllPetSupplies")]
+		public ISingleResult<spGetAllPetSuppliesResult> spGetAllPetSupplies([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_type_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_status_id)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_supply_id, quantity);
-			return ((int)(result.ReturnValue));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_supply_type_id, pet_type_id, pet_supply_status_id);
+			return ((ISingleResult<spGetAllPetSuppliesResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spSelectLatestTransactionHistoryID")]
-		public ISingleResult<spSelectLatestTransactionHistoryIDResult> spSelectLatestTransactionHistoryID()
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spGetPetBreeds")]
+		public ISingleResult<spGetPetBreedsResult> spGetPetBreeds([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_type_id)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
-			return ((ISingleResult<spSelectLatestTransactionHistoryIDResult>)(result.ReturnValue));
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwCustomers")]
-	public partial class vwCustomer
-	{
-		
-		private int _ID;
-		
-		private string _First_Name;
-		
-		private string _Middle_Name;
-		
-		private string _Last_Name;
-		
-		private string _Gender;
-		
-		private System.DateTime _Birthdate;
-		
-		private string _Contact_Number;
-		
-		private string _Email_Address;
-		
-		private string _Home_Address;
-		
-		public vwCustomer()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[First Name]", Storage="_First_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string First_Name
-		{
-			get
-			{
-				return this._First_Name;
-			}
-			set
-			{
-				if ((this._First_Name != value))
-				{
-					this._First_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Middle Name]", Storage="_Middle_Name", DbType="VarChar(50)")]
-		public string Middle_Name
-		{
-			get
-			{
-				return this._Middle_Name;
-			}
-			set
-			{
-				if ((this._Middle_Name != value))
-				{
-					this._Middle_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Last Name]", Storage="_Last_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Last_Name
-		{
-			get
-			{
-				return this._Last_Name;
-			}
-			set
-			{
-				if ((this._Last_Name != value))
-				{
-					this._Last_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Gender", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Gender
-		{
-			get
-			{
-				return this._Gender;
-			}
-			set
-			{
-				if ((this._Gender != value))
-				{
-					this._Gender = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Birthdate", DbType="DateTime NOT NULL")]
-		public System.DateTime Birthdate
-		{
-			get
-			{
-				return this._Birthdate;
-			}
-			set
-			{
-				if ((this._Birthdate != value))
-				{
-					this._Birthdate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Contact Number]", Storage="_Contact_Number", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Contact_Number
-		{
-			get
-			{
-				return this._Contact_Number;
-			}
-			set
-			{
-				if ((this._Contact_Number != value))
-				{
-					this._Contact_Number = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Email Address]", Storage="_Email_Address", DbType="VarChar(50)")]
-		public string Email_Address
-		{
-			get
-			{
-				return this._Email_Address;
-			}
-			set
-			{
-				if ((this._Email_Address != value))
-				{
-					this._Email_Address = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Home Address]", Storage="_Home_Address", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Home_Address
-		{
-			get
-			{
-				return this._Home_Address;
-			}
-			set
-			{
-				if ((this._Home_Address != value))
-				{
-					this._Home_Address = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwMedicalHistories")]
-	public partial class vwMedicalHistory
-	{
-		
-		private int _Record_ID;
-		
-		private int _Pet_ID;
-		
-		private string _Pet_Name;
-		
-		private string _Medical_Type;
-		
-		private string _Description;
-		
-		private double _Cost;
-		
-		private System.DateTime _Process_date;
-		
-		private string _Staff;
-		
-		public vwMedicalHistory()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Record ID]", Storage="_Record_ID", DbType="Int NOT NULL")]
-		public int Record_ID
-		{
-			get
-			{
-				return this._Record_ID;
-			}
-			set
-			{
-				if ((this._Record_ID != value))
-				{
-					this._Record_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Pet ID]", Storage="_Pet_ID", DbType="Int NOT NULL")]
-		public int Pet_ID
-		{
-			get
-			{
-				return this._Pet_ID;
-			}
-			set
-			{
-				if ((this._Pet_ID != value))
-				{
-					this._Pet_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Pet Name]", Storage="_Pet_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Pet_Name
-		{
-			get
-			{
-				return this._Pet_Name;
-			}
-			set
-			{
-				if ((this._Pet_Name != value))
-				{
-					this._Pet_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Medical Type]", Storage="_Medical_Type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Medical_Type
-		{
-			get
-			{
-				return this._Medical_Type;
-			}
-			set
-			{
-				if ((this._Medical_Type != value))
-				{
-					this._Medical_Type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this._Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost", DbType="Float NOT NULL")]
-		public double Cost
-		{
-			get
-			{
-				return this._Cost;
-			}
-			set
-			{
-				if ((this._Cost != value))
-				{
-					this._Cost = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Process date]", Storage="_Process_date", DbType="DateTime NOT NULL")]
-		public System.DateTime Process_date
-		{
-			get
-			{
-				return this._Process_date;
-			}
-			set
-			{
-				if ((this._Process_date != value))
-				{
-					this._Process_date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Staff", DbType="VarChar(102) NOT NULL", CanBeNull=false)]
-		public string Staff
-		{
-			get
-			{
-				return this._Staff;
-			}
-			set
-			{
-				if ((this._Staff != value))
-				{
-					this._Staff = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwPets")]
-	public partial class vwPet
-	{
-		
-		private int _ID;
-		
-		private string _Name;
-		
-		private string _Gender;
-		
-		private System.DateTime _Birthdate;
-		
-		private string _Species;
-		
-		private string _Breed;
-		
-		private double _Price;
-		
-		private string _Status;
-		
-		public vwPet()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this._Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Gender", DbType="VarChar(50)")]
-		public string Gender
-		{
-			get
-			{
-				return this._Gender;
-			}
-			set
-			{
-				if ((this._Gender != value))
-				{
-					this._Gender = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Birthdate", DbType="DateTime NOT NULL")]
-		public System.DateTime Birthdate
-		{
-			get
-			{
-				return this._Birthdate;
-			}
-			set
-			{
-				if ((this._Birthdate != value))
-				{
-					this._Birthdate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Species", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Species
-		{
-			get
-			{
-				return this._Species;
-			}
-			set
-			{
-				if ((this._Species != value))
-				{
-					this._Species = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Breed", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Breed
-		{
-			get
-			{
-				return this._Breed;
-			}
-			set
-			{
-				if ((this._Breed != value))
-				{
-					this._Breed = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Float NOT NULL")]
-		public double Price
-		{
-			get
-			{
-				return this._Price;
-			}
-			set
-			{
-				if ((this._Price != value))
-				{
-					this._Price = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this._Status = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwPetSupplies")]
-	public partial class vwPetSupply
-	{
-		
-		private int _ID;
-		
-		private string _Product_name;
-		
-		private int _Quantity;
-		
-		private double _Price;
-		
-		private string _Status;
-		
-		private string _Type;
-		
-		private string _Species;
-		
-		public vwPetSupply()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Product name]", Storage="_Product_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Product_name
-		{
-			get
-			{
-				return this._Product_name;
-			}
-			set
-			{
-				if ((this._Product_name != value))
-				{
-					this._Product_name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quantity", DbType="Int NOT NULL")]
-		public int Quantity
-		{
-			get
-			{
-				return this._Quantity;
-			}
-			set
-			{
-				if ((this._Quantity != value))
-				{
-					this._Quantity = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Float NOT NULL")]
-		public double Price
-		{
-			get
-			{
-				return this._Price;
-			}
-			set
-			{
-				if ((this._Price != value))
-				{
-					this._Price = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this._Status = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Type
-		{
-			get
-			{
-				return this._Type;
-			}
-			set
-			{
-				if ((this._Type != value))
-				{
-					this._Type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Species", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Species
-		{
-			get
-			{
-				return this._Species;
-			}
-			set
-			{
-				if ((this._Species != value))
-				{
-					this._Species = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwPetSupplyTransactions")]
-	public partial class vwPetSupplyTransaction
-	{
-		
-		private int _Transaction_ID;
-		
-		private System.Nullable<double> _Total_Cost;
-		
-		private System.Nullable<int> _Quantity_Sold;
-		
-		private System.DateTime _Process_Date;
-		
-		private string _Staff;
-		
-		public vwPetSupplyTransaction()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Transaction ID]", Storage="_Transaction_ID", DbType="Int NOT NULL")]
-		public int Transaction_ID
-		{
-			get
-			{
-				return this._Transaction_ID;
-			}
-			set
-			{
-				if ((this._Transaction_ID != value))
-				{
-					this._Transaction_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Total Cost]", Storage="_Total_Cost", DbType="Float")]
-		public System.Nullable<double> Total_Cost
-		{
-			get
-			{
-				return this._Total_Cost;
-			}
-			set
-			{
-				if ((this._Total_Cost != value))
-				{
-					this._Total_Cost = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Quantity Sold]", Storage="_Quantity_Sold", DbType="Int")]
-		public System.Nullable<int> Quantity_Sold
-		{
-			get
-			{
-				return this._Quantity_Sold;
-			}
-			set
-			{
-				if ((this._Quantity_Sold != value))
-				{
-					this._Quantity_Sold = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Process Date]", Storage="_Process_Date", DbType="DateTime NOT NULL")]
-		public System.DateTime Process_Date
-		{
-			get
-			{
-				return this._Process_Date;
-			}
-			set
-			{
-				if ((this._Process_Date != value))
-				{
-					this._Process_Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Staff", DbType="VarChar(102) NOT NULL", CanBeNull=false)]
-		public string Staff
-		{
-			get
-			{
-				return this._Staff;
-			}
-			set
-			{
-				if ((this._Staff != value))
-				{
-					this._Staff = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwPetSupplyTransactionSummaries")]
-	public partial class vwPetSupplyTransactionSummary
-	{
-		
-		private int _Parent_Transaction_ID;
-		
-		private string _Supply_name;
-		
-		private string _Supply_type;
-		
-		private string _Species;
-		
-		private double _Price_per_item;
-		
-		private int _Purchase_Quantity;
-		
-		private double _Total;
-		
-		public vwPetSupplyTransactionSummary()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Parent Transaction ID]", Storage="_Parent_Transaction_ID", DbType="Int NOT NULL")]
-		public int Parent_Transaction_ID
-		{
-			get
-			{
-				return this._Parent_Transaction_ID;
-			}
-			set
-			{
-				if ((this._Parent_Transaction_ID != value))
-				{
-					this._Parent_Transaction_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Supply name]", Storage="_Supply_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Supply_name
-		{
-			get
-			{
-				return this._Supply_name;
-			}
-			set
-			{
-				if ((this._Supply_name != value))
-				{
-					this._Supply_name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Supply type]", Storage="_Supply_type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Supply_type
-		{
-			get
-			{
-				return this._Supply_type;
-			}
-			set
-			{
-				if ((this._Supply_type != value))
-				{
-					this._Supply_type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Species", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Species
-		{
-			get
-			{
-				return this._Species;
-			}
-			set
-			{
-				if ((this._Species != value))
-				{
-					this._Species = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Price per item]", Storage="_Price_per_item", DbType="Float NOT NULL")]
-		public double Price_per_item
-		{
-			get
-			{
-				return this._Price_per_item;
-			}
-			set
-			{
-				if ((this._Price_per_item != value))
-				{
-					this._Price_per_item = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Purchase Quantity]", Storage="_Purchase_Quantity", DbType="Int NOT NULL")]
-		public int Purchase_Quantity
-		{
-			get
-			{
-				return this._Purchase_Quantity;
-			}
-			set
-			{
-				if ((this._Purchase_Quantity != value))
-				{
-					this._Purchase_Quantity = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Float NOT NULL")]
-		public double Total
-		{
-			get
-			{
-				return this._Total;
-			}
-			set
-			{
-				if ((this._Total != value))
-				{
-					this._Total = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwPetTransactions")]
-	public partial class vwPetTransaction
-	{
-		
-		private int _Transaction_ID;
-		
-		private string _Pet_name;
-		
-		private string _Customer_name;
-		
-		private double _Cost;
-		
-		private System.DateTime _Process_Date;
-		
-		private string _Staff;
-		
-		public vwPetTransaction()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Transaction ID]", Storage="_Transaction_ID", DbType="Int NOT NULL")]
-		public int Transaction_ID
-		{
-			get
-			{
-				return this._Transaction_ID;
-			}
-			set
-			{
-				if ((this._Transaction_ID != value))
-				{
-					this._Transaction_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Pet name]", Storage="_Pet_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Pet_name
-		{
-			get
-			{
-				return this._Pet_name;
-			}
-			set
-			{
-				if ((this._Pet_name != value))
-				{
-					this._Pet_name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Customer name]", Storage="_Customer_name", DbType="VarChar(102) NOT NULL", CanBeNull=false)]
-		public string Customer_name
-		{
-			get
-			{
-				return this._Customer_name;
-			}
-			set
-			{
-				if ((this._Customer_name != value))
-				{
-					this._Customer_name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost", DbType="Float NOT NULL")]
-		public double Cost
-		{
-			get
-			{
-				return this._Cost;
-			}
-			set
-			{
-				if ((this._Cost != value))
-				{
-					this._Cost = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Process Date]", Storage="_Process_Date", DbType="DateTime NOT NULL")]
-		public System.DateTime Process_Date
-		{
-			get
-			{
-				return this._Process_Date;
-			}
-			set
-			{
-				if ((this._Process_Date != value))
-				{
-					this._Process_Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Staff", DbType="VarChar(102) NOT NULL", CanBeNull=false)]
-		public string Staff
-		{
-			get
-			{
-				return this._Staff;
-			}
-			set
-			{
-				if ((this._Staff != value))
-				{
-					this._Staff = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwStaff")]
-	public partial class vwStaff
-	{
-		
-		private int _ID;
-		
-		private string _First_Name;
-		
-		private string _Middle_Name;
-		
-		private string _Last_Name;
-		
-		private string _Gender;
-		
-		private System.DateTime _Birthdate;
-		
-		private string _Contact_Number;
-		
-		private string _Email_Address;
-		
-		private string _Home_Address;
-		
-		public vwStaff()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[First Name]", Storage="_First_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string First_Name
-		{
-			get
-			{
-				return this._First_Name;
-			}
-			set
-			{
-				if ((this._First_Name != value))
-				{
-					this._First_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Middle Name]", Storage="_Middle_Name", DbType="VarChar(50)")]
-		public string Middle_Name
-		{
-			get
-			{
-				return this._Middle_Name;
-			}
-			set
-			{
-				if ((this._Middle_Name != value))
-				{
-					this._Middle_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Last Name]", Storage="_Last_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Last_Name
-		{
-			get
-			{
-				return this._Last_Name;
-			}
-			set
-			{
-				if ((this._Last_Name != value))
-				{
-					this._Last_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Gender", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Gender
-		{
-			get
-			{
-				return this._Gender;
-			}
-			set
-			{
-				if ((this._Gender != value))
-				{
-					this._Gender = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Birthdate", DbType="DateTime NOT NULL")]
-		public System.DateTime Birthdate
-		{
-			get
-			{
-				return this._Birthdate;
-			}
-			set
-			{
-				if ((this._Birthdate != value))
-				{
-					this._Birthdate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Contact Number]", Storage="_Contact_Number", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Contact_Number
-		{
-			get
-			{
-				return this._Contact_Number;
-			}
-			set
-			{
-				if ((this._Contact_Number != value))
-				{
-					this._Contact_Number = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Email Address]", Storage="_Email_Address", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Email_Address
-		{
-			get
-			{
-				return this._Email_Address;
-			}
-			set
-			{
-				if ((this._Email_Address != value))
-				{
-					this._Email_Address = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Home Address]", Storage="_Home_Address", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Home_Address
-		{
-			get
-			{
-				return this._Home_Address;
-			}
-			set
-			{
-				if ((this._Home_Address != value))
-				{
-					this._Home_Address = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblPetSupplies")]
-	public partial class tblPetSupply : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _pet_supply_id;
-		
-		private string _pet_supply_name;
-		
-		private int _quantity;
-		
-		private string _image_path;
-		
-		private double _price;
-		
-		private System.Nullable<int> _pet_supply_status_id;
-		
-		private int _pet_supply_type_id;
-		
-		private int _pet_type_id;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onpet_supply_idChanging(int value);
-    partial void Onpet_supply_idChanged();
-    partial void Onpet_supply_nameChanging(string value);
-    partial void Onpet_supply_nameChanged();
-    partial void OnquantityChanging(int value);
-    partial void OnquantityChanged();
-    partial void Onimage_pathChanging(string value);
-    partial void Onimage_pathChanged();
-    partial void OnpriceChanging(double value);
-    partial void OnpriceChanged();
-    partial void Onpet_supply_status_idChanging(System.Nullable<int> value);
-    partial void Onpet_supply_status_idChanged();
-    partial void Onpet_supply_type_idChanging(int value);
-    partial void Onpet_supply_type_idChanged();
-    partial void Onpet_type_idChanging(int value);
-    partial void Onpet_type_idChanged();
-    #endregion
-		
-		public tblPetSupply()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_supply_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int pet_supply_id
-		{
-			get
-			{
-				return this._pet_supply_id;
-			}
-			set
-			{
-				if ((this._pet_supply_id != value))
-				{
-					this.Onpet_supply_idChanging(value);
-					this.SendPropertyChanging();
-					this._pet_supply_id = value;
-					this.SendPropertyChanged("pet_supply_id");
-					this.Onpet_supply_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_supply_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string pet_supply_name
-		{
-			get
-			{
-				return this._pet_supply_name;
-			}
-			set
-			{
-				if ((this._pet_supply_name != value))
-				{
-					this.Onpet_supply_nameChanging(value);
-					this.SendPropertyChanging();
-					this._pet_supply_name = value;
-					this.SendPropertyChanged("pet_supply_name");
-					this.Onpet_supply_nameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantity", DbType="Int NOT NULL")]
-		public int quantity
-		{
-			get
-			{
-				return this._quantity;
-			}
-			set
-			{
-				if ((this._quantity != value))
-				{
-					this.OnquantityChanging(value);
-					this.SendPropertyChanging();
-					this._quantity = value;
-					this.SendPropertyChanged("quantity");
-					this.OnquantityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_image_path", DbType="VarChar(MAX)")]
-		public string image_path
-		{
-			get
-			{
-				return this._image_path;
-			}
-			set
-			{
-				if ((this._image_path != value))
-				{
-					this.Onimage_pathChanging(value);
-					this.SendPropertyChanging();
-					this._image_path = value;
-					this.SendPropertyChanged("image_path");
-					this.Onimage_pathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_price", DbType="Float NOT NULL")]
-		public double price
-		{
-			get
-			{
-				return this._price;
-			}
-			set
-			{
-				if ((this._price != value))
-				{
-					this.OnpriceChanging(value);
-					this.SendPropertyChanging();
-					this._price = value;
-					this.SendPropertyChanged("price");
-					this.OnpriceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_supply_status_id", DbType="Int")]
-		public System.Nullable<int> pet_supply_status_id
-		{
-			get
-			{
-				return this._pet_supply_status_id;
-			}
-			set
-			{
-				if ((this._pet_supply_status_id != value))
-				{
-					this.Onpet_supply_status_idChanging(value);
-					this.SendPropertyChanging();
-					this._pet_supply_status_id = value;
-					this.SendPropertyChanged("pet_supply_status_id");
-					this.Onpet_supply_status_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_supply_type_id", DbType="Int NOT NULL")]
-		public int pet_supply_type_id
-		{
-			get
-			{
-				return this._pet_supply_type_id;
-			}
-			set
-			{
-				if ((this._pet_supply_type_id != value))
-				{
-					this.Onpet_supply_type_idChanging(value);
-					this.SendPropertyChanging();
-					this._pet_supply_type_id = value;
-					this.SendPropertyChanged("pet_supply_type_id");
-					this.Onpet_supply_type_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_type_id", DbType="Int NOT NULL")]
-		public int pet_type_id
-		{
-			get
-			{
-				return this._pet_type_id;
-			}
-			set
-			{
-				if ((this._pet_type_id != value))
-				{
-					this.Onpet_type_idChanging(value);
-					this.SendPropertyChanging();
-					this._pet_type_id = value;
-					this.SendPropertyChanged("pet_type_id");
-					this.Onpet_type_idChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwAllTransactions")]
-	public partial class vwAllTransaction
-	{
-		
-		private int _Transaction_ID;
-		
-		private System.Nullable<double> _Total_Cost;
-		
-		private System.Nullable<int> _Quantity_Sold;
-		
-		private System.DateTime _Process_Date;
-		
-		private string _Transaction_Type;
-		
-		private string _Staff;
-		
-		private System.Nullable<int> _Staff_ID;
-		
-		private System.Nullable<int> _Transaction_Type_ID;
-		
-		public vwAllTransaction()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Transaction ID]", Storage="_Transaction_ID", DbType="Int NOT NULL")]
-		public int Transaction_ID
-		{
-			get
-			{
-				return this._Transaction_ID;
-			}
-			set
-			{
-				if ((this._Transaction_ID != value))
-				{
-					this._Transaction_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Total Cost]", Storage="_Total_Cost", DbType="Float")]
-		public System.Nullable<double> Total_Cost
-		{
-			get
-			{
-				return this._Total_Cost;
-			}
-			set
-			{
-				if ((this._Total_Cost != value))
-				{
-					this._Total_Cost = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Quantity Sold]", Storage="_Quantity_Sold", DbType="Int")]
-		public System.Nullable<int> Quantity_Sold
-		{
-			get
-			{
-				return this._Quantity_Sold;
-			}
-			set
-			{
-				if ((this._Quantity_Sold != value))
-				{
-					this._Quantity_Sold = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Process Date]", Storage="_Process_Date", DbType="DateTime NOT NULL")]
-		public System.DateTime Process_Date
-		{
-			get
-			{
-				return this._Process_Date;
-			}
-			set
-			{
-				if ((this._Process_Date != value))
-				{
-					this._Process_Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Transaction Type]", Storage="_Transaction_Type", DbType="VarChar(50)")]
-		public string Transaction_Type
-		{
-			get
-			{
-				return this._Transaction_Type;
-			}
-			set
-			{
-				if ((this._Transaction_Type != value))
-				{
-					this._Transaction_Type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Staff", DbType="VarChar(102)")]
-		public string Staff
-		{
-			get
-			{
-				return this._Staff;
-			}
-			set
-			{
-				if ((this._Staff != value))
-				{
-					this._Staff = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Staff ID]", Storage="_Staff_ID", DbType="Int")]
-		public System.Nullable<int> Staff_ID
-		{
-			get
-			{
-				return this._Staff_ID;
-			}
-			set
-			{
-				if ((this._Staff_ID != value))
-				{
-					this._Staff_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Transaction Type ID]", Storage="_Transaction_Type_ID", DbType="Int")]
-		public System.Nullable<int> Transaction_Type_ID
-		{
-			get
-			{
-				return this._Transaction_Type_ID;
-			}
-			set
-			{
-				if ((this._Transaction_Type_ID != value))
-				{
-					this._Transaction_Type_ID = value;
-				}
-			}
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pet_type_id);
+			return ((ISingleResult<spGetPetBreedsResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -2252,436 +638,6 @@ namespace IntegrativeMidterm
 				if ((this._Staff_ID != value))
 				{
 					this._Staff_ID = value;
-				}
-			}
-		}
-	}
-	
-	public partial class spGetAllPetsResult
-	{
-		
-		private int _ID;
-		
-		private string _Name;
-		
-		private string _Gender;
-		
-		private System.DateTime _Birthdate;
-		
-		private string _Species;
-		
-		private string _Breed;
-		
-		private double _Price;
-		
-		private string _Status;
-		
-		private string _Image_path;
-		
-		private int _Species_ID;
-		
-		private int _Breed_ID;
-		
-		private int _Status_ID;
-		
-		public spGetAllPetsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this._Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Gender", DbType="VarChar(50)")]
-		public string Gender
-		{
-			get
-			{
-				return this._Gender;
-			}
-			set
-			{
-				if ((this._Gender != value))
-				{
-					this._Gender = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Birthdate", DbType="DateTime NOT NULL")]
-		public System.DateTime Birthdate
-		{
-			get
-			{
-				return this._Birthdate;
-			}
-			set
-			{
-				if ((this._Birthdate != value))
-				{
-					this._Birthdate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Species", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Species
-		{
-			get
-			{
-				return this._Species;
-			}
-			set
-			{
-				if ((this._Species != value))
-				{
-					this._Species = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Breed", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Breed
-		{
-			get
-			{
-				return this._Breed;
-			}
-			set
-			{
-				if ((this._Breed != value))
-				{
-					this._Breed = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Float NOT NULL")]
-		public double Price
-		{
-			get
-			{
-				return this._Price;
-			}
-			set
-			{
-				if ((this._Price != value))
-				{
-					this._Price = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this._Status = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Image path]", Storage="_Image_path", DbType="VarChar(MAX)")]
-		public string Image_path
-		{
-			get
-			{
-				return this._Image_path;
-			}
-			set
-			{
-				if ((this._Image_path != value))
-				{
-					this._Image_path = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Species ID]", Storage="_Species_ID", DbType="Int NOT NULL")]
-		public int Species_ID
-		{
-			get
-			{
-				return this._Species_ID;
-			}
-			set
-			{
-				if ((this._Species_ID != value))
-				{
-					this._Species_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Breed ID]", Storage="_Breed_ID", DbType="Int NOT NULL")]
-		public int Breed_ID
-		{
-			get
-			{
-				return this._Breed_ID;
-			}
-			set
-			{
-				if ((this._Breed_ID != value))
-				{
-					this._Breed_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Status ID]", Storage="_Status_ID", DbType="Int NOT NULL")]
-		public int Status_ID
-		{
-			get
-			{
-				return this._Status_ID;
-			}
-			set
-			{
-				if ((this._Status_ID != value))
-				{
-					this._Status_ID = value;
-				}
-			}
-		}
-	}
-	
-	public partial class spGetAllPetSuppliesResult
-	{
-		
-		private int _ID;
-		
-		private string _Product_name;
-		
-		private int _Quantity;
-		
-		private double _Price;
-		
-		private string _Status;
-		
-		private string _Supply_Type;
-		
-		private string _Species;
-		
-		private string _Image_path;
-		
-		private int _Status_ID;
-		
-		private int _Supply_Type_ID;
-		
-		private int _Species_ID;
-		
-		public spGetAllPetSuppliesResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Product name]", Storage="_Product_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Product_name
-		{
-			get
-			{
-				return this._Product_name;
-			}
-			set
-			{
-				if ((this._Product_name != value))
-				{
-					this._Product_name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quantity", DbType="Int NOT NULL")]
-		public int Quantity
-		{
-			get
-			{
-				return this._Quantity;
-			}
-			set
-			{
-				if ((this._Quantity != value))
-				{
-					this._Quantity = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Float NOT NULL")]
-		public double Price
-		{
-			get
-			{
-				return this._Price;
-			}
-			set
-			{
-				if ((this._Price != value))
-				{
-					this._Price = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this._Status = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Supply Type]", Storage="_Supply_Type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Supply_Type
-		{
-			get
-			{
-				return this._Supply_Type;
-			}
-			set
-			{
-				if ((this._Supply_Type != value))
-				{
-					this._Supply_Type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Species", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Species
-		{
-			get
-			{
-				return this._Species;
-			}
-			set
-			{
-				if ((this._Species != value))
-				{
-					this._Species = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Image path]", Storage="_Image_path", DbType="VarChar(MAX)")]
-		public string Image_path
-		{
-			get
-			{
-				return this._Image_path;
-			}
-			set
-			{
-				if ((this._Image_path != value))
-				{
-					this._Image_path = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Status ID]", Storage="_Status_ID", DbType="Int NOT NULL")]
-		public int Status_ID
-		{
-			get
-			{
-				return this._Status_ID;
-			}
-			set
-			{
-				if ((this._Status_ID != value))
-				{
-					this._Status_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Supply Type ID]", Storage="_Supply_Type_ID", DbType="Int NOT NULL")]
-		public int Supply_Type_ID
-		{
-			get
-			{
-				return this._Supply_Type_ID;
-			}
-			set
-			{
-				if ((this._Supply_Type_ID != value))
-				{
-					this._Supply_Type_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Species ID]", Storage="_Species_ID", DbType="Int NOT NULL")]
-		public int Species_ID
-		{
-			get
-			{
-				return this._Species_ID;
-			}
-			set
-			{
-				if ((this._Species_ID != value))
-				{
-					this._Species_ID = value;
 				}
 			}
 		}
@@ -3612,50 +1568,6 @@ namespace IntegrativeMidterm
 				if ((this._price != value))
 				{
 					this._price = value;
-				}
-			}
-		}
-	}
-	
-	public partial class spGetPetBreedsResult
-	{
-		
-		private int _pet_breed_id;
-		
-		private string _description;
-		
-		public spGetPetBreedsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_breed_id", DbType="Int NOT NULL")]
-		public int pet_breed_id
-		{
-			get
-			{
-				return this._pet_breed_id;
-			}
-			set
-			{
-				if ((this._pet_breed_id != value))
-				{
-					this._pet_breed_id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_description", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string description
-		{
-			get
-			{
-				return this._description;
-			}
-			set
-			{
-				if ((this._description != value))
-				{
-					this._description = value;
 				}
 			}
 		}
@@ -5127,27 +3039,493 @@ namespace IntegrativeMidterm
 		}
 	}
 	
-	public partial class spSelectLatestTransactionHistoryIDResult
+	public partial class spGetAllPetsResult
 	{
 		
-		private System.Nullable<int> _Column1;
+		private int _ID;
 		
-		public spSelectLatestTransactionHistoryIDResult()
+		private string _Name;
+		
+		private string _Gender;
+		
+		private System.DateTime _Birthdate;
+		
+		private string _Species;
+		
+		private string _Breed;
+		
+		private double _Price;
+		
+		private string _Status;
+		
+		private string _Image_path;
+		
+		private int _Species_ID;
+		
+		private int _Breed_ID;
+		
+		private int _Status_ID;
+		
+		public spGetAllPetsResult()
 		{
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="", Storage="_Column1", DbType="Int")]
-		public System.Nullable<int> Column1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
 		{
 			get
 			{
-				return this._Column1;
+				return this._ID;
 			}
 			set
 			{
-				if ((this._Column1 != value))
+				if ((this._ID != value))
 				{
-					this._Column1 = value;
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Gender", DbType="VarChar(50)")]
+		public string Gender
+		{
+			get
+			{
+				return this._Gender;
+			}
+			set
+			{
+				if ((this._Gender != value))
+				{
+					this._Gender = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Birthdate", DbType="DateTime NOT NULL")]
+		public System.DateTime Birthdate
+		{
+			get
+			{
+				return this._Birthdate;
+			}
+			set
+			{
+				if ((this._Birthdate != value))
+				{
+					this._Birthdate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Species", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Species
+		{
+			get
+			{
+				return this._Species;
+			}
+			set
+			{
+				if ((this._Species != value))
+				{
+					this._Species = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Breed", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Breed
+		{
+			get
+			{
+				return this._Breed;
+			}
+			set
+			{
+				if ((this._Breed != value))
+				{
+					this._Breed = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Float NOT NULL")]
+		public double Price
+		{
+			get
+			{
+				return this._Price;
+			}
+			set
+			{
+				if ((this._Price != value))
+				{
+					this._Price = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this._Status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Image path]", Storage="_Image_path", DbType="VarChar(MAX)")]
+		public string Image_path
+		{
+			get
+			{
+				return this._Image_path;
+			}
+			set
+			{
+				if ((this._Image_path != value))
+				{
+					this._Image_path = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Species ID]", Storage="_Species_ID", DbType="Int NOT NULL")]
+		public int Species_ID
+		{
+			get
+			{
+				return this._Species_ID;
+			}
+			set
+			{
+				if ((this._Species_ID != value))
+				{
+					this._Species_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Breed ID]", Storage="_Breed_ID", DbType="Int NOT NULL")]
+		public int Breed_ID
+		{
+			get
+			{
+				return this._Breed_ID;
+			}
+			set
+			{
+				if ((this._Breed_ID != value))
+				{
+					this._Breed_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Status ID]", Storage="_Status_ID", DbType="Int NOT NULL")]
+		public int Status_ID
+		{
+			get
+			{
+				return this._Status_ID;
+			}
+			set
+			{
+				if ((this._Status_ID != value))
+				{
+					this._Status_ID = value;
+				}
+			}
+		}
+	}
+	
+	public partial class spGetAllPetSuppliesResult
+	{
+		
+		private int _ID;
+		
+		private string _Product_name;
+		
+		private int _Quantity;
+		
+		private double _Price;
+		
+		private string _Status;
+		
+		private string _Supply_Type;
+		
+		private string _Species;
+		
+		private string _Image_path;
+		
+		private int _Status_ID;
+		
+		private int _Supply_Type_ID;
+		
+		private int _Species_ID;
+		
+		public spGetAllPetSuppliesResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Product name]", Storage="_Product_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Product_name
+		{
+			get
+			{
+				return this._Product_name;
+			}
+			set
+			{
+				if ((this._Product_name != value))
+				{
+					this._Product_name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quantity", DbType="Int NOT NULL")]
+		public int Quantity
+		{
+			get
+			{
+				return this._Quantity;
+			}
+			set
+			{
+				if ((this._Quantity != value))
+				{
+					this._Quantity = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Float NOT NULL")]
+		public double Price
+		{
+			get
+			{
+				return this._Price;
+			}
+			set
+			{
+				if ((this._Price != value))
+				{
+					this._Price = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this._Status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Supply Type]", Storage="_Supply_Type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Supply_Type
+		{
+			get
+			{
+				return this._Supply_Type;
+			}
+			set
+			{
+				if ((this._Supply_Type != value))
+				{
+					this._Supply_Type = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Species", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Species
+		{
+			get
+			{
+				return this._Species;
+			}
+			set
+			{
+				if ((this._Species != value))
+				{
+					this._Species = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Image path]", Storage="_Image_path", DbType="VarChar(MAX)")]
+		public string Image_path
+		{
+			get
+			{
+				return this._Image_path;
+			}
+			set
+			{
+				if ((this._Image_path != value))
+				{
+					this._Image_path = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Status ID]", Storage="_Status_ID", DbType="Int NOT NULL")]
+		public int Status_ID
+		{
+			get
+			{
+				return this._Status_ID;
+			}
+			set
+			{
+				if ((this._Status_ID != value))
+				{
+					this._Status_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Supply Type ID]", Storage="_Supply_Type_ID", DbType="Int NOT NULL")]
+		public int Supply_Type_ID
+		{
+			get
+			{
+				return this._Supply_Type_ID;
+			}
+			set
+			{
+				if ((this._Supply_Type_ID != value))
+				{
+					this._Supply_Type_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Species ID]", Storage="_Species_ID", DbType="Int NOT NULL")]
+		public int Species_ID
+		{
+			get
+			{
+				return this._Species_ID;
+			}
+			set
+			{
+				if ((this._Species_ID != value))
+				{
+					this._Species_ID = value;
+				}
+			}
+		}
+	}
+	
+	public partial class spGetPetBreedsResult
+	{
+		
+		private int _pet_breed_id;
+		
+		private System.Nullable<int> _pet_type_id;
+		
+		private string _description;
+		
+		public spGetPetBreedsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_breed_id", DbType="Int NOT NULL")]
+		public int pet_breed_id
+		{
+			get
+			{
+				return this._pet_breed_id;
+			}
+			set
+			{
+				if ((this._pet_breed_id != value))
+				{
+					this._pet_breed_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pet_type_id", DbType="Int")]
+		public System.Nullable<int> pet_type_id
+		{
+			get
+			{
+				return this._pet_type_id;
+			}
+			set
+			{
+				if ((this._pet_type_id != value))
+				{
+					this._pet_type_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_description", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string description
+		{
+			get
+			{
+				return this._description;
+			}
+			set
+			{
+				if ((this._description != value))
+				{
+					this._description = value;
 				}
 			}
 		}

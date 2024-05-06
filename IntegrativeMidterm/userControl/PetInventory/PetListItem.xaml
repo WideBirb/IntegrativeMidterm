@@ -7,11 +7,13 @@
              mc:Ignorable="d"
                       d:DesignHeight="50" d:DesignWidth="550">
     <RadioButton Height="50"
-            Margin="20 0 10 0"
-            Background="Transparent"
-            BorderThickness="0"
-            HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch">
+                 Margin="20 0 10 0"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 HorizontalContentAlignment="Stretch"
+                 VerticalContentAlignment="Stretch"
+                 Click="RadioButton_Click"
+                 Tag="{Binding ID}">
         <RadioButton.Template>
             <ControlTemplate TargetType="RadioButton">
                 <Border x:Name="RadioBorder" CornerRadius="15">
@@ -20,8 +22,12 @@
                                 Margin="7.5"
                                 Background="White"
                                 CornerRadius="7.5"
-                                HorizontalAlignment="Left">
-                            <Image Source="{Binding ImagePath}"/>
+                                HorizontalAlignment="Left"
+                                ClipToBounds="True">
+                            <Border.Clip>
+                                <RectangleGeometry RadiusX="7.5" RadiusY="7.5" Rect="0,0,35,35"/>
+                            </Border.Clip>
+                            <Image Source="{Binding ImagePath, Mode=TwoWay}"/>
                         </Border>
                         <Grid Margin="45 0 36.5 0">
                             <Grid.ColumnDefinitions>

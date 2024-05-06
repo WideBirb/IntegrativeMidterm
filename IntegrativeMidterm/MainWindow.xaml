@@ -13,7 +13,7 @@
     MinHeight="950"
     mc:Ignorable="d">
     <Window.DataContext>
-        <viewModel:MainViewModel />
+        <viewModel:MainViewModel/>
     </Window.DataContext>
 
     <Border Background="{StaticResource BackgroundColor}">
@@ -98,9 +98,6 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Content="{Binding CurrentView}" />
-
-
-
         </Grid>
     </Border>
 </Window>

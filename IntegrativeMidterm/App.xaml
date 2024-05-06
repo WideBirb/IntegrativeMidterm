@@ -19,6 +19,7 @@
                 <ResourceDictionary Source="/Themes/Style/ScrollViewStyles.xaml" />
                 <ResourceDictionary Source="/Themes/Style/PetSupplyStyles.xaml" />
                 <ResourceDictionary Source="/Themes/Style/DatagridStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Style/ComboBoxStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
 
@@ -46,10 +47,6 @@
 
             <DataTemplate DataType="{x:Type viewModel:PetInventoryViewModel}">
                 <view:PetInventoryView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModel:PetProfileViewModel}">
-                <view:PetProfileView />
             </DataTemplate>
 
         </ResourceDictionary>

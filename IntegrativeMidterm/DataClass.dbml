@@ -1,120 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PetShop" Class="DataClassDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=PetShop;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False" SettingsObjectName="IntegrativeMidterm.Properties.Settings" SettingsPropertyName="PetShopConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.vwCustomers" Member="vwCustomers">
-    <Type Name="vwCustomer">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="[First Name]" Member="First_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Middle Name]" Member="Middle_Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="[Last Name]" Member="Last_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Gender" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Birthdate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="[Contact Number]" Member="Contact_Number" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Email Address]" Member="Email_Address" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="[Home Address]" Member="Home_Address" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.vwMedicalHistories" Member="vwMedicalHistories">
-    <Type Name="vwMedicalHistory">
-      <Column Name="[Record ID]" Member="Record_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Pet ID]" Member="Pet_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Pet Name]" Member="Pet_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Medical Type]" Member="Medical_Type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Cost" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="[Process date]" Member="Process_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Staff" Type="System.String" DbType="VarChar(102) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.vwPets" Member="vwPets">
-    <Type Name="vwPet">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Gender" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Birthdate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Species" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Breed" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.vwPetSupplies" Member="vwPetSupplies">
-    <Type Name="vwPetSupply">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Product name]" Member="Product_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Species" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.vwPetSupplyTransactions" Member="vwPetSupplyTransactions">
-    <Type Name="vwPetSupplyTransaction">
-      <Column Name="[Transaction ID]" Member="Transaction_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Total Cost]" Member="Total_Cost" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="[Quantity Sold]" Member="Quantity_Sold" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="[Process Date]" Member="Process_Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Staff" Type="System.String" DbType="VarChar(102) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.vwPetSupplyTransactionSummaries" Member="vwPetSupplyTransactionSummaries">
-    <Type Name="vwPetSupplyTransactionSummary">
-      <Column Name="[Parent Transaction ID]" Member="Parent_Transaction_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Supply name]" Member="Supply_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Supply type]" Member="Supply_type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Species" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Price per item]" Member="Price_per_item" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="[Purchase Quantity]" Member="Purchase_Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Total" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.vwPetTransactions" Member="vwPetTransactions">
-    <Type Name="vwPetTransaction">
-      <Column Name="[Transaction ID]" Member="Transaction_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Pet name]" Member="Pet_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Customer name]" Member="Customer_name" Type="System.String" DbType="VarChar(102) NOT NULL" CanBeNull="false" />
-      <Column Name="Cost" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="[Process Date]" Member="Process_Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Staff" Type="System.String" DbType="VarChar(102) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.vwStaff" Member="vwStaffs">
-    <Type Name="vwStaff">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="[First Name]" Member="First_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Middle Name]" Member="Middle_Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="[Last Name]" Member="Last_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Gender" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Birthdate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="[Contact Number]" Member="Contact_Number" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Email Address]" Member="Email_Address" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Home Address]" Member="Home_Address" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.tblPetSupplies" Member="tblPetSupplies">
-    <Type Name="tblPetSupply">
-      <Column Name="pet_supply_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="pet_supply_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="image_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="pet_supply_status_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="pet_supply_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="pet_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.vwAllTransactions" Member="vwAllTransactions">
-    <Type Name="vwAllTransaction">
-      <Column Name="[Transaction ID]" Member="Transaction_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Total Cost]" Member="Total_Cost" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="[Quantity Sold]" Member="Quantity_Sold" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="[Process Date]" Member="Process_Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="[Transaction Type]" Member="Transaction_Type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Staff" Type="System.String" DbType="VarChar(102)" CanBeNull="true" />
-      <Column Name="[Staff ID]" Member="Staff_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="[Transaction Type ID]" Member="Transaction_Type_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </Type>
-  </Table>
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=PetShop;Integrated Security=True;Encrypt=True;Trust Server Certificate=True" SettingsObjectName="IntegrativeMidterm.Properties.Settings" SettingsPropertyName="PetShopConnectionString" Provider="System.Data.SqlClient" />
   <Function Name="dbo.spAddGeneralStatus" Method="spAddGeneralStatus">
     <Parameter Name="Description" Parameter="description" Type="System.String" DbType="VarChar(50)" />
     <Return Type="System.Int32" />
@@ -187,44 +72,6 @@
       <Column Name="[Pet ID1]" Member="Pet_ID1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="[Record ID1]" Member="Record_ID1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="[Staff ID]" Member="Staff_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.spGetAllPets" Method="spGetAllPets">
-    <Parameter Name="pet_type_id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="pet_breed_id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="gender" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="pet_status_id" Type="System.Int32" DbType="Int" />
-    <ElementType Name="spGetAllPetsResult">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Gender" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Birthdate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Species" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Breed" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Image path]" Member="Image_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="[Species ID]" Member="Species_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Breed ID]" Member="Breed_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Status ID]" Member="Status_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.spGetAllPetSupplies" Method="spGetAllPetSupplies">
-    <Parameter Name="pet_supply_type_id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="pet_type_id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="pet_supply_status_id" Type="System.Int32" DbType="Int" />
-    <ElementType Name="spGetAllPetSuppliesResult">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Product name]" Member="Product_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Supply Type]" Member="Supply_Type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Species" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="[Image path]" Member="Image_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="[Status ID]" Member="Status_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Supply Type ID]" Member="Supply_Type_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Species ID]" Member="Species_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
   <Function Name="dbo.spGetAllPetSupplyTransactions" Method="spGetAllPetSupplyTransactions">
@@ -306,12 +153,6 @@
       <Column Name="medical_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="description" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.spGetPetBreeds" Method="spGetPetBreeds">
-    <ElementType Name="spGetPetBreedsResult">
-      <Column Name="pet_breed_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="description" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
   <Function Name="dbo.spGetPetData" Method="spGetPetData">
@@ -435,6 +276,16 @@
     <Parameter Name="image_path" Type="System.String" DbType="VarChar(MAX)" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.spUpdateSupplyData" Method="spUpdateSupplyData">
+    <Parameter Name="pet_supply_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="pet_supply_name" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="pet_supply_type_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="pet_type_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="price" Type="System.Double" DbType="Float" />
+    <Parameter Name="quantity" Type="System.Int32" DbType="Int" />
+    <Parameter Name="image_path" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
   <Function Name="dbo.spRegisterPet" Method="spRegisterPet">
     <Parameter Name="pet_name" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="gender" Type="System.String" DbType="VarChar(50)" />
@@ -537,25 +388,50 @@
       <Column Name="[Species ID]" Member="Species_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.spUpdateSupplyData" Method="spUpdateSupplyData">
-    <Parameter Name="pet_supply_id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="pet_supply_name" Type="System.String" DbType="VarChar(50)" />
+  <Function Name="dbo.spGetAllPets" Method="spGetAllPets">
+    <Parameter Name="pet_type_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="pet_breed_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="gender" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="pet_status_id" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spGetAllPetsResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Gender" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Birthdate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Species" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Breed" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[Image path]" Member="Image_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Species ID]" Member="Species_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Breed ID]" Member="Breed_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Status ID]" Member="Status_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spGetAllPetSupplies" Method="spGetAllPetSupplies">
     <Parameter Name="pet_supply_type_id" Type="System.Int32" DbType="Int" />
     <Parameter Name="pet_type_id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="price" Type="System.Double" DbType="Float" />
-    <Parameter Name="quantity" Type="System.Int32" DbType="Int" />
-    <Parameter Name="pet_supply_status_ID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="image_path" Type="System.String" DbType="VarChar(MAX)" />
-    <Return Type="System.Int32" />
+    <Parameter Name="pet_supply_status_id" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spGetAllPetSuppliesResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Product name]" Member="Product_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[Supply Type]" Member="Supply_Type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Species" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[Image path]" Member="Image_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Status ID]" Member="Status_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Supply Type ID]" Member="Supply_Type_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Species ID]" Member="Species_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
   </Function>
-  <Function Name="dbo.spUpdatePetSupplyQuantity" Method="spUpdatePetSupplyQuantity">
-    <Parameter Name="pet_supply_id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="quantity" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.spSelectLatestTransactionHistoryID" Method="spSelectLatestTransactionHistoryID">
-    <ElementType Name="spSelectLatestTransactionHistoryIDResult">
-      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+  <Function Name="dbo.spGetPetBreeds" Method="spGetPetBreeds">
+    <Parameter Name="pet_type_id" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spGetPetBreedsResult">
+      <Column Name="pet_breed_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="pet_type_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>

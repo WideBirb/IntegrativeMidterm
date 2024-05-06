@@ -70,6 +70,7 @@
       <DependentUpon>DataClass.dbml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\Model\AvailabilityIndicatorData.cs" />
+    <Compile Include="MVVM\Model\ControlModels\InputBarResults.cs" />
     <Compile Include="MVVM\Model\Filters\PetBreed.cs" />
     <Compile Include="MVVM\Model\Filters\PetSpecies.cs" />
     <Compile Include="MVVM\Model\Filters\PetSupplyType.cs" />
@@ -80,15 +81,11 @@
     <Compile Include="MVVM\Model\PetSupply.cs" />
     <Compile Include="MVVM\ViewModel\PetCheckOutViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PetInventoryViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PetProfileViewModel.cs" />
     <Compile Include="MVVM\View\PetCheckOutView.xaml.cs">
       <DependentUpon>PetCheckOutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\PetInventoryView.xaml.cs">
       <DependentUpon>PetInventoryView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\PetProfileView.xaml.cs">
-      <DependentUpon>PetProfileView.xaml</DependentUpon>
     </Compile>
     <Compile Include="userControl\CheckoutItems.xaml.cs">
       <DependentUpon>CheckoutItems.xaml</DependentUpon>
@@ -98,6 +95,9 @@
     </Compile>
     <Compile Include="userControl\General\SearchBar.xaml.cs">
       <DependentUpon>SearchBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="userControl\Overlay\PetProfile.xaml.cs">
+      <DependentUpon>PetProfile.xaml</DependentUpon>
     </Compile>
     <Compile Include="userControl\PetInventory\PetAvailabilityIndicator.xaml.cs">
       <DependentUpon>PetAvailabilityIndicator.xaml</DependentUpon>
@@ -138,10 +138,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\PetProfileView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MVVM\View\SuppliesInventoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -155,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Style\ColorLibrary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Style\ComboBoxStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="userControl\General\SearchBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="userControl\Overlay\PetProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
