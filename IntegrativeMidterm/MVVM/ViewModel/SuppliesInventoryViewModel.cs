@@ -258,7 +258,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 						determinePetType(selectedItem.Species),
 						selectedItem.Price,
 						selectedItem.Quantity,
-						1,
 						selectedItem.ImagePath
 					);
 

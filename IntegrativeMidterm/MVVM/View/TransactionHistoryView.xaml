@@ -5,26 +5,85 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
              xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
+             xmlns:components="clr-namespace:IntegrativeMidterm.userControl.TransactionHistory"
+             xmlns:userControls="clr-namespace:IntegrativeMidterm.userControl.General"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="800" MinWidth="900">
     <UserControl.DataContext>
         <viewModel:TransactionHistoryViewModel/>
     </UserControl.DataContext>
 
     <Grid>
-        <DataGrid 
-            Height="400"
-            Width="500"
-                ItemsSource="{Binding Sales}"
-                CanUserAddRows="False" CanUserDeleteRows="False"
-                AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ItemID" Binding="{Binding ItemID}" Width="2*" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="2*"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="2*"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding Date}" Width="2*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
 
+        <Grid Grid.Column="0" Margin="25 25 12.5 25" IsEnabled="{Binding ProfileClosedStatus}">
+            <Border Background="#2C2A3D"  CornerRadius="15"/>
+            <StackPanel>
+                <userControls:SearchBar TextChangedCommand="{Binding SearchCommand}"
+                                        VerticalAlignment="Top" Margin="0 0 0 0"
+                                        PlaceholderText="{Binding SearchBarPlaceholderText}"
+                                        InputText="{Binding SearchBarInput, Mode=TwoWay}"/>
+
+                <Grid Margin="50 0 90 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Column="0"
+                               Text="ID"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource FontColorLight}"
+                               FontSize="18"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1"
+                               Text="Total Sale"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource FontColorLight}"
+                               FontSize="18"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2"
+                               Text="Process Date"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource FontColorLight}"
+                               FontSize="18"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="3"
+                               Text="Staff"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource FontColorLight}"
+                               FontSize="18"
+                               VerticalAlignment="Center"/>
+                </Grid>
+
+                <ScrollViewer Margin="0 0 0 0" MaxHeight="600"
+                          Style="{StaticResource ThinScrollViewerStyle}">
+                    <ItemsControl Margin="0 0 0 0"
+                    ItemsSource="{Binding AllTransactions}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <components:TransactionItem/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel
+                                Orientation="Vertical"
+                                Margin="40 0 40 0"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="12.5 25 25 25" IsEnabled="{Binding ProfileClosedStatus}">
+            <Border Grid.Row="0" Background="#2C2A3D" CornerRadius="15"/>
+        </Grid>
     </Grid>
 </UserControl>

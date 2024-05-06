@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Linq;
 using System.Linq;
 using System.Reflection;
@@ -31,7 +32,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
         public ChartValues<double> SupplyAmountSold  { get; set; }
 		public ChartValues<double> SupplySales { get; set; }
-
 		public ChartValues<double> PetSales { get; set; }
 
 		private float lifetimeProfit { get; set; }
@@ -87,7 +87,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 						totalcost += propertySelector(item);
 				}
 				if (totalcost > 10000)
-					totalcost = totalcost / 1000;
+					totalcost /= 1000;
 				WeekList.Add(totalcost);
 
 			}
@@ -113,34 +113,29 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 						totalcost += propertySelector(item);
 				}
 				if (totalcost > 10000)
-					totalcost = totalcost / 1000;
+					totalcost /= 1000;
 				WeekList.Add(totalcost);
 
 			}
 			return WeekList;
 		}
 
-
-
 		public DashboardViewModel() 
         {
 
 			//Lifetime Profit
-			ISingleResult<spGetAllTransactionsResult> day = PetshopDB.spGetAllTransactions(DateTime.Now.AddYears(-20), DateTime.Now);
-			foreach (var item in day)
+			ISingleResult<spGetAllTransactionsResult> allTransactions = PetshopDB.spGetAllTransactions(null, null);
+            foreach (var transaction in allTransactions)
 			{
-				if (item.Total_Cost == null)
+				if (transaction.Total_Cost == null)
 					continue;
-				else
-					LifetimeProfit += (float)item.Total_Cost;
-			}
-				
+				LifetimeProfit += (float)transaction.Total_Cost;
+            }
+			spGetAllTransactionsResult recentTransaction = PetshopDB.spGetAllTransactions(null, null).Last();
+            RecentSaleCost = (double)recentTransaction.Total_Cost;
+            RecentSaleDate = recentTransaction.Process_Date.ToString();
 
-			// Recent Transaction
-			RecentSaleCost = PetshopDB.vwAllTransactions.Max(t => (double)t.Total_Cost);
-			RecentSaleDate = PetshopDB.vwAllTransactions.Max(t => t.Process_Date.ToString());
-
-			seriesCollection = new SeriesCollection();
+            seriesCollection = new SeriesCollection();
 			SupplyAmountSold = calculateSupplyWeekStatistics(item => (double)item.Quantity_Sold); ; // new ChartValues<double> { 63, 43, 52, 21, 45, 51, 75 };
 			SupplySales = calculateSupplyWeekStatistics(item => (double)item.Total_Cost);
 			PetSales = calculatePetWeekStatistics(item => (double)item.Cost);

@@ -15,8 +15,8 @@
     </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="7*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="7.25*"/>
+            <ColumnDefinition Width="2.75*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" Margin="25 25 12.5 25" IsEnabled="{Binding ProfileClosedStatus}">
@@ -85,7 +85,7 @@
                     ItemsSource="{Binding AvailabilityIndicators}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <components:PetAvailabilityIndicator Margin="0 5 0 5"
+                            <components:PetAvailabilityIndicator Margin="-10 5 -10 5"
                                                                  SelectedCommand="{Binding DataContext.AvailabilityCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

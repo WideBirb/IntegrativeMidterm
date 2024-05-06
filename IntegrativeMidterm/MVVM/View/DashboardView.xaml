@@ -15,7 +15,7 @@
         <viewModel:DashboardViewModel />
     </UserControl.DataContext>
 
-    <Grid>
+    <Grid HorizontalAlignment="Center">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -33,7 +33,7 @@
                 Width="450"
                 Height="150"
                 Margin="25,25,25,25"
-                HorizontalAlignment="Right"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Background="#FFD23C3C"
                 BorderBrush="White"
@@ -49,9 +49,8 @@
 
             </Border>
 
-            <StackPanel Grid.Column="0">
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
                 <TextBlock
-                    Margin="70,35,25,0"
                     HorizontalAlignment="Center"
                     Panel.ZIndex="2"
                     FontSize="45"
@@ -60,13 +59,12 @@
                     Text="LIFETIME PROFIT" />
 
                 <TextBlock
-                    Margin="70,5,25,5"
                     HorizontalAlignment="Center"
                     Panel.ZIndex="2"
                     FontSize="45"
                     FontWeight="Bold"
                     Foreground="Lime"
-                    Text="{Binding LifetimeProfit, StringFormat=PHP: {0}}" />
+                    Text="{Binding LifetimeProfit, StringFormat=Php {0}}" />
 
             </StackPanel>
 
@@ -75,8 +73,7 @@
                 Grid.Column="1"
                 Width="350"
                 Height="150"
-                Margin="25"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Background="{DynamicResource MenuButtonHoveredColor}"
                 BorderBrush="White"
@@ -92,9 +89,8 @@
 
             </Border>
 
-            <StackPanel Grid.Column="1">
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock
-                    Margin="0,50,40,0"
                     HorizontalAlignment="Center"
                     Panel.ZIndex="2"
                     FontSize="25"
@@ -103,22 +99,20 @@
                     Text="RECENT TRANSACTION" />
 
                 <TextBlock
-                    Margin="0,2,40,0"
                     HorizontalAlignment="Center"
                     Panel.ZIndex="2"
                     FontSize="25"
                     FontWeight="Bold"
                     Foreground="#FFFF5959"
-                    Text="{Binding RecentSaleDate}" />
+                    Text="{Binding RecentSaleDate, Mode=TwoWay}" />
 
                 <TextBlock
-                    Margin="0,2,40,0"
                     HorizontalAlignment="Center"
                     Panel.ZIndex="2"
                     FontSize="25"
                     FontWeight="Bold"
                     Foreground="Lime"
-                    Text="{Binding RecentSaleCost, StringFormat=PHP: {0}}" />
+                    Text="{Binding RecentSaleCost, StringFormat=Php {0}, Mode=TwoWay}" />
 
             </StackPanel>
         </Grid>

@@ -79,6 +79,8 @@
     <Compile Include="MVVM\Model\SaleOverview.cs" />
     <Compile Include="MVVM\Model\SaleSupplyReceipt.cs" />
     <Compile Include="MVVM\Model\PetSupply.cs" />
+    <Compile Include="MVVM\Model\TransactionHistory.cs" />
+    <Compile Include="MVVM\Model\TransactionSummary.cs" />
     <Compile Include="MVVM\ViewModel\PetCheckOutViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PetInventoryViewModel.cs" />
     <Compile Include="MVVM\View\PetCheckOutView.xaml.cs">
@@ -107,6 +109,9 @@
     </Compile>
     <Compile Include="userControl\SupplyItems.xaml.cs">
       <DependentUpon>SupplyItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="userControl\TransactionHistory\TransactionItem.xaml.cs">
+      <DependentUpon>TransactionItem.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -203,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="userControl\SupplyItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="userControl\TransactionHistory\TransactionItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

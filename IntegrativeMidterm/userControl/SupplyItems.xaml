@@ -8,7 +8,7 @@
     x:Name="root"
     HorizontalAlignment="Stretch"
     VerticalAlignment="Stretch"
-    mc:Ignorable="d">
+    mc:Ignorable="d" d:DesignWidth="520" MinWidth="500">
 
     <Border
         Margin="15,10,15,10"
@@ -20,7 +20,7 @@
                 Opacity="0.75"
                 ShadowDepth="3" />
         </Border.Effect>
-        <Grid Width="500" Height="100">
+        <Grid Height="100">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="95" />
                 <ColumnDefinition Width="1.5*" />
@@ -50,6 +50,7 @@
 
             <StackPanel
                 Grid.Column="1"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Orientation="Vertical">
                 <TextBlock
@@ -75,6 +76,7 @@
             <StackPanel
                 Grid.Column="2"
                 Width="70"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Orientation="Vertical">
                 <TextBlock
@@ -93,6 +95,7 @@
             <StackPanel
                 Grid.Column="3"
                 Width="70"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Orientation="Vertical">
                 <TextBlock
@@ -115,6 +118,7 @@
                 Height="40"
                 BorderBrush="White"
                 BorderThickness="1.5"
+                HorizontalAlignment="Center"
                 Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.AddItemCommand}"
                 CommandParameter="{Binding PetSupplyID}"
                 Content="ADD"
