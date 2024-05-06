@@ -156,7 +156,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             set { _profileImagePath = value; OnPropertyChanged(); }
         }
 
-
         //-----------------------------------------------------------------//
 
         public PetInventoryViewModel()
@@ -196,16 +195,16 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             if (retrievedData == null) { return; }
             ResetAvailabilityCount();
 
-            foreach (var petData in retrievedData)
+            if (filter != null)
             {
-                currentDateTime = DateTime.Now;
-                previousDateTime = petData.Birthdate;
-                age = ((currentDateTime.Year - previousDateTime.Year) * 12) + currentDateTime.Month - previousDateTime.Month;
-                price = (float)Math.Round(petData.Price, 2);
-                UpdateAvailabilityCount(petData.Status_ID);
-
-                if (filter != null)
+                foreach (var petData in retrievedData)
                 {
+                    currentDateTime = DateTime.Now;
+                    previousDateTime = petData.Birthdate;
+                    age = ((currentDateTime.Year - previousDateTime.Year) * 12) + currentDateTime.Month - previousDateTime.Month;
+                    price = (float)Math.Round(petData.Price, 2);
+                    UpdateAvailabilityCount(petData.Status_ID);
+
                     if (!petData.Name.ToLower().Contains(filter.ToLower()))
                         continue;
 
@@ -228,6 +227,16 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                     });
                     continue;
                 }
+                return;
+            }
+
+            foreach (var petData in retrievedData)
+            {
+                currentDateTime = DateTime.Now;
+                previousDateTime = petData.Birthdate;
+                age = ((currentDateTime.Year - previousDateTime.Year) * 12) + currentDateTime.Month - previousDateTime.Month;
+                price = (float)Math.Round(petData.Price, 2);
+                UpdateAvailabilityCount(petData.Status_ID);
 
                 DisplayedPets.Add(new Pet
                 {
@@ -262,15 +271,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
         //-----------------------------------------------------------------//
 
-        private async void InitializeData()
+        private void InitializeData()
         {
-            ISingleResult<spGetPetStatusResult> availabilityStatus = null;
-            do
-            {
-                availabilityStatus = PetshopDB.spGetPetStatus();
-                await Task.Delay(0);
-            } while (availabilityStatus == null);
-
+            ISingleResult<spGetPetStatusResult> availabilityStatus = PetshopDB.spGetPetStatus();
             foreach (var status in availabilityStatus)
             {
                 AvailabilityIndicators.Add(new AvailabilityIndicatorData
@@ -281,13 +284,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 });
             }
 
-            ISingleResult<spGetPetTypesResult> petSpecies = null;
-            do
-            {
-                petSpecies = PetshopDB.spGetPetTypes();
-                await Task.Delay(0);
-            } while (petSpecies == null);
-
+            ISingleResult<spGetPetTypesResult> petSpecies = PetshopDB.spGetPetTypes();
             foreach (var species in petSpecies)
             {
                 PetSpeciesFilters.Add(new PetSpecies
@@ -295,11 +292,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                     ID = species.pet_type_id,
                     Description = species.description
                 });
-            }
-
-            while (PetshopDB.spGetAllPets(null, null, null, null) == null)
-            {
-                await Task.Delay(100);
             }
             GetSearchResults();
         }

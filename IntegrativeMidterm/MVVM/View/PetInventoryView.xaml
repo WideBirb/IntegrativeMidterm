@@ -45,7 +45,7 @@
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                <VirtualizingStackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
@@ -54,7 +54,8 @@
                 <ScrollViewer Margin="0 0 25 0" MaxHeight="600"
                               Style="{StaticResource ThinScrollViewerStyle}">
                     <ItemsControl Margin="0 0 0 0"
-                        ItemsSource="{Binding DisplayedPets}">
+                                  ItemsSource="{Binding DisplayedPets}"
+                                  VirtualizingStackPanel.IsVirtualizing="True">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <components:PetListItem Margin="0 5 -30 5"
@@ -63,7 +64,7 @@
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel
+                                <VirtualizingStackPanel
                                     Orientation="Vertical"
                                     Margin="40 0 40 0"/>
                             </ItemsPanelTemplate>
