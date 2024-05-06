@@ -6,9 +6,11 @@
     xmlns:local="clr-namespace:IntegrativeMidterm.userControl"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="root"
+    MinWidth="500"
     HorizontalAlignment="Stretch"
     VerticalAlignment="Stretch"
-    mc:Ignorable="d" d:DesignWidth="520" MinWidth="500">
+    d:DesignWidth="520"
+    mc:Ignorable="d">
 
     <Border
         Margin="15,10,15,10"
@@ -59,18 +61,19 @@
                     Foreground="White"
                     Text="{Binding PetSupplyName}"
                     TextAlignment="Center" />
-                <TextBlock
+                <!--<TextBlock
                     Foreground="White"
                     Text="{Binding SupplyType, StringFormat=Category: {0}}"
-                    TextAlignment="Center" />
+                    TextAlignment="Center" />-->
                 <TextBlock
                     Foreground="White"
                     Text="{Binding Species, StringFormat=Type: {0}}"
                     TextAlignment="Center" />
-                <TextBlock
-                    Foreground="#FFFF8080"
-                    Text="{Binding PetSupplyID}"
-                    TextAlignment="Center" />
+                <TextBlock Foreground="#FFFF8080" TextAlignment="Center">
+                    <Run Text="Item ID: " />
+                    <Run Text="{Binding PetSupplyID}" />
+                </TextBlock>
+
             </StackPanel>
 
             <StackPanel
@@ -116,9 +119,9 @@
                 Grid.Column="4"
                 Width="70"
                 Height="40"
+                HorizontalAlignment="Center"
                 BorderBrush="White"
                 BorderThickness="1.5"
-                HorizontalAlignment="Center"
                 Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.AddItemCommand}"
                 CommandParameter="{Binding PetSupplyID}"
                 Content="ADD"

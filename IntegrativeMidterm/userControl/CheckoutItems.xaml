@@ -61,10 +61,10 @@
                     Foreground="White"
                     Text="{Binding PetSupplyName}"
                     TextAlignment="Left" />
-                <TextBlock
+                <!--<TextBlock
                     Foreground="White"
                     Text="{Binding SupplyType, StringFormat=Category: {0}}"
-                    TextAlignment="Left" />
+                    TextAlignment="Left" />-->
                 <TextBlock
                     Foreground="White"
                     Text="{Binding Species, StringFormat=Type: {0}}"
@@ -72,8 +72,10 @@
                 <TextBlock
                     x:Name="PetSupplyIDTextBox"
                     Foreground="#FFFF8080"
-                    Text="{Binding PetSupplyID}"
-                    TextAlignment="Left" />
+                    TextAlignment="Left">
+                    <Run Text="Item ID: " />
+                    <Run Text="{Binding PetSupplyID}" />
+                </TextBlock>
             </StackPanel>
 
 

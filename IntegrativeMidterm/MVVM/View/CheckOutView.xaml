@@ -8,9 +8,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:userControls="clr-namespace:IntegrativeMidterm.userControl.General"
     xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
+    MinWidth="900"
     HorizontalAlignment="Stretch"
     VerticalAlignment="Stretch"
-    mc:Ignorable="d" d:DesignHeight="830" d:DesignWidth="800" MinWidth="900">
+    d:DesignHeight="830"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:CheckOutViewModel />
     </UserControl.DataContext>
@@ -18,10 +21,13 @@
     <Grid Grid.Row="1" Margin="25">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*" />
-            <ColumnDefinition/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Border Background="#2C2A3D" CornerRadius="15" Margin="0 0 12.5 0"/>
+        <Border
+            Margin="0,0,12.5,0"
+            Background="#2C2A3D"
+            CornerRadius="15" />
         <!--  Left Panel  -->
         <Grid Grid.Row="1">
 
@@ -41,11 +47,12 @@
                     <ItemsControl ItemsSource="{Binding PetSpeciesFilters}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button
+                                <RadioButton
                                     Command="{Binding DataContext.FilterPetTypesCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
-                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Content}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                                     Content="{Binding Description}"
-                                    Style="{StaticResource FilterButtonStyle}" />
+                                    Style="{StaticResource FilterRadioButtonStyle}"
+                                    Tag="{Binding Description}" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
@@ -59,7 +66,7 @@
                     </ItemsControl>
                 </ScrollViewer>
 
-                <TextBlock
+                <!--<TextBlock
                     Grid.Row="1"
                     Margin="25,0,0,0"
                     HorizontalAlignment="Left"
@@ -68,7 +75,7 @@
                     FontWeight="Bold"
                     Foreground="White"
                     Text="{Binding CurrentPetFilter, StringFormat=FILTER: {0}}"
-                    TextAlignment="Left" />
+                    TextAlignment="Left" />-->
 
                 <!--  Main  -->
 

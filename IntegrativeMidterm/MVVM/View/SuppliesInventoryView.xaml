@@ -7,47 +7,50 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
     x:Name="root"
-    HorizontalAlignment="Center"
+    HorizontalAlignment="Stretch"
     VerticalAlignment="Stretch"
     mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:SuppliesInventoryViewModel />
     </UserControl.DataContext>
 
-    <Grid Margin="0,90,0,0">
+    <Grid Margin="-5,0,30,5">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="5.4*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
 
-        <Border Margin="-25,0,15,0" CornerRadius="15">
 
-            <Border.Effect>
-                <DropShadowEffect
-                    BlurRadius="45"
-                    Opacity="0.5"
-                    ShadowDepth="15" />
-            </Border.Effect>
+        <Border
+            Width="710"
+            Height="780"
+            Margin="10,0,10,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="{StaticResource ViewBorderBG}"
+            CornerRadius="15">
 
             <DataGrid
                 x:Name="myDataGrid"
                 Grid.Column="0"
-                Width="550"
+                Width="660"
                 Height="700"
-                HorizontalAlignment="Left"
+                Margin="25,20,0,0"
                 VerticalAlignment="Top"
+                VerticalContentAlignment="Center"
                 AutoGenerateColumns="False"
+                Background="{StaticResource ViewBorderBG}"
                 BorderBrush="White"
-                BorderThickness="3"
                 CanUserAddRows="False"
                 CanUserDeleteRows="False"
                 CellEditEnding="DataGrid_CellEditEnding"
-                ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}"
-                FontSize="15"
+                ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                FontSize="24"
+                Foreground="White"
                 ItemsSource="{Binding SupplyItems}"
-                RowStyle="{DynamicResource DataGridRowStyle}"
+                RowStyle="{DynamicResource DataGridRowStyle1}"
                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                 <DataGrid.Columns>
                     <!--<DataGridTextColumn
@@ -55,6 +58,26 @@
             Binding="{Binding PetSupplyID}"
             Header="ID"
             IsReadOnly="True" />-->
+                    <DataGridTemplateColumn Width="0.75*" Header="Image">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border
+                                    Width="40"
+                                    Height="40"
+                                    Margin="0,0,55,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    BorderBrush="White"
+                                    BorderThickness="2"
+                                    CornerRadius="5">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="{Binding ImagePath}" />
+                                    </Border.Background>
+                                </Border>
+
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn
                         Width="1*"
                         Binding="{Binding PetSupplyName}"
@@ -66,7 +89,7 @@
                         Header="QTY"
                         IsReadOnly="False" />
                     <DataGridTextColumn
-                        Width="1*"
+                        Width="0.78*"
                         Binding="{Binding Price}"
                         Header="Price"
                         IsReadOnly="False" />
@@ -75,152 +98,197 @@
                         Binding="{Binding Species}"
                         Header="Pet Type"
                         IsReadOnly="False" />
-                    <DataGridTextColumn
+                    <!--<DataGridTextColumn
                         Width="1*"
                         Binding="{Binding SupplyType}"
                         Header="S.Type"
-                        IsReadOnly="False" />
-                    <DataGridTextColumn
+                        IsReadOnly="False" />-->
+                    <!--<DataGridTextColumn
                         Width="1*"
                         Binding="{Binding ImagePath}"
                         Header="Image URL"
-                        IsReadOnly="False" />
+                        IsReadOnly="False" />-->
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
 
 
 
-        <Grid Grid.Column="1" VerticalAlignment="Top">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="3*" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+        <Border
+            Grid.Column="1"
+            Width="280"
+            Height="780"
+            Margin="0,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="{StaticResource ViewBorderBG}"
+            CornerRadius="15">
 
-            <StackPanel
-                x:Name="TextBoxContainer"
-                Grid.Column="1"
-                Margin="5,10,0,15"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top">
-
-                <Button
-                    Width="200"
-                    Height="25"
-                    Margin="5,0,10,10"
-                    Command="{Binding ClearCommand}"
-                    CommandParameter="{Binding ElementName=TextBoxContainer}"
-                    Content="CLEAR ALL FORMS"
-                    FontSize="17"
-                    Style="{StaticResource SecondaryButtonStyle}" />
-
-                <Button
-                    Width="200"
-                    Height="25"
-                    Margin="5,0,10,10"
-                    Command="{Binding CopyCommand}"
-                    CommandParameter="{Binding ElementName=root}"
-                    Content="COPY SELECTED ITEM"
-                    FontSize="17"
-                    Style="{StaticResource TertiaryButtonStyle}" />
+            <Grid Grid.Column="1" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
 
-                <Label
-                    Content="Name"
-                    FontSize="18"
-                    Foreground="White" />
-                <TextBox x:Name="NameTextBox" Style="{StaticResource TextBoxBase}" />
-                <Label
-                    Content="Quantity"
-                    FontSize="18"
-                    Foreground="White" />
-                <TextBox
-                    x:Name="QuantityTextBox"
-                    Margin="5,0,5,15"
-                    PreviewTextInput="QuantityTextBox_PreviewTextInput"
-                    Style="{StaticResource TextBoxBase}" />
-                <Label
-                    Content="Price"
-                    FontSize="18"
-                    Foreground="White" />
-                <TextBox
-                    x:Name="PriceTextBox"
-                    Margin="5,0,5,15"
-                    PreviewTextInput="PriceTextBox_PreviewTextInput"
-                    Style="{StaticResource TextBoxBase}" />
 
-                <Label
-                    Content="Pet Type"
-                    FontSize="18"
-                    Foreground="White" />
-                <TextBox
-                    x:Name="PetTypeTextBox"
-                    Margin="5,0,5,15"
-                    Style="{StaticResource TextBoxBase}" />
-
-                <Label
-                    Content="Supply Type"
-                    FontSize="18"
-                    Foreground="White" />
-
-                <TextBox
-                    x:Name="SupplyTypeTextBox"
-                    Margin="5,0,5,15"
-                    Style="{StaticResource TextBoxBase}" />
-
-                <Label
-                    Content="Image URL"
-                    FontSize="18"
-                    Foreground="White" />
-                <TextBox
-                    x:Name="ImageURLTextBox"
-                    Margin="5,0,5,5"
-                    Style="{StaticResource TextBoxBase}" />
-            </StackPanel>
-
-            <StackPanel
-                Grid.Row="1"
-                Margin="5,0,0,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Orientation="Vertical">
-                <Button
-                    Name="Hello"
-                    Width="190"
-                    Height="45"
-                    Margin="5,0,10,10"
-                    Command="{Binding AddCommand}"
-                    CommandParameter="{Binding ElementName=root}"
-                    Content="ADD"
-                    Style="{StaticResource PrimaryButtonStyle}" />
+                <StackPanel
+                    x:Name="TextBoxContainer"
+                    Grid.Column="1"
+                    Margin="0,10,25,15"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top">
 
 
-                <Button
-                    Width="190"
-                    Height="45"
-                    Margin="5,0,10,10"
-                    Command="{Binding UpdateCommand}"
-                    CommandParameter="{Binding ElementName=root}"
-                    Content="UPDATE"
-                    Style="{StaticResource TertiaryButtonStyle}" />
+                    <Button
+                        Width="220"
+                        Height="25"
+                        Margin="5,55,10,10"
+                        Command="{Binding CopyCommand}"
+                        CommandParameter="{Binding ElementName=root}"
+                        Content="COPY SELECTED ITEM"
+                        FontSize="17"
+                        Style="{StaticResource PrimaryButtonStyle}" />
 
-                <Button
-                    Width="190"
-                    Height="45"
-                    Margin="5,0,10,0"
-                    Command="{Binding DeleteCommand}"
-                    Content="DELETE"
-                    Style="{StaticResource SecondaryButtonStyle}" />
-
-
-            </StackPanel>
+                    <Button
+                        Width="220"
+                        Height="25"
+                        Margin="5,0,10,10"
+                        Command="{Binding ClearCommand}"
+                        CommandParameter="{Binding ElementName=TextBoxContainer}"
+                        Content="CLEAR ALL FORMS"
+                        FontSize="17"
+                        Style="{StaticResource SecondaryButtonStyle}" />
 
 
 
 
+                    <Label
+                        Content="Name"
+                        FontSize="18"
+                        Foreground="White" />
+                    <TextBox
+                        x:Name="NameTextBox"
+                        Margin="5,0,5,15"
+                        Style="{StaticResource TextBoxBase}" />
+                    <Label
+                        Content="Quantity"
+                        FontSize="18"
+                        Foreground="White" />
+                    <TextBox
+                        x:Name="QuantityTextBox"
+                        Margin="5,0,5,15"
+                        PreviewTextInput="QuantityTextBox_PreviewTextInput"
+                        Style="{StaticResource TextBoxBase}" />
+                    <Label
+                        Content="Price"
+                        FontSize="18"
+                        Foreground="White" />
+                    <TextBox
+                        x:Name="PriceTextBox"
+                        Margin="5,0,5,15"
+                        PreviewTextInput="PriceTextBox_PreviewTextInput"
+                        Style="{StaticResource TextBoxBase}" />
+
+                    <Label
+                        Content="Pet Type"
+                        FontSize="18"
+                        Foreground="White" />
+                    <TextBox
+                        x:Name="PetTypeTextBox"
+                        Margin="5,0,5,15"
+                        Style="{StaticResource TextBoxBase}" />
+
+                    <!--<Label
+            Content="Supply Type"
+            FontSize="18"
+            Foreground="White" />
+
+        <TextBox
+            x:Name="SupplyTypeTextBox"
+            Margin="5,0,5,15"
+            Style="{StaticResource TextBoxBase}" />-->
+
+                    <Label
+                        Content="Image "
+                        FontSize="18"
+                        Foreground="White" />
+
+                    <Button
+                        Width="220"
+                        Height="35"
+                        Margin="5,5,10,0"
+                        Command="{Binding UploadImageCommand}"
+                        CommandParameter="{Binding ElementName=TextBoxContainer}"
+                        Content="UPLOAD IMAGE"
+                        FontSize="17"
+                        FontWeight="Bold"
+                        Style="{StaticResource TertiaryButtonStyle}" />
+
+                    <!--<TextBox
+            x:Name="ImageURLTextBox"
+            Margin="5,0,5,5"
+            Style="{StaticResource TextBoxBase}" />-->
+
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="1"
+                    Margin="5,0,5,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <Label
+                        Margin="0,0,0,15"
+                        HorizontalAlignment="Center"
+                        Content="____________________________________________________"
+                        FontSize="18"
+                        Foreground="White" />
+
+                    <Button
+                        Name="Hello"
+                        Width="190"
+                        Height="45"
+                        Margin="5,0,10,10"
+                        Command="{Binding AddCommand}"
+                        CommandParameter="{Binding ElementName=root}"
+                        Content="ADD"
+                        Style="{StaticResource PrimaryButtonStyle}" />
 
 
-        </Grid>
+                    <Button
+                        Width="190"
+                        Height="45"
+                        Margin="5,0,10,10"
+                        Command="{Binding UpdateCommand}"
+                        CommandParameter="{Binding ElementName=root}"
+                        Content="UPDATE"
+                        Style="{StaticResource TertiaryButtonStyle}" />
+
+                    <Button
+                        Width="190"
+                        Height="45"
+                        Margin="5,0,10,25"
+                        Command="{Binding DeleteCommand}"
+                        Content="DELETE"
+                        Style="{StaticResource SecondaryButtonStyle}" />
+
+
+
+                </StackPanel>
+
+
+
+
+
+
+            </Grid>
+
+
+        </Border>
+
+
 
 
     </Grid>
