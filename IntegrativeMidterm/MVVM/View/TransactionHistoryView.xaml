@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
              xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
              xmlns:components="clr-namespace:IntegrativeMidterm.userControl.TransactionHistory"
+             xmlns:helpers="clr-namespace:IntegrativeMidterm.userControl.HelperClasses"
              xmlns:userControls="clr-namespace:IntegrativeMidterm.userControl.General"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800" MinWidth="900">
@@ -61,8 +62,9 @@
                                VerticalAlignment="Center"/>
                 </Grid>
 
-                <ScrollViewer Margin="0 0 0 0" MaxHeight="600"
-                          Style="{StaticResource ThinScrollViewerStyle}">
+                <ScrollViewer x:Name="ResultsScroll"
+                              MaxHeight="600"
+                              helpers:ScrollViewerHelper.ScrollToEndCommand="{Binding EndScrollCommand}">
                     <ItemsControl Margin="0 0 0 0"
                     ItemsSource="{Binding AllTransactions}">
                         <ItemsControl.ItemTemplate>

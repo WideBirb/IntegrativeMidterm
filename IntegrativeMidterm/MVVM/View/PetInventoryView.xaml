@@ -9,7 +9,7 @@
              xmlns:helpers="clr-namespace:IntegrativeMidterm.userControl.HelperClasses"
              xmlns:components="clr-namespace:IntegrativeMidterm.userControl.PetInventory"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="800" MinWidth="900">
+             d:DesignHeight="800" d:DesignWidth="800" MinWidth="950">
     <UserControl.DataContext>
         <viewModel:PetInventoryViewModel/>
     </UserControl.DataContext>
@@ -96,6 +96,18 @@
             </StackPanel>
 
             <Border Grid.Row="1" Background="#2C2A3D" CornerRadius="15" Margin="0 12.5 0 0"/>
+            <StackPanel Grid.Row="1" 
+                        Margin="10 22.5 10 10"
+                        VerticalAlignment="Center">
+                <TextBlock Height="50"
+                           Foreground="White"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           Text="Register Pet"/>
+                <Button Style="{StaticResource CircularButtonStyle}"
+                        Width="70" Height="70" Content="➕"/>
+            </StackPanel>
+            
             <StackPanel Grid.Row="1" 
                         Margin="10 22.5 10 10"
                         VerticalAlignment="Center"

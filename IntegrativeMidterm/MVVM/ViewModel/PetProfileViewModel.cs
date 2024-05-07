@@ -10,13 +10,21 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using IntegrativeMidterm.MVVM.Model;
+using System.Collections.ObjectModel;
+using IntegrativeMidterm.MVVM.Model.Filters;
+using System.Data.Common;
+using System.Windows.Controls;
 
 namespace IntegrativeMidterm.MVVM.ViewModel
 {
     internal class PetProfileViewModel : ViewModelBase
     {
+        public ObservableCollection<PetSpecies> PetSpeciesList { get; set; }
+        public ObservableCollection<PetBreed> PetBreedsList {  get; set; }
+
         public EventHandler CloseView;
         public readonly Pet SelectedPet = null;
+
         public bool ChangesSaved { get; private set; }
 
         //-----------------------------------------------------------------//
@@ -29,7 +37,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         private string _species = string.Empty;
         private string _breed = string.Empty;
         private string _vaccinationDate = string.Empty;
-        private string _dewormDate = string.Empty;
+        private string _checkupDate = string.Empty;
         private string _profileImagePath = string.Empty;
         private bool _isGenderMale = true;
         private bool _isGenderFemale = false;
@@ -66,10 +74,10 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             get { return _vaccinationDate; }
             set { _vaccinationDate = value; OnPropertyChanged(); }
         }
-        public string DewormDate
+        public string CheckupDate
         {
-            get { return _dewormDate; }
-            set { _dewormDate = value; OnPropertyChanged(); }
+            get { return _checkupDate; }
+            set { _checkupDate = value; OnPropertyChanged(); }
         }
         public bool IsGenderMale
         {
@@ -100,14 +108,18 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
         //-----------------------------------------------------------------//
 
-        public RelayCommand UploadImageCommand => new RelayCommand(parameter => UploadImage());
-        public RelayCommand SaveChangesCommand => new RelayCommand(parameter => SaveChanges());
-        public RelayCommand DiscardChangesCommand => new RelayCommand(parameter => DiscardChanges());
-
+        public RelayCommand UploadImageCommand => new RelayCommand(execute => UploadImage());
+        public RelayCommand SaveChangesCommand => new RelayCommand(execute => SaveChanges());
+        public RelayCommand DiscardChangesCommand => new RelayCommand(execute => DiscardChanges());
+        public RelayCommand SelectionChanged => new RelayCommand(parameter => SetSelection(parameter));
+        
         //-----------------------------------------------------------------//
 
         public PetProfileViewModel(Pet chosenPet = null)
         {
+            PetSpeciesList = new ObservableCollection<PetSpecies>();
+            PetBreedsList = new ObservableCollection<PetBreed>();
+
             SelectedPet = chosenPet;
 
             if (chosenPet != null)
@@ -121,7 +133,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 Species = chosenPet.Species;
                 Breed = chosenPet.Breed;
                 VaccinationDate = "N/A";
-                DewormDate = "N/A";
+                CheckupDate = "N/A";
                 ProfileImagePath = chosenPet.ImagePath;
                 if (chosenPet.Gender == "M")
                 {
@@ -131,6 +143,18 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 {
                     IsGenderMale = false; IsGenderFemale = true;
                 }
+
+                var species = PetshopDB.spGetPetTypes();
+                foreach (var type in species)
+                {
+                    PetSpeciesList.Add(new PetSpecies
+                    {
+                        ID = type.pet_type_id,
+                        Description = type.description
+                    });
+                }
+
+                UpdateBreeds(chosenPet.SpeciesID);
             }
         }
 
@@ -173,7 +197,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Vaccination Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            if (!CheckDateFormat(DewormDate, out deworm) && DewormDate != "N/A")
+            if (!CheckDateFormat(CheckupDate, out deworm) && CheckupDate != "N/A")
             {
                 MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Deworm Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -218,6 +242,35 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             ChangesSaved = false;
             CloseView?.Invoke(this, EventArgs.Empty);
         }
+        private void SetSelection(object sender)
+        {
+            if (sender is PetSpecies species)
+            {
+                Species = species.Description;
+                UpdateBreeds(species.ID);
+                return;
+            }
+
+            if (sender is PetBreed breed)
+            {
+                Breed = breed.Description;
+                return;
+            }
+        }
+        private void UpdateBreeds(int ID)
+        {
+            PetBreedsList.Clear();
+
+            var breeds = PetshopDB.spGetPetBreeds(ID);
+            foreach (var breed in breeds)
+            {
+                PetBreedsList.Add(new PetBreed
+                {
+                    ID = breed.pet_breed_id,
+                    Description = breed.description
+                });
+            }
+        }
 
         //-----------------------------------------------------------------//
 
@@ -230,7 +283,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 Species == string.Empty ||
                 Breed == string.Empty ||
                 VaccinationDate == string.Empty ||
-                DewormDate == string.Empty
+                CheckupDate == string.Empty
                 )
                 return false;
 

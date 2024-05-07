@@ -96,6 +96,9 @@
     <Compile Include="userControl\CheckoutItems.xaml.cs">
       <DependentUpon>CheckoutItems.xaml</DependentUpon>
     </Compile>
+    <Compile Include="userControl\General\DropdownSelection.xaml.cs">
+      <DependentUpon>DropdownSelection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="userControl\General\InputBar.xaml.cs">
       <DependentUpon>InputBar.xaml</DependentUpon>
     </Compile>
@@ -190,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="userControl\CheckoutItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="userControl\General\DropdownSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

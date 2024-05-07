@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace IntegrativeMidterm.MVVM.View
 {
-    /// <summary>
-    /// Interaction logic for TransactionHistoryView.xaml
-    /// </summary>
     public partial class TransactionHistoryView : UserControl
     {
         public TransactionHistoryView()

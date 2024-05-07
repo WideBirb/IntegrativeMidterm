@@ -61,19 +61,22 @@
                     Foreground="White"
                     Text="{Binding PetSupplyName}"
                     TextAlignment="Center" />
-                <!--<TextBlock
-                    Foreground="White"
-                    Text="{Binding SupplyType, StringFormat=Category: {0}}"
-                    TextAlignment="Center" />-->
                 <TextBlock
                     Foreground="White"
                     Text="{Binding Species, StringFormat=Type: {0}}"
                     TextAlignment="Center" />
-                <TextBlock Foreground="#FFFF8080" TextAlignment="Center">
-                    <Run Text="Item ID: " />
-                    <Run Text="{Binding PetSupplyID}" />
-                </TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock
+                        Foreground="#FFFF8080"
+                        Text="ITEM ID: "
+                        TextAlignment="Left" />
 
+                    <TextBlock
+                        x:Name="PetSupplyIDTextBox"
+                        Foreground="#FFFF8080"
+                        Text="{Binding PetSupplyID}"
+                        TextAlignment="Left" />
+                </StackPanel>
             </StackPanel>
 
             <StackPanel
