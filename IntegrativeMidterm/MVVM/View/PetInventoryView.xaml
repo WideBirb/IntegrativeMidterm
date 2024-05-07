@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
              xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
              xmlns:userControls="clr-namespace:IntegrativeMidterm.userControl.General"
-             xmlns:profile="clr-namespace:IntegrativeMidterm.userControl.Overlay"
+             xmlns:helpers="clr-namespace:IntegrativeMidterm.userControl.HelperClasses"
              xmlns:components="clr-namespace:IntegrativeMidterm.userControl.PetInventory"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800" MinWidth="900">
@@ -51,7 +51,9 @@
                     </ItemsControl>
                 </ScrollViewer>
 
-                <ScrollViewer Margin="0 0 25 0" MaxHeight="600"
+                <ScrollViewer x:Name="ResultsScroll"
+                              Margin="0 0 25 0" MaxHeight="600"
+                              helpers:ScrollViewerHelper.ScrollToEndCommand="{Binding EndScrollCommand}"
                               Style="{StaticResource ThinScrollViewerStyle}">
                     <ItemsControl Margin="0 0 0 0"
                                   ItemsSource="{Binding DisplayedPets}"
@@ -149,6 +151,6 @@
             </StackPanel>
         </Grid>
 
-        <profile:PetProfile Grid.ColumnSpan="2" Visibility="{Binding ProfileVisibility}"/>
+        <ContentControl Content="{Binding ProfileView}" Grid.ColumnSpan="2"/>
     </Grid>
 </UserControl>

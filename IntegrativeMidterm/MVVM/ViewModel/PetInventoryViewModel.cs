@@ -18,6 +18,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Text.RegularExpressions;
+using System.Data.Common;
+using System.Threading;
 
 namespace IntegrativeMidterm.MVVM.ViewModel
 {
@@ -28,20 +30,17 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public ObservableCollection<Pet> DisplayedPets { get; set; }
         
         public RelayCommand ConfirmCommand => new RelayCommand(execute => ManageInformation());
-        public RelayCommand SearchCommand => new RelayCommand(parameter => UpdateSearchResult(parameter));
-        public RelayCommand UploadImageCommand => new RelayCommand(parameter => UploadImage());
-        public RelayCommand SaveChangesCommand => new RelayCommand(parameter => SaveChanges());
-        public RelayCommand DiscardChangesCommand => new RelayCommand(parameter => DiscardChanges());
+        public RelayCommand SearchCommand => new RelayCommand(parameter => UpdateSearchInput(parameter));
 
         public RelayCommand FilterCommand => new RelayCommand(parameter => SetSpeciesFilter(parameter));
         public RelayCommand AvailabilityCommand => new RelayCommand(parameter => SetAvailabilityFilter(parameter));
         public RelayCommand ResultSelectCommand => new RelayCommand(parameter => SetResultSelection(parameter));
+        public RelayCommand EndScrollCommand => new RelayCommand(parameter => LoadMoreItems(parameter));
 
         private string _searchBarInput = string.Empty;
         private string _searchBarPlaceholderText = string.Empty;
         private bool _profileClosedStatus = true;
         private Visibility _profileOptionsVisibility = Visibility.Collapsed;
-        private Visibility _profileVisibility = Visibility.Collapsed;
 
         private int? _speciesFilter = null;
         private int? _availabilityFilter = null;
@@ -49,6 +48,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         RadioButton _activeFilterButton = null;
         RadioButton _activeAvailabilityButton = null;
         RadioButton _activeResultButton = null;
+        private string _previousSearchInput = string.Empty;
         
         private string _petName = string.Empty;
         private string _birthdate = string.Empty;
@@ -57,13 +57,23 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         private string _customer = string.Empty;
         private string _species = string.Empty;
         private string _breed = string.Empty;
-        private string _vaccinationDate = string.Empty;
-        private string _dewormDate = string.Empty;
-        private bool _isGenderMale = true;
-        private bool _isGenderFemale = false;
-        private string _profileImagePath = string.Empty;
 
+        int _displayLimit = 20;
+        int _retrieveIndex = 0;
+        
         private Pet _selectedPet { get; set; }
+        private object _profileView = null;
+        private object _contentScroller = null;
+        
+        public object ProfileView
+        {
+            get { return _profileView; }
+            set
+            {
+                _profileView = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Visibility ProfileOptionsVisibility
         {
@@ -75,11 +85,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             get { return _profileClosedStatus; }
             set { _profileClosedStatus = value; OnPropertyChanged(); }
         }
-        public Visibility ProfileVisibility
-        {
-            get { return _profileVisibility; }
-            set { _profileVisibility = value; OnPropertyChanged(); }
-        }
+
         //-----------------------------------------------------------------//
 
         public string SearchBarInput
@@ -130,31 +136,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             get { return _breed; }
             set { _breed = value; OnPropertyChanged(); }
         }
-        public string VaccinationDate
-        {
-            get { return _vaccinationDate; }
-            set { _vaccinationDate = value; OnPropertyChanged(); }
-        }
-        public string DewormDate
-        {
-            get { return _dewormDate; }
-            set { _dewormDate = value; OnPropertyChanged(); }
-        }
-        public bool IsGenderMale
-        {
-            get { return _isGenderMale; }
-            set { _isGenderMale = value; OnPropertyChanged(); }
-        }
-        public bool IsGenderFemale
-        {
-            get { return _isGenderFemale; }
-            set { _isGenderFemale = value; OnPropertyChanged(); }
-        }
-        public string ProfileImagePath
-        {
-            get { return _profileImagePath; }
-            set { _profileImagePath = value; OnPropertyChanged(); }
-        }
+        
 
         //-----------------------------------------------------------------//
 
@@ -171,15 +153,28 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         }
 
         //-----------------------------------------------------------------//
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
+        private void UpdateSearchInput(object parameter)
+        {
+            ResetResultsAndRestrictions();
+
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            Task.Run(() => GetSearchResults(_cancellationTokenSource.Token, parameter as string));
+        }
         private void UpdateSearchResult(object parameter)
         {
             if (DisplayedPets == null) { return; }
 
-            DisplayedPets.Clear();
-            GetSearchResults(parameter as string);
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            Task.Run(() => GetSearchResults(_cancellationTokenSource.Token, parameter as string));
         }
-        private void GetSearchResults(string filter = null)
+
+        private async void GetSearchResults(CancellationToken cancellationToken, string filter = null)
         {
             DateTime currentDateTime;
             DateTime previousDateTime;
@@ -192,21 +187,79 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 null,
                 _availabilityFilter);
 
-            if (retrievedData == null) { return; }
-            ResetAvailabilityCount();
+            int counter = 0;
 
             if (filter != null)
             {
+                await Application.Current.Dispatcher.BeginInvoke(new Action( async() =>
+                {
+                    foreach (var petData in retrievedData)
+                    {
+                        if (cancellationToken.IsCancellationRequested)
+                            return;
+
+                        if (counter++ < _retrieveIndex)
+                            continue;
+                        if (counter > _displayLimit)
+                            return;
+                        if (DisplayedPets.Any(item => item.ID == petData.ID))
+                            return;
+
+                        currentDateTime = DateTime.Now;
+                        previousDateTime = petData.Birthdate;
+                        age = ((currentDateTime.Year - previousDateTime.Year) * 12) + currentDateTime.Month - previousDateTime.Month;
+                        price = (float)Math.Round(petData.Price, 2);
+                        UpdateAvailabilityCount(petData.Status_ID);
+
+                        if (!petData.Name.ToLower().Contains(filter.ToLower()))
+                        {
+                            --counter;
+                            continue;
+                        }
+
+
+                        DisplayedPets.Add(new Pet
+                        {
+                            ID = petData.ID,
+                            PetName = petData.Name,
+                            Breed = petData.Breed,
+                            Species = petData.Species,
+                            Gender = petData.Gender,
+                            Birthdate = petData.Birthdate,
+                            Price = price,
+                            Status = petData.Status,
+                            StatusID = petData.Status_ID,
+                            BreedID = petData.Breed_ID,
+                            SpeciesID = petData.Species_ID,
+                            Age = age.ToString() + "mo.",
+                            StatusColor = GetStatusColor(petData.Status_ID),
+                            ImagePath = petData.Image_path
+                        });
+                        await Task.Delay(1);
+                    }
+                }));
+                return;
+            }
+
+            await Application.Current.Dispatcher.BeginInvoke(new Action( async() =>
+            {
                 foreach (var petData in retrievedData)
                 {
+                    if (cancellationToken.IsCancellationRequested)
+                        return;
+
+                    if (counter++ < _retrieveIndex)
+                        continue;
+                    if (counter > _displayLimit)
+                        return;
+                    if (DisplayedPets.Any(item => item.ID == petData.ID))
+                        return;
+
                     currentDateTime = DateTime.Now;
                     previousDateTime = petData.Birthdate;
                     age = ((currentDateTime.Year - previousDateTime.Year) * 12) + currentDateTime.Month - previousDateTime.Month;
                     price = (float)Math.Round(petData.Price, 2);
                     UpdateAvailabilityCount(petData.Status_ID);
-
-                    if (!petData.Name.ToLower().Contains(filter.ToLower()))
-                        continue;
 
                     DisplayedPets.Add(new Pet
                     {
@@ -225,37 +278,10 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                         StatusColor = GetStatusColor(petData.Status_ID),
                         ImagePath = petData.Image_path
                     });
-                    continue;
+
+                    await Task.Delay(1);
                 }
-                return;
-            }
-
-            foreach (var petData in retrievedData)
-            {
-                currentDateTime = DateTime.Now;
-                previousDateTime = petData.Birthdate;
-                age = ((currentDateTime.Year - previousDateTime.Year) * 12) + currentDateTime.Month - previousDateTime.Month;
-                price = (float)Math.Round(petData.Price, 2);
-                UpdateAvailabilityCount(petData.Status_ID);
-
-                DisplayedPets.Add(new Pet
-                {
-                    ID = petData.ID,
-                    PetName = petData.Name,
-                    Breed = petData.Breed,
-                    Species = petData.Species,
-                    Gender = petData.Gender,
-                    Birthdate = petData.Birthdate,
-                    Price = price,
-                    Status = petData.Status,
-                    StatusID = petData.Status_ID,
-                    BreedID = petData.Breed_ID,
-                    SpeciesID = petData.Species_ID,
-                    Age = age.ToString() + "mo.",
-                    StatusColor = GetStatusColor(petData.Status_ID),
-                    ImagePath = petData.Image_path
-                });
-            }
+            }));
         }
         private void UpdateAvailabilityCount(int id)
         {
@@ -267,6 +293,27 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             {
                 AvailabilityIndicators[i].Count = 0;
             }
+        }
+        private void LoadMoreItems(object sender)
+        {
+            _contentScroller = sender;
+
+            if (DisplayedPets.Count == _displayLimit)
+            {
+                _retrieveIndex = _displayLimit;
+                _displayLimit += 10;
+                UpdateSearchResult(SearchBarInput);
+            }
+        }
+        private void ResetResultsAndRestrictions()
+        {
+            _retrieveIndex = 0;
+            _displayLimit = 15;
+            ResetAvailabilityCount();
+            DisplayedPets.Clear();
+
+            if (_contentScroller != null)
+            ((ScrollViewer)_contentScroller).ScrollToTop();
         }
 
         //-----------------------------------------------------------------//
@@ -293,7 +340,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                     Description = species.description
                 });
             }
-            GetSearchResults();
+            UpdateSearchResult(null);
         }
         private SolidColorBrush GetStatusColor(int status)
         {
@@ -314,7 +361,20 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         private void ManageInformation()
         {
             ProfileClosedStatus = false;
-            ProfileVisibility = Visibility.Visible;
+            ProfileView = new PetProfileViewModel(_selectedPet);
+            ((PetProfileViewModel)ProfileView).CloseView += ClosePetProfile;
+        }
+        private void ClosePetProfile(object sender, EventArgs e)
+        {
+            PetProfileViewModel ProfileVM = sender as PetProfileViewModel;
+            ProfileClosedStatus = true;
+
+            if (ProfileVM.ChangesSaved)
+            {
+                ProfileOptionsVisibility = Visibility.Collapsed;
+                UpdateSearchInput(SearchBarInput);
+            }
+            ProfileView = null;
         }
 
         //-----------------------------------------------------------------//
@@ -340,6 +400,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 _speciesFilter = filter;
             }
 
+            ResetResultsAndRestrictions();
             UpdateSearchResult(SearchBarInput);
         }
         private void SetAvailabilityFilter(object sender)
@@ -380,13 +441,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 Customer = null;
                 Species = null;
                 Breed = null;
-                VaccinationDate = null;
-                DewormDate = null;
-                IsGenderMale = true;
-                IsGenderFemale = false;
 
-                ProfileOptionsVisibility = Visibility.Collapsed;
                 _activeResultButton = null;
+                ProfileOptionsVisibility = Visibility.Collapsed;
                 return;
             }
 
@@ -395,142 +452,29 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             _activeResultButton = button;
 
             var chosenPet = DisplayedPets.FirstOrDefault(item => item.ID == (int)button.Tag);
-            if (chosenPet == null)
-                return;
+
             _selectedPet = chosenPet;
+            ShowPetDetails(chosenPet);
+
+        }
+        private void ShowPetDetails(Pet chosenPet)
+        {
+            if (chosenPet == null)
+            {
+                ProfileOptionsVisibility = Visibility.Collapsed;
+                return;
+            }
 
             PetName = chosenPet.PetName;
             Birthdate = chosenPet.Birthdate.ToString("MM/dd/yyyy");
             PetStatus = chosenPet.Status;
             Price = Math.Round(chosenPet.Price, 2).ToString("#,##0.00");
-            ProfileOptionsVisibility = Visibility.Visible;
             Species = chosenPet.Species;
             Breed = chosenPet.Breed;
-            VaccinationDate = "N/A";
-            DewormDate = "N/A";
-            ProfileImagePath = chosenPet.ImagePath;
 
-            if (chosenPet.Gender == "M")
-            {
-                IsGenderMale = true; IsGenderFemale = false;
-            }
-            else
-            {
-                IsGenderMale = false; IsGenderFemale = true;
-            }
+            ProfileOptionsVisibility = Visibility.Visible;
         }
 
         //-----------------------------------------------------------------//
-
-        private void UploadImage()
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image Files (*.jpg; *.jpeg; *.png; *.gif)|*.jpg; *.jpeg; *.png; *.gif|All Files (*.*)|*.*";
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                string selectedFilePath = openFileDialog.FileName;
-
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(selectedFilePath);
-
-                string destinationDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PetImages");
-                Directory.CreateDirectory(destinationDirectory);
-
-                string destinationFilePath = Path.Combine(destinationDirectory, fileName);
-                File.Copy(selectedFilePath, destinationFilePath);
-
-                ProfileImagePath = (new BitmapImage(new Uri(destinationFilePath))).ToString();
-            }
-        }
-        private void SaveChanges()
-        {
-            DateTime birthday;
-            DateTime vaccination;
-            DateTime deworm;
-            string gender = string.Empty;
-
-            if (!CheckDateFormat(Birthdate, out birthday))
-            {
-                MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Birthday Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (!CheckDateFormat(VaccinationDate, out vaccination) && VaccinationDate != "N/A")
-            {
-                MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Vaccination Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (!CheckDateFormat(DewormDate, out deworm) && DewormDate != "N/A")
-            {
-                MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Deworm Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            if (!CheckSpecies(out int species_ID))
-            {
-                MessageBox.Show("Species not found or registered in database!", "Invalid Species Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (!CheckBreed(species_ID, out int breed_ID))
-            {
-                MessageBox.Show("Breed not found or registered in " + Species + " species!", "Invalid Breed Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (!CheckPriceFormat(Price))
-            {
-                MessageBox.Show("Price entry must be in proper monetary format, 2 decimal places max!", "Invalid Price Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (!float.TryParse(Price, out float price) && price < 0)
-            {
-                MessageBox.Show("Price entry can not become negative!", "Invalid Price Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (IsGenderMale)
-                gender = "M";
-            else
-                gender = "F";
-
-            PetshopDB.spUpdatePetData(_selectedPet.ID, PetName, gender, birthday, species_ID, breed_ID, Double.Parse(Price), ProfileImagePath);
-
-            ProfileClosedStatus = true;
-            ProfileVisibility = Visibility.Collapsed;
-            ProfileOptionsVisibility = Visibility.Collapsed;
-            UpdateSearchResult(SearchBarInput);
-        }
-        private bool CheckDateFormat(string date, out DateTime result)
-        {
-            return DateTime.TryParseExact(date, "MM/dd/yyyy", null, System.Globalization.DateTimeStyles.None, out result);
-        }
-        private bool CheckSpecies(out int ID)
-        {
-            var species = PetshopDB.spGetPetTypes().FirstOrDefault(pet => pet.description.ToLower() == Species.ToLower());
-            if (species != null)
-                ID = species.pet_type_id;
-            else
-                ID = -1;
-
-            return species != null;
-        }
-        private bool CheckBreed(int species_ID, out int ID)
-        {
-            var breed = PetshopDB.spGetPetBreeds(species_ID).FirstOrDefault(pet => pet.description.ToLower() == Breed.ToLower());
-            if (breed != null)
-                ID = breed.pet_breed_id;
-            else
-                ID = -1;
-
-            return breed != null;
-        }
-        private bool CheckPriceFormat(string price)
-        {
-            string pattern = @"^\d{1,3}(,\d{3})*(\.\d{1,2})?$";
-
-            return Regex.IsMatch(price, pattern);
-        }
-        private void DiscardChanges()
-        {
-            ProfileClosedStatus = true;
-            ProfileVisibility = Visibility.Collapsed;
-        }
     }
 }

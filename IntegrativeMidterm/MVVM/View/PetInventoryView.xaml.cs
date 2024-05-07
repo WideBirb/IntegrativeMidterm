@@ -1,4 +1,5 @@
 ﻿using IntegrativeMidterm.Core;
+using IntegrativeMidterm.userControl.PetInventory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace IntegrativeMidterm.MVVM.View
 {
-    /// <summary>
-    /// Interaction logic for PetInventoryView.xaml
-    /// </summary>
     public partial class PetInventoryView : UserControl
     {
         public PetInventoryView()

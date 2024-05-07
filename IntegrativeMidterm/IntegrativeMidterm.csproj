@@ -83,11 +83,15 @@
     <Compile Include="MVVM\Model\TransactionSummary.cs" />
     <Compile Include="MVVM\ViewModel\PetCheckOutViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PetInventoryViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PetProfileViewModel.cs" />
     <Compile Include="MVVM\View\PetCheckOutView.xaml.cs">
       <DependentUpon>PetCheckOutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\PetInventoryView.xaml.cs">
       <DependentUpon>PetInventoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\PetProfileView.xaml.cs">
+      <DependentUpon>PetProfileView.xaml</DependentUpon>
     </Compile>
     <Compile Include="userControl\CheckoutItems.xaml.cs">
       <DependentUpon>CheckoutItems.xaml</DependentUpon>
@@ -98,9 +102,7 @@
     <Compile Include="userControl\General\SearchBar.xaml.cs">
       <DependentUpon>SearchBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="userControl\Overlay\PetProfile.xaml.cs">
-      <DependentUpon>PetProfile.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="userControl\HelperClasses\ScrollViewerHelper.cs" />
     <Compile Include="userControl\PetInventory\PetAvailabilityIndicator.xaml.cs">
       <DependentUpon>PetAvailabilityIndicator.xaml</DependentUpon>
     </Compile>
@@ -140,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\PetInventoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\PetProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -192,10 +198,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="userControl\General\SearchBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="userControl\Overlay\PetProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

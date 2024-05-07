@@ -49,6 +49,10 @@
                 <view:PetInventoryView />
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:PetProfileViewModel}">
+                <view:PetProfileView />
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -17,8 +17,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public RelayCommand TransactionHistoryViewCommand { get; set; }
         public RelayCommand PetCheckOutViewCommand { get; set; }
         public RelayCommand PetInventoryViewCommand { get; set; }
-        public RelayCommand PetProfileViewCommand { get; set; }
-        
 
         public DashboardViewModel DashboardVM { get; set; }
         public CheckOutViewModel CheckOutVM { get; set; }
@@ -84,7 +82,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 CurrentView = TransactionHistoryVM;
                 WindowNameText = "TRANSACTION HISTORY";
             });
-
             PetCheckOutViewCommand = new RelayCommand(o =>
             {
                 CurrentView = PetCheckOutVM;
