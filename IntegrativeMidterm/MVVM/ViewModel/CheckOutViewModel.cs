@@ -195,7 +195,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 				InitializeData();
 				updateTotalCost();
 
-				new AlertBox("Check Out Successful").Show();
+				new AlertBox("Check Out Successful").ShowDialog();
 			}
 
         }
@@ -206,7 +206,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 			ShoppingCart.Clear();
             updateTotalCost();
-			new AlertBox("Purchase Cancelled").Show();
+			new AlertBox("Purchase Cancelled").ShowDialog();
 		}
 
 		private void AddItem(object parameter)
@@ -218,7 +218,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			bool alreadyExists = ShoppingCart.Any(x => x.PetSupplyID.ToString() == PetSupplyID);
 			if (alreadyExists)
 			{
-				new AlertBox("Item is already added").Show(); ;
+				new AlertBox("Item is already added").ShowDialog(); ;
 				return;
 			}
 

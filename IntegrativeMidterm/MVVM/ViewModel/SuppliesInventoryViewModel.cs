@@ -163,7 +163,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			view.QuantityTextBox.Text = selectedItem.Quantity.ToString();
 			view.PriceTextBox.Text = selectedItem.Price.ToString();
 			foreach (var item in view.PetTypeComboBox.Items)
-				if ((item as ComboBoxItem).Content.ToString() == selectedItem.Species)
+				if ((item as ComboBoxItem).Content.ToString() == selectedItem.Species.ToString())
 				{
 					view.PetTypeComboBox.SelectedItem = item;
 					break; // Exit the loop once the item is found
@@ -200,14 +200,14 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 				//item.ImageURLTextBox.Text == string.Empty)
 			{
 
-				new AlertBox("Please fill out all the forms!", 18).Show();
+				new AlertBox("Please fill out all the forms!", 18).ShowDialog();
 			}
             else
             {
 				//Add to DB
 				ComboBoxItem selectedComboBox = new ComboBoxItem();
 				foreach (ComboBoxItem items in item.PetTypeComboBox.Items)
-					if ((items as ComboBoxItem).Content.ToString() == selectedItem.Species)
+					if ((items as ComboBoxItem) == item.PetTypeComboBox.SelectedItem)
 					{
 						selectedComboBox = items;
 						break; // Exit the loop once the item is found
@@ -244,7 +244,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 				});
 
-				new AlertBox("Data Added Successfully!", 20).Show();
+				new AlertBox("Data Added Successfully!", 20).ShowDialog();
 				clearTextbox(item.TextBoxContainer);
 
 			}
@@ -256,7 +256,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			//STATUS ID = 2 IS ARCHIVED
 			PetshopDB.spSetPetSupplyStatus(selectedItem.PetSupplyID, 2);
 			SupplyItems.Remove(selectedItem);
-			new AlertBox("Data Deleted Successfully!", 20).Show();
+			new AlertBox("Data Deleted Successfully!", 20).ShowDialog();
 		}
 
 
@@ -267,7 +267,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 			ComboBoxItem selectedComboBox = new ComboBoxItem();
 			foreach (ComboBoxItem items in item.PetTypeComboBox.Items)
-				if ((items as ComboBoxItem).Content.ToString() == selectedItem.Species)
+				if ((items as ComboBoxItem) == item.PetTypeComboBox.SelectedItem)
 				{
 					selectedComboBox = items;
 					break; // Exit the loop once the item is found
@@ -282,7 +282,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 				//item.ImageURLTextBox.Text == string.Empty)
 			{
 
-				new AlertBox("Please fill out all the forms!", 18).Show();
+				new AlertBox("Please fill out all the forms!", 18).ShowDialog();
 			}
 			else
 			{
@@ -307,7 +307,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 				item.myDataGrid.ItemsSource = null;
 				item.myDataGrid.ItemsSource = SupplyItems;
-				new AlertBox("Data Updated Successfully!", 20).Show();
+				new AlertBox("Data Updated Successfully!", 20).ShowDialog();
 				clearTextbox(item.TextBoxContainer);
 			}
 
