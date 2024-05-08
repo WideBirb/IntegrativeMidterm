@@ -204,7 +204,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 		private void CancelPurchase(object parameter)
 		{
-
+			if (ShoppingCart.Count == 0 ) return;
 			ShoppingCart.Clear();
             updateTotalCost();
 			new AlertBox("Purchase Cancelled").ShowDialog();
