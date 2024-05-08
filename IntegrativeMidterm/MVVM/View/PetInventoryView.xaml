@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
              xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
              xmlns:userControls="clr-namespace:IntegrativeMidterm.userControl.General"
+             xmlns:converter="clr-namespace:IntegrativeMidterm.MVVM.Converters"
              xmlns:helpers="clr-namespace:IntegrativeMidterm.userControl.HelperClasses"
              xmlns:components="clr-namespace:IntegrativeMidterm.userControl.PetInventory"
              mc:Ignorable="d" 
@@ -13,6 +14,9 @@
     <UserControl.DataContext>
         <viewModel:PetInventoryViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <converter:InverseVisibilityConverter x:Key="InverseVisibilityConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7.25*"/>
@@ -98,14 +102,16 @@
             <Border Grid.Row="1" Background="#2C2A3D" CornerRadius="15" Margin="0 12.5 0 0"/>
             <StackPanel Grid.Row="1" 
                         Margin="10 22.5 10 10"
-                        VerticalAlignment="Center">
+                        VerticalAlignment="Center"
+                        Visibility="{Binding ProfileOptionsVisibility, Converter={StaticResource InverseVisibilityConverter}}">
                 <TextBlock Height="50"
                            Foreground="White"
                            FontSize="25"
                            HorizontalAlignment="Center"
                            Text="Register Pet"/>
                 <Button Style="{StaticResource CircularButtonStyle}"
-                        Width="70" Height="70" Content="➕"/>
+                        Width="70" Height="70" Content="➕"
+                        Command="{Binding AddPetCommand}"/>
             </StackPanel>
             
             <StackPanel Grid.Row="1" 

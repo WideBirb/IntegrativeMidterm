@@ -36,6 +36,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public RelayCommand AvailabilityCommand => new RelayCommand(parameter => SetAvailabilityFilter(parameter));
         public RelayCommand ResultSelectCommand => new RelayCommand(parameter => SetResultSelection(parameter));
         public RelayCommand EndScrollCommand => new RelayCommand(parameter => LoadMoreItems(parameter));
+        public RelayCommand AddPetCommand => new RelayCommand(execute => RegisterPet());
 
         private string _searchBarInput = string.Empty;
         private string _searchBarPlaceholderText = string.Empty;
@@ -48,8 +49,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         RadioButton _activeFilterButton = null;
         RadioButton _activeAvailabilityButton = null;
         RadioButton _activeResultButton = null;
-        private string _previousSearchInput = string.Empty;
-        
+
         private string _petName = string.Empty;
         private string _birthdate = string.Empty;
         private string _petStatus = string.Empty;
@@ -74,7 +74,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-
         public Visibility ProfileOptionsVisibility
         {
             get { return _profileOptionsVisibility;; }
@@ -191,7 +190,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
             if (filter != null)
             {
-                await Application.Current.Dispatcher.BeginInvoke(new Action( async() =>
+                await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     foreach (var petData in retrievedData)
                     {
@@ -235,13 +234,13 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                             StatusColor = GetStatusColor(petData.Status_ID),
                             ImagePath = petData.Image_path
                         });
-                        await Task.Delay(1);
+                        //await Task.Delay(1);
                     }
                 }));
                 return;
             }
 
-            await Application.Current.Dispatcher.BeginInvoke(new Action( async() =>
+            await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
                 foreach (var petData in retrievedData)
                 {
@@ -279,7 +278,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                         ImagePath = petData.Image_path
                     });
 
-                    await Task.Delay(1);
+                    //await Task.Delay(1);
                 }
             }));
         }
@@ -375,6 +374,12 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 UpdateSearchInput(SearchBarInput);
             }
             ProfileView = null;
+        }
+        private void RegisterPet()
+        {
+            ProfileClosedStatus = false;
+            ProfileView = new PetProfileViewModel();
+            ((PetProfileViewModel)ProfileView).CloseView += ClosePetProfile;
         }
 
         //-----------------------------------------------------------------//

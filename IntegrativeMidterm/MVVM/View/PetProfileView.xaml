@@ -57,7 +57,7 @@
                            HorizontalAlignment="Center"
                            Foreground="{StaticResource FontColorLight}"
                            Margin="25 50 25 50"
-                           Text="PET PROFILE"/>
+                           Text="{Binding ProfileTitle, Mode=OneTime}"/>
 
                 <StackPanel Grid.Column="0"
                             Margin="0 125 0 50">
@@ -159,10 +159,10 @@
                     Grid.Column="1">
                 <StackPanel VerticalAlignment="Center">
                     <Button Style="{StaticResource PrimaryButtonStyle}"
-                            Content="SAVE CHANGES" Width="200"
+                            Content="{Binding SaveButtonContent, Mode=OneTime}" Width="200"
                             Command="{Binding SaveChangesCommand}"/>
                     <Button Style="{StaticResource SecondaryButtonStyle}"
-                            Content="DISCARD CHANGES" Width="200"
+                            Content="{Binding DiscardButtonContent, Mode=OneTime}" Width="200"
                             Command="{Binding DiscardChangesCommand}"/>
                 </StackPanel>
             </Border>
