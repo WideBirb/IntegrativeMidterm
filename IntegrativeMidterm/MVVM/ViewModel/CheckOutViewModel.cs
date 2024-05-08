@@ -74,7 +74,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public RelayCommand increaseQuantityCommand { get; set; }
         public RelayCommand decreaseQuantityCommand { get; set; }
         public RelayCommand FilterPetTypesCommand { get; set; }
-        public RelayCommand AB => new RelayCommand(parameter => { MessageBox.Show("AB! AB! AB!"); });
 		public RelayCommand FilterCommand { get; }
 
 		public int determineSupplyType(string supplyType)
@@ -207,8 +206,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 			ShoppingCart.Clear();
             updateTotalCost();
-			MessageBox.Show("Order Cancelled");
-        }
+			new AlertBox("Purchase Cancelled").Show();
+		}
 
 		private void AddItem(object parameter)
 		{
@@ -219,7 +218,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			bool alreadyExists = ShoppingCart.Any(x => x.PetSupplyID.ToString() == PetSupplyID);
 			if (alreadyExists)
 			{
-				MessageBox.Show("Item is already in the cart");
+				new AlertBox("Item is already added").Show(); ;
 				return;
 			}
 

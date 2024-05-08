@@ -19,10 +19,11 @@ namespace IntegrativeMidterm.userControl.General
 	/// </summary>
 	public partial class AlertBox : Window
 	{
-		public AlertBox(string Message)
+		public AlertBox(string Message, int fontsize = 24)
 		{
 			InitializeComponent();
 			MessageTextBlock.Text = Message;
+			MessageTextBlock.FontSize = fontsize;
 		}
 
 		private void OKButton_Click(object sender, RoutedEventArgs e)

@@ -53,11 +53,11 @@
                 RowStyle="{DynamicResource DataGridRowStyle1}"
                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                 <DataGrid.Columns>
-                    <!--<DataGridTextColumn
-            Width="0.4*"
-            Binding="{Binding PetSupplyID}"
-            Header="ID"
-            IsReadOnly="True" />-->
+                    <DataGridTextColumn
+                        Width="0.4*"
+                        Binding="{Binding PetSupplyID}"
+                        Header="ID"
+                        IsReadOnly="True" />
                     <DataGridTemplateColumn Width="0.75*" Header="Image">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -194,10 +194,24 @@
                         Content="Pet Type"
                         FontSize="18"
                         Foreground="White" />
-                    <TextBox
+
+                    <ComboBox
+                        x:Name="PetTypeComboBox"
+                        Width="230"
+                        Background="Transparent"
+                        FontSize="17">
+                        <ComboBoxItem Content="cat" Tag="cat" />
+                        <ComboBoxItem Content="dog" Tag="dog" />
+                        <ComboBoxItem Content="bird" Tag="bird" />
+                        <ComboBoxItem Content="shark" Tag="shark" />
+                        <ComboBoxItem Content="dinosaur" Tag="dinosaur" />
+                    </ComboBox>
+
+
+                    <!--<TextBox
                         x:Name="PetTypeTextBox"
                         Margin="5,0,5,15"
-                        Style="{StaticResource TextBoxBase}" />
+                        Style="{StaticResource TextBoxBase}" />-->
 
                     <!--<Label
             Content="Supply Type"
