@@ -21,8 +21,6 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
-
-
         <Border
             Width="710"
             Height="780"
@@ -200,11 +198,11 @@
                         Width="230"
                         Background="Transparent"
                         FontSize="17">
-                        <ComboBoxItem Content="cat" Tag="cat" />
-                        <ComboBoxItem Content="dog" Tag="dog" />
-                        <ComboBoxItem Content="bird" Tag="bird" />
-                        <ComboBoxItem Content="shark" Tag="shark" />
-                        <ComboBoxItem Content="dinosaur" Tag="dinosaur" />
+                        <ComboBoxItem Content="Cat" Tag="Cat" />
+                        <ComboBoxItem Content="Dog" Tag="Dog" />
+                        <ComboBoxItem Content="Bird" Tag="Bird" />
+                        <ComboBoxItem Content="Fish" Tag="Fish" />
+                        <ComboBoxItem Content="Mollusk" Tag="Mollusk" />
                     </ComboBox>
 
 

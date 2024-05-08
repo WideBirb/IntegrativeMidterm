@@ -91,13 +91,13 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 		public int determinePetType(string petType)
 		{
 
-			if (petType == "dog")
+			if (petType == "Dog")
 				return 1;
-			else if (petType == "cat")
+			else if (petType == "Cat")
 				return 2;
-			else if (petType == "bird")
+			else if (petType == "Bird")
 				return 3;
-			else if (petType == "fish")
+			else if (petType == "Fish")
 				return 4;
 			else
 				return 5;
