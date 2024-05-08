@@ -248,6 +248,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 				clearTextbox(item.TextBoxContainer);
 
 			}
+			ProfileImagePath = string.Empty;
 		}
 
         private void DeleteItem()
@@ -311,6 +312,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 				clearTextbox(item.TextBoxContainer);
 			}
 
+			ProfileImagePath = string.Empty;	
 		}
 	}
 }
