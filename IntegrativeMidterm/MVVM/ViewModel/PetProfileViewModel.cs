@@ -23,11 +23,13 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public ObservableCollection<PetBreed> PetBreedsList {  get; set; }
 
         public EventHandler CloseView;
-        public readonly Pet SelectedPet = null;
+        public readonly Pet CurrentProfile = null;
 
         public bool ChangesSaved { get; private set; }
 
         //-----------------------------------------------------------------//
+
+        public bool EditMode { get; private set; }
 
         private string _petName = string.Empty;
         private string _birthdate = string.Empty;
@@ -41,6 +43,10 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         private string _profileImagePath = string.Empty;
         private bool _isGenderMale = true;
         private bool _isGenderFemale = false;
+
+        private string _profileTitle = string.Empty;
+        private string _saveButtonContent = string.Empty;
+        private string _discardButtonContent = string.Empty;
 
         //-----------------------------------------------------------------//
 
@@ -104,6 +110,24 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             get { return _customer; }
             set { _customer = value; OnPropertyChanged(); }
         }
+
+        //-----------------------------------------------------------------//
+
+        public string ProfileTitle
+        {
+            get { return _profileTitle; }
+            set { _profileTitle = value; OnPropertyChanged(); }
+        }
+        public string SaveButtonContent
+        {
+            get { return _saveButtonContent; }
+            set { _saveButtonContent = value; OnPropertyChanged(); }
+        }
+        public string DiscardButtonContent
+        {
+            get { return _discardButtonContent; }
+            set { _discardButtonContent = value; OnPropertyChanged(); }
+        }
         public Visibility PlaceholderVisibility { get; set; } = Visibility.Visible;
 
         //-----------------------------------------------------------------//
@@ -120,10 +144,25 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             PetSpeciesList = new ObservableCollection<PetSpecies>();
             PetBreedsList = new ObservableCollection<PetBreed>();
 
-            SelectedPet = chosenPet;
+            CurrentProfile = chosenPet;
+
+            var species = PetshopDB.spGetPetTypes();
+            foreach (var type in species)
+            {
+                PetSpeciesList.Add(new PetSpecies
+                {
+                    ID = type.pet_type_id,
+                    Description = type.description
+                });
+            }
 
             if (chosenPet != null)
             {
+                EditMode = true;
+
+                ProfileTitle = "PET PROFILE";
+                SaveButtonContent = "SAVE CHANGES";
+                DiscardButtonContent = "DISCARD CHANGES";
                 PlaceholderVisibility = Visibility.Hidden;
 
                 PetName = chosenPet.PetName;
@@ -144,18 +183,18 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                     IsGenderMale = false; IsGenderFemale = true;
                 }
 
-                var species = PetshopDB.spGetPetTypes();
-                foreach (var type in species)
-                {
-                    PetSpeciesList.Add(new PetSpecies
-                    {
-                        ID = type.pet_type_id,
-                        Description = type.description
-                    });
-                }
-
                 UpdateBreeds(chosenPet.SpeciesID);
+                return;
             }
+
+            EditMode = false; // ADD PET MODE
+            CurrentProfile = new Pet();
+
+            IsGenderMale = false;
+            ProfileTitle = "REGISTER PET";
+            SaveButtonContent = "ADD NEW PROFILE";
+            DiscardButtonContent = "DISCARD PROFILE";
+            PlaceholderVisibility = Visibility.Visible;
         }
 
         //-----------------------------------------------------------------//
@@ -182,57 +221,39 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         }
         private void SaveChanges()
         {
-            DateTime birthday;
-            DateTime vaccination;
-            DateTime deworm;
-            string gender = string.Empty;
+            if (!EntriesAreValid(out ProfileDetails profile))
+                return;
 
-            if (!CheckDateFormat(Birthdate, out birthday))
-            {
-                MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Birthday Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (!CheckDateFormat(VaccinationDate, out vaccination) && VaccinationDate != "N/A")
-            {
-                MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Vaccination Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (!CheckDateFormat(CheckupDate, out deworm) && CheckupDate != "N/A")
-            {
-                MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Deworm Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+            PetName = PetName.Trim();
+            PetName = Regex.Replace(PetName, @"\s+", " ");
 
-            if (!CheckSpecies(out int species_ID))
+            if (EditMode)
             {
-                MessageBox.Show("Species not found or registered in database!", "Invalid Species Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                PetshopDB.spUpdatePetData
+                    (
+                        CurrentProfile.ID,
+                        PetName,
+                        profile.Gender,
+                        profile.Birthdate,
+                        profile.Species_ID,
+                        profile.Breed_ID,
+                        Double.Parse(Price),
+                        ProfileImagePath
+                    );
             }
-            if (!CheckBreed(species_ID, out int breed_ID))
-            {
-                MessageBox.Show("Breed not found or registered in " + Species + " species!", "Invalid Breed Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (!CheckPriceFormat(Price))
-            {
-                MessageBox.Show("Price entry must be in proper monetary format, 2 decimal places max!", "Invalid Price Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (!float.TryParse(Price, out float price) && price < 0)
-            {
-                MessageBox.Show("Price entry can not become negative!", "Invalid Price Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (IsGenderMale)
-                gender = "M";
             else
-                gender = "F";
-            if (!CheckEmptyEntries())
             {
-                MessageBox.Show("Please fill out all entries!", "Incomplete Entries", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                PetshopDB.spRegisterPet
+                    (
+                        PetName,
+                        profile.Gender,
+                        profile.Birthdate,
+                        profile.Species_ID,
+                        profile.Breed_ID,
+                        Double.Parse(Price),
+                        ProfileImagePath
+                    );
             }
-            PetshopDB.spUpdatePetData(SelectedPet.ID, PetName, gender, birthday, species_ID, breed_ID, Double.Parse(Price), ProfileImagePath);
 
             ChangesSaved = true;
             CloseView?.Invoke(this, EventArgs.Empty);
@@ -274,6 +295,90 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
         //-----------------------------------------------------------------//
 
+        private bool EntriesAreValid(out ProfileDetails profile)
+        {
+            profile = null;
+
+            if (!CheckEmptyEntries())
+            {
+                MessageBox.Show("Please fill out all entries!", "Incomplete Entries", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            DateTime birthday = DateTime.MinValue;
+            DateTime vaccination = DateTime.MinValue;
+            DateTime checkup = DateTime.MinValue;
+            string gender = null;
+            int species_ID = 0;
+            int breed_ID = 0;
+
+            if (String.IsNullOrWhiteSpace(PetName))
+            {
+                MessageBox.Show("Please enter pet name!", "Invalid Name Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (!Regex.IsMatch(PetName, "^[a-zA-Z\\s]+$"))
+            {
+                MessageBox.Show("Name entry must not include numerical or special characters!", "Invalid Name Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (!CheckDateFormat(Birthdate, out birthday))
+            {
+                MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Birthday Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (!CheckDateFormat(VaccinationDate, out vaccination) && VaccinationDate != "N/A")
+            {
+                MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Vaccination Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (!CheckDateFormat(CheckupDate, out checkup) && CheckupDate != "N/A")
+            {
+                MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Checkup Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (!CheckSpecies(out species_ID))
+            {
+                MessageBox.Show("Species not found or registered in database!", "Invalid Species Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (!CheckBreed(species_ID, out breed_ID))
+            {
+                MessageBox.Show("Breed not found or registered in " + Species + " species!", "Invalid Breed Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (!CheckPriceFormat(Price))
+            {
+                MessageBox.Show("Price entry must be in proper monetary format, 2 decimal places max!", "Invalid Price Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (!float.TryParse(Price, out float price) && price < 0)
+            {
+                MessageBox.Show("Price entry can not become negative!", "Invalid Price Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (!IsGenderMale && !IsGenderFemale)
+            {
+                MessageBox.Show("Please select pet gender!", "Invalid Gender Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            if (IsGenderMale)
+                gender = "M";
+            else
+                gender = "F";
+
+            profile = new ProfileDetails()
+            {
+                Birthdate = birthday,
+                Vaccination = vaccination,
+                Checkup = checkup,
+                Gender = gender,
+                Species_ID = species_ID,
+                Breed_ID = breed_ID
+            };
+            return true;
+        }
         private bool CheckEmptyEntries()
         {
             if (
@@ -283,7 +388,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 Species == string.Empty ||
                 Breed == string.Empty ||
                 VaccinationDate == string.Empty ||
-                CheckupDate == string.Empty
+                CheckupDate == string.Empty ||
+                (!IsGenderFemale && !IsGenderMale)
                 )
                 return false;
 
@@ -291,6 +397,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         }
         private bool CheckDateFormat(string date, out DateTime result)
         {
+            date = Regex.Replace(date, @"\s+", "");
             return DateTime.TryParseExact(date, "MM/dd/yyyy", null, System.Globalization.DateTimeStyles.None, out result);
         }
         private bool CheckSpecies(out int ID)
@@ -315,9 +422,19 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         }
         private bool CheckPriceFormat(string price)
         {
-            string pattern = @"^\d{1,3}(,\d{3})*(\.\d{1,2})?$";
+            string pattern = @"^\d{1,3}(,\d{3})*(\.\d{1,2})?$|^(\d+)(\.\d{1,2})?$";
 
             return Regex.IsMatch(price, pattern);
+        }
+
+        private class ProfileDetails
+        {
+            public DateTime Birthdate { get; set; }
+            public DateTime Vaccination { get; set; }
+            public DateTime Checkup { get; set; }
+            public string Gender { get; set; }
+            public int Species_ID { get; set; }
+            public int Breed_ID { get; set; }
         }
     }
 }

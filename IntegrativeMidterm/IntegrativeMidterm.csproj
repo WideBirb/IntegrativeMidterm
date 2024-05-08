@@ -69,6 +69,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClass.dbml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\Converters\InverseVisibilityConverter.cs" />
     <Compile Include="MVVM\Model\AvailabilityIndicatorData.cs" />
     <Compile Include="MVVM\Model\ControlModels\InputBarResults.cs" />
     <Compile Include="MVVM\Model\Filters\PetBreed.cs" />
