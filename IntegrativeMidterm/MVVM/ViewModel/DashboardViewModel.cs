@@ -132,7 +132,9 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 				LifetimeProfit += (float)transaction.Total_Cost;
             }
 			spGetAllTransactionsResult recentTransaction = PetshopDB.spGetAllTransactions(null, null).Last();
-            RecentSaleCost = (double)recentTransaction.Total_Cost;
+			if (recentTransaction.Total_Cost != null)
+				RecentSaleCost = (double)recentTransaction.Total_Cost;
+
             RecentSaleDate = recentTransaction.Process_Date.ToString();
 
             seriesCollection = new SeriesCollection();

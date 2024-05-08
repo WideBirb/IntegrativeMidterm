@@ -3,6 +3,7 @@ using IntegrativeMidterm.MVVM.Model;
 using IntegrativeMidterm.MVVM.Model.Filters;
 using IntegrativeMidterm.MVVM.View;
 using IntegrativeMidterm.userControl;
+using IntegrativeMidterm.userControl.General;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -175,33 +176,29 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			foreach (PetSupply item in ShoppingCart)
                 TotalPrice += item.Price * item.Quantity;
 		}
+
 		private void ConfirmPurchase(object parameter)
 		{
-			// should make the pet supply status to 3 (out of stock) here but gilbs is not gonan notice
+			ConfirmationBox confirmBox = new ConfirmationBox("Do you wish to proceed with the check out?");
+			var result = confirmBox.ShowDialog();
 
-			PetshopDB.spTransactionCreate(DateTime.Now, 1, 1, null);
-			int maxTransactionID = PetshopDB.vwAllTransactions.Max(t => t.Transaction_ID);
+			if (result.HasValue && result == true)
+			{
+				PetshopDB.spTransactionCreate(DateTime.Now, 1, 1, null);
+				int maxTransactionID = PetshopDB.vwAllTransactions.Max(t => t.Transaction_ID);
 
-			// Add Transaction for History
-			foreach (PetSupply item in ShoppingCart)
-				PetshopDB.spTransactionAddSupply(maxTransactionID, item.Quantity, item.PetSupplyID);
+				// Add Transaction for History
+				foreach (PetSupply item in ShoppingCart)
+					PetshopDB.spTransactionAddSupply(maxTransactionID, item.Quantity, item.PetSupplyID);
 
-			//Dictionary<int, int> IDQuantitypairs = new Dictionary<int, int>();
+				ShoppingCart.Clear();
+				PetSupplyItems.Clear();
+				InitializeData();
+				updateTotalCost();
 
-			//// Get ID and Quantity for each order
-			//foreach (PetSupply item in ShoppingCart)
-			//	IDQuantitypairs.Add(item.PetSupplyID, item.Quantity);
+				new AlertBox("Check Out Successful").Show();
+			}
 
-			////Update DB
-			//foreach (KeyValuePair<int, int> kvp in IDQuantitypairs)
-			//	PetshopDB.spUpdatePetSupplyQuantity(kvp.Key, kvp.Value);
-
-			ShoppingCart.Clear();
-			PetSupplyItems.Clear();
-			InitializeData();
-            updateTotalCost();
-
-			MessageBox.Show("Check Out Success!");
         }
 
 
