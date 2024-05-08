@@ -178,6 +178,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 		private void ConfirmPurchase(object parameter)
 		{
+			if (ShoppingCart.Count == 0) return;
 			ConfirmationBox confirmBox = new ConfirmationBox("Do you wish to proceed with the check out?");
 			var result = confirmBox.ShowDialog();
 
