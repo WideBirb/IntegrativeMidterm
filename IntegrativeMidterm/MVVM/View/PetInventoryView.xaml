@@ -55,6 +55,59 @@
                     </ItemsControl>
                 </ScrollViewer>
 
+                <Grid Height="40" Margin="25 -10 25 0">
+                    <Grid Margin="45 0 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="3.8*"/>
+                            <ColumnDefinition Width="2.25*"/>
+                            <ColumnDefinition Width="1.75*"/>
+                            <ColumnDefinition Width="1.75*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                                Grid.Column="0"
+                                Text="Pet Name" FontWeight="SemiBold"
+                                HorizontalAlignment="Center"
+                                Margin="20 0 10 0"
+                                Foreground="{StaticResource FontColorLight}"
+                                FontSize="18"
+                                VerticalAlignment="Center"/>
+                        <TextBlock
+                                Grid.Column="1"
+                                Text="Breed" FontWeight="SemiBold"
+                                HorizontalAlignment="Center"
+                                Margin="10 0 10 0"
+                                Foreground="{StaticResource FontColorLight}"
+                                FontSize="18"
+                                VerticalAlignment="Center"/>
+                        <TextBlock
+                                Grid.Column="2"
+                                Text="Gender" FontWeight="SemiBold"
+                                HorizontalAlignment="Center"
+                                Margin="10 0 10 0"
+                                Foreground="{StaticResource FontColorLight}"
+                                FontSize="18"
+                                VerticalAlignment="Center"/>
+                        <TextBlock
+                                Grid.Column="3"
+                                Text="Age" FontWeight="SemiBold"
+                                HorizontalAlignment="Center"
+                                Margin="10 0 10 0"
+                                Foreground="{StaticResource FontColorLight}"
+                                FontSize="18"
+                                VerticalAlignment="Center"/>
+                        <TextBlock
+                                Grid.Column="4"
+                                Text="Status" FontWeight="SemiBold"
+                                HorizontalAlignment="Center"
+                                Margin="10 0 10 0"
+                                Foreground="{StaticResource FontColorLight}"
+                                FontSize="18"
+                                VerticalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+                <Border Margin="25 0 25 10" Height="2" Background="White"/>
+
                 <ScrollViewer x:Name="ResultsScroll"
                               Margin="0 0 25 0" MaxHeight="600"
                               helpers:ScrollViewerHelper.ScrollToEndCommand="{Binding EndScrollCommand}"

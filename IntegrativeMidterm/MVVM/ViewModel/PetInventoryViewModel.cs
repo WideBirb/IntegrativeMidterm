@@ -187,20 +187,23 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 _availabilityFilter);
 
             int counter = 0;
-
             if (filter != null)
             {
                 await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
+                    ResetAvailabilityCount();
+
                     foreach (var petData in retrievedData)
                     {
                         if (cancellationToken.IsCancellationRequested)
                             return;
 
+                        UpdateAvailabilityCount(petData.Status_ID);
+
                         if (counter++ < _retrieveIndex)
                             continue;
                         if (counter > _displayLimit)
-                            return;
+                            continue;
                         if (DisplayedPets.Any(item => item.ID == petData.ID))
                             return;
 
@@ -208,14 +211,12 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                         previousDateTime = petData.Birthdate;
                         age = ((currentDateTime.Year - previousDateTime.Year) * 12) + currentDateTime.Month - previousDateTime.Month;
                         price = (float)Math.Round(petData.Price, 2);
-                        UpdateAvailabilityCount(petData.Status_ID);
 
                         if (!petData.Name.ToLower().Contains(filter.ToLower()))
                         {
                             --counter;
                             continue;
                         }
-
 
                         DisplayedPets.Add(new Pet
                         {
@@ -242,15 +243,19 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
             await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
+                ResetAvailabilityCount();
+
                 foreach (var petData in retrievedData)
                 {
                     if (cancellationToken.IsCancellationRequested)
                         return;
 
+                    UpdateAvailabilityCount(petData.Status_ID);
+
                     if (counter++ < _retrieveIndex)
                         continue;
                     if (counter > _displayLimit)
-                        return;
+                        continue;
                     if (DisplayedPets.Any(item => item.ID == petData.ID))
                         return;
 
@@ -258,7 +263,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                     previousDateTime = petData.Birthdate;
                     age = ((currentDateTime.Year - previousDateTime.Year) * 12) + currentDateTime.Month - previousDateTime.Month;
                     price = (float)Math.Round(petData.Price, 2);
-                    UpdateAvailabilityCount(petData.Status_ID);
 
                     DisplayedPets.Add(new Pet
                     {
@@ -277,7 +281,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                         StatusColor = GetStatusColor(petData.Status_ID),
                         ImagePath = petData.Image_path
                     });
-
                     //await Task.Delay(1);
                 }
             }));
@@ -308,7 +311,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         {
             _retrieveIndex = 0;
             _displayLimit = 15;
-            ResetAvailabilityCount();
             DisplayedPets.Clear();
 
             if (_contentScroller != null)
@@ -429,6 +431,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 _availabilityFilter = availability;
             }
 
+            ResetResultsAndRestrictions();
             UpdateSearchResult(SearchBarInput);
         }
         private void SetResultSelection(object sender)

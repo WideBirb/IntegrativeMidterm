@@ -193,7 +193,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             IsGenderMale = false;
             ProfileTitle = "REGISTER PET";
             SaveButtonContent = "ADD NEW PROFILE";
-            DiscardButtonContent = "DISCARD PROFILE";
+            DiscardButtonContent = "CANCEL";
             PlaceholderVisibility = Visibility.Visible;
         }
 

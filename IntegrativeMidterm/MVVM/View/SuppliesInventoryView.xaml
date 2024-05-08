@@ -55,8 +55,17 @@
                         Width="0.4*"
                         Binding="{Binding PetSupplyID}"
                         Header="ID"
-                        IsReadOnly="True" />
+                        IsReadOnly="True">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}"/>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                    
                     <DataGridTemplateColumn Width="0.75*" Header="Image">
+                        <DataGridTemplateColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}">
+                            </Style>
+                        </DataGridTemplateColumn.CellStyle>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border
@@ -72,39 +81,54 @@
                                         <ImageBrush ImageSource="{Binding ImagePath}" />
                                     </Border.Background>
                                 </Border>
-
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    
                     <DataGridTextColumn
                         Width="1*"
                         Binding="{Binding PetSupplyName}"
                         Header="Name"
-                        IsReadOnly="False" />
+                        IsReadOnly="True">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}"/>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                    
                     <DataGridTextColumn
                         Width="0.5*"
                         Binding="{Binding Quantity}"
                         Header="QTY"
-                        IsReadOnly="False" />
+                        IsReadOnly="True">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}"/>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                    
                     <DataGridTextColumn
                         Width="0.78*"
                         Binding="{Binding Price}"
                         Header="Price"
-                        IsReadOnly="False" />
+                        IsReadOnly="True">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}"/>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                    
                     <DataGridTextColumn
                         Width="1*"
                         Binding="{Binding Species}"
                         Header="Pet Type"
-                        IsReadOnly="False" />
+                        IsReadOnly="True">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}"/>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                    
                     <!--<DataGridTextColumn
                         Width="1*"
                         Binding="{Binding SupplyType}"
                         Header="S.Type"
-                        IsReadOnly="False" />-->
-                    <!--<DataGridTextColumn
-                        Width="1*"
-                        Binding="{Binding ImagePath}"
-                        Header="Image URL"
                         IsReadOnly="False" />-->
                 </DataGrid.Columns>
             </DataGrid>
