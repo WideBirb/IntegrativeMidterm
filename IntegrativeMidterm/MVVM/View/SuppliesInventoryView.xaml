@@ -6,36 +6,32 @@
     xmlns:local="clr-namespace:IntegrativeMidterm.MVVM.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:IntegrativeMidterm.MVVM.ViewModel"
+    xmlns:userControl="clr-namespace:IntegrativeMidterm.userControl.General"
     x:Name="root"
-    HorizontalAlignment="Stretch"
-    VerticalAlignment="Stretch"
     mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewModel:SuppliesInventoryViewModel />
+        <viewModel:SuppliesInventoryViewModel/>
     </UserControl.DataContext>
 
-    <Grid Margin="-5,0,30,5">
+    <Grid>
+        <Grid Margin="25">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5.4*" />
-            <ColumnDefinition Width="2*" />
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7.25*"/>
+                <ColumnDefinition Width="2.75*"/>
+            </Grid.ColumnDefinitions>
 
-        <Border
-            Width="710"
-            Height="780"
-            Margin="10,0,10,0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
+            <Border
+            Margin="0,0,12.5,0"
             Background="{StaticResource ViewBorderBG}"
             CornerRadius="15">
 
-            <DataGrid
+                <DataGrid
                 x:Name="myDataGrid"
                 Grid.Column="0"
                 Width="660"
                 Height="700"
-                Margin="25,20,0,0"
+                Margin="25,20,25,0"
                 VerticalAlignment="Top"
                 VerticalContentAlignment="Center"
                 AutoGenerateColumns="False"
@@ -50,129 +46,143 @@
                 ItemsSource="{Binding SupplyItems}"
                 RowStyle="{DynamicResource DataGridRowStyle1}"
                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
                         Width="0.4*"
                         Binding="{Binding PetSupplyID}"
-                        Header="ID"
+                        Header="  ID"
                         IsReadOnly="True">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}"/>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    
-                    <DataGridTemplateColumn Width="0.75*" Header="Image">
-                        <DataGridTemplateColumn.CellStyle>
-                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}">
-                            </Style>
-                        </DataGridTemplateColumn.CellStyle>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}">
+                                    <Setter Property="TextBlock.MaxHeight" Value="32"/>
+                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTemplateColumn Width="0.75*" Header="Image">
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}">
+                                    <Setter Property="TextBlock.MaxHeight" Value="40"/>
+                                </Style>
+                            </DataGridTemplateColumn.CellStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border
                                     Width="40"
                                     Height="40"
-                                    Margin="0,0,55,0"
+                                    Margin="0,0,20,0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     BorderBrush="White"
                                     BorderThickness="2"
                                     CornerRadius="5">
-                                    <Border.Background>
-                                        <ImageBrush ImageSource="{Binding ImagePath}" />
-                                    </Border.Background>
-                                </Border>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    
-                    <DataGridTextColumn
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{Binding ImagePath}" />
+                                        </Border.Background>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn
                         Width="1*"
                         Binding="{Binding PetSupplyName}"
                         Header="Name"
                         IsReadOnly="True">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}"/>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    
-                    <DataGridTextColumn
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}">
+                                    <Setter Property="TextBlock.MaxHeight" Value="32"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn
                         Width="0.5*"
                         Binding="{Binding Quantity}"
-                        Header="QTY"
+                        Header="  QTY"
                         IsReadOnly="True">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}"/>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    
-                    <DataGridTextColumn
-                        Width="0.78*"
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}">
+                                    <Setter Property="TextBlock.MaxHeight" Value="32"/>
+                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn
+                        Width="0.8*"
                         Binding="{Binding Price}"
                         Header="Price"
                         IsReadOnly="True">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}"/>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    
-                    <DataGridTextColumn
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}">
+                                    <Setter Property="TextBlock.MaxHeight" Value="32"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn
                         Width="1*"
                         Binding="{Binding Species}"
                         Header="Pet Type"
                         IsReadOnly="True">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}"/>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    
-                    <!--<DataGridTextColumn
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}">
+                                    <Setter Property="TextBlock.MaxHeight" Value="32"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn
                         Width="1*"
                         Binding="{Binding SupplyType}"
-                        Header="S.Type"
-                        IsReadOnly="False" />-->
-                </DataGrid.Columns>
-            </DataGrid>
-        </Border>
+                        Header="Product Type"
+                        IsReadOnly="True">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle1}">
+                                    <Setter Property="TextBlock.MaxHeight" Value="32"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+            <Border Margin="50 57 50 10" Height="2"
+                VerticalAlignment="Top"
+                Background="White"/>
 
-
-
-        <Border
+            <Border
             Grid.Column="1"
-            Width="280"
-            Height="780"
-            Margin="0,0,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            Margin="12.5,0,0,0"
             Background="{StaticResource ViewBorderBG}"
             CornerRadius="15">
 
-            <Grid Grid.Column="1" VerticalAlignment="Top">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+                <Grid Grid.Column="1" VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-
-
-                <StackPanel
+                    <StackPanel
                     x:Name="TextBoxContainer"
                     Grid.Column="1"
-                    Margin="0,10,25,15"
+                    Margin="12.5,10,12.5,15"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top">
 
 
-                    <Button
+                        <Button
                         Width="220"
                         Height="25"
-                        Margin="5,55,10,10"
+                        Margin="5,30,10,10"
                         Command="{Binding CopyCommand}"
                         CommandParameter="{Binding ElementName=root}"
                         Content="COPY SELECTED ITEM"
                         FontSize="17"
                         Style="{StaticResource PrimaryButtonStyle}" />
 
-                    <Button
+                        <Button
                         Width="220"
                         Height="25"
                         Margin="5,0,10,10"
@@ -182,107 +192,72 @@
                         FontSize="17"
                         Style="{StaticResource SecondaryButtonStyle}" />
 
-
-
-
-                    <Label
-                        Content="Name"
-                        FontSize="18"
-                        Foreground="White" />
-                    <TextBox
+                        <userControl:InputBar
                         x:Name="NameTextBox"
-                        Margin="5,0,5,15"
-                        Style="{StaticResource TextBoxBase}" />
-                    <Label
-                        Content="Quantity"
-                        FontSize="18"
-                        Foreground="White" />
-                    <TextBox
+                        EntryLabel="Product name"
+                        PlaceholderText=""
+                        Margin="-20 0 -20 -20"/>
+                        <userControl:InputBar
                         x:Name="QuantityTextBox"
-                        Margin="5,0,5,15"
-                        PreviewTextInput="QuantityTextBox_PreviewTextInput"
-                        Style="{StaticResource TextBoxBase}" />
-                    <Label
-                        Content="Price"
-                        FontSize="18"
-                        Foreground="White" />
-                    <TextBox
+                        EntryLabel="Quantity"
+                        PlaceholderText=""
+                        Margin="-20 0 -20 -20"/>
+                        <userControl:InputBar
                         x:Name="PriceTextBox"
-                        Margin="5,0,5,15"
-                        PreviewTextInput="PriceTextBox_PreviewTextInput"
-                        Style="{StaticResource TextBoxBase}" />
+                        EntryLabel="Price (Php)"
+                        PlaceholderText=""
+                        Margin="-20 0 -20 -20"/>
 
-                    <Label
-                        Content="Pet Type"
-                        FontSize="18"
-                        Foreground="White" />
+                        <userControl:DropdownSelection
+                               x:Name="PetTypeComboBox"
+                               EntryLabel="Species" Tag="speciesEntry"
+                               DropdownItemSource="{Binding PetSpeciesSelection, Mode=TwoWay}"
+                               InputText="{Binding ChosenSpecies, Mode=TwoWay}"
+                               DisplayMemberPath="Description"
+                               PlaceholderText="" Margin="-20 0 -20 -20"/>
 
-                    <ComboBox
-                        x:Name="PetTypeComboBox"
-                        Width="230"
-                        Background="Transparent"
-                        FontSize="17">
-                        <ComboBoxItem Content="Cat" Tag="Cat" />
-                        <ComboBoxItem Content="Dog" Tag="Dog" />
-                        <ComboBoxItem Content="Bird" Tag="Bird" />
-                        <ComboBoxItem Content="Fish" Tag="Fish" />
-                        <ComboBoxItem Content="Mollusk" Tag="Mollusk" />
-                    </ComboBox>
+                        <userControl:DropdownSelection
+                               x:Name="SupplyTypeComboBox"
+                               EntryLabel="Supply Type" Tag="supplyTypeEntry"
+                               DropdownItemSource="{Binding SupplyTypeSelection, Mode=TwoWay}"
+                               InputText="{Binding ChosenSupplyType, Mode=TwoWay}"
+                               DisplayMemberPath="Description"
+                               PlaceholderText="" Margin="-20 0 -20 -20"/>
 
-
-                    <!--<TextBox
-                        x:Name="PetTypeTextBox"
-                        Margin="5,0,5,15"
-                        Style="{StaticResource TextBoxBase}" />-->
-
-                    <!--<Label
-            Content="Supply Type"
-            FontSize="18"
-            Foreground="White" />
-
-        <TextBox
-            x:Name="SupplyTypeTextBox"
-            Margin="5,0,5,15"
-            Style="{StaticResource TextBoxBase}" />-->
-
-                    <Label
-                        Content="Image "
-                        FontSize="18"
-                        Foreground="White" />
-
-                    <Button
-                        Width="220"
+                        <StackPanel Orientation="Horizontal" Height="90" HorizontalAlignment="Center">
+                            <Border Width="70" Height="70" CornerRadius="10" ClipToBounds="True" BorderThickness="2" BorderBrush="White">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="{Binding ProfileImagePath}" />
+                                </Border.Background>
+                            </Border>
+                            <Button
+                        Width="140"
                         Height="35"
-                        Margin="5,5,10,0"
+                        Margin="15,5,0,0"
                         Command="{Binding UploadImageCommand}"
                         CommandParameter="{Binding ElementName=TextBoxContainer}"
                         Content="UPLOAD IMAGE"
                         FontSize="17"
-                        FontWeight="Bold"
+                        FontWeight="SemiBold"
                         Style="{StaticResource TertiaryButtonStyle}" />
+                        </StackPanel>
+                    </StackPanel>
 
-                    <!--<TextBox
-            x:Name="ImageURLTextBox"
-            Margin="5,0,5,5"
-            Style="{StaticResource TextBoxBase}" />-->
-
-                </StackPanel>
-
-                <StackPanel
+                    <StackPanel
                     Grid.Row="1"
-                    Margin="5,0,5,0"
+                    Margin="12.5,0,12.5,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <Label
+                        <Label
                         Margin="0,0,0,15"
                         HorizontalAlignment="Center"
                         Content="____________________________________________________"
                         FontSize="18"
                         Foreground="White" />
 
-                    <Button
+                        <Button
                         Name="Hello"
                         Width="190"
                         Height="45"
@@ -293,7 +268,7 @@
                         Style="{StaticResource PrimaryButtonStyle}" />
 
 
-                    <Button
+                        <Button
                         Width="190"
                         Height="45"
                         Margin="5,0,10,10"
@@ -302,30 +277,16 @@
                         Content="UPDATE"
                         Style="{StaticResource TertiaryButtonStyle}" />
 
-                    <Button
+                        <Button
                         Width="190"
                         Height="45"
                         Margin="5,0,10,25"
                         Command="{Binding DeleteCommand}"
                         Content="DELETE"
                         Style="{StaticResource SecondaryButtonStyle}" />
-
-
-
-                </StackPanel>
-
-
-
-
-
-
-            </Grid>
-
-
-        </Border>
-
-
-
-
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

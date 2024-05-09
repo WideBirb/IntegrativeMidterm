@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataClass.cs">
+      <DependentUpon>DataClass.dbml</DependentUpon>
+    </Compile>
     <Compile Include="DataClass.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -81,8 +84,6 @@
     <Compile Include="MVVM\Model\SaleSupplyReceipt.cs" />
     <Compile Include="MVVM\Model\PetSupply.cs" />
     <Compile Include="MVVM\Model\TransactionHistory.cs" />
-    <Compile Include="MVVM\Model\TransactionSummary.cs" />
-    <Compile Include="MVVM\ViewModel\PetCheckOutViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PetInventoryViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PetProfileViewModel.cs" />
     <Compile Include="MVVM\View\PetCheckOutView.xaml.cs">
@@ -296,9 +297,10 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Themes\Images\MyImage.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Themes\Images\placeholder.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Images\ReceiptTexture.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -37,11 +37,14 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         public RelayCommand ResultSelectCommand => new RelayCommand(parameter => SetResultSelection(parameter));
         public RelayCommand EndScrollCommand => new RelayCommand(parameter => LoadMoreItems(parameter));
         public RelayCommand AddPetCommand => new RelayCommand(execute => RegisterPet());
+        public RelayCommand SecondaryOptionCommand => new RelayCommand(execute => SecondaryProfileOption());
 
         private string _searchBarInput = string.Empty;
         private string _searchBarPlaceholderText = string.Empty;
+        private string _secondaryOption = string.Empty;
         private bool _profileClosedStatus = true;
         private Visibility _profileOptionsVisibility = Visibility.Collapsed;
+        private Visibility _secondaryOptionVisibility = Visibility.Collapsed;
 
         private int? _speciesFilter = null;
         private int? _availabilityFilter = null;
@@ -57,7 +60,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         private string _customer = string.Empty;
         private string _species = string.Empty;
         private string _breed = string.Empty;
-
+        private string _imagePath = string.Empty;
+        
         int _displayLimit = 20;
         int _retrieveIndex = 0;
         
@@ -74,16 +78,22 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-        public Visibility ProfileOptionsVisibility
-        {
-            get { return _profileOptionsVisibility;; }
-            set { _profileOptionsVisibility = value; OnPropertyChanged(); }
-        }
         public bool ProfileClosedStatus
         {
             get { return _profileClosedStatus; }
             set { _profileClosedStatus = value; OnPropertyChanged(); }
         }
+        public Visibility ProfileOptionsVisibility
+        {
+            get { return _profileOptionsVisibility; ; }
+            set { _profileOptionsVisibility = value; OnPropertyChanged(); }
+        }
+        public Visibility SecondaryOptionVisibility
+        {
+            get { return _secondaryOptionVisibility; ; }
+            set { _secondaryOptionVisibility = value; OnPropertyChanged(); }
+        }
+
 
         //-----------------------------------------------------------------//
 
@@ -96,6 +106,11 @@ namespace IntegrativeMidterm.MVVM.ViewModel
         {
             get { return _searchBarPlaceholderText; }
             set { _searchBarPlaceholderText = value; OnPropertyChanged(); }
+        }
+        public string SecondaryOption
+        {
+            get { return _secondaryOption; }
+            set { _secondaryOption = value; OnPropertyChanged(); }
         }
 
         //-----------------------------------------------------------------//
@@ -135,7 +150,12 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             get { return _breed; }
             set { _breed = value; OnPropertyChanged(); }
         }
-        
+        public string ProfileImagePath
+        {
+            get { return _imagePath; }
+            set { _imagePath = value; OnPropertyChanged(); }
+        }
+
 
         //-----------------------------------------------------------------//
 
@@ -147,6 +167,7 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
             SearchBarPlaceholderText = "Search...";
             SearchBarInput = string.Empty;
+            SecondaryOptionVisibility = Visibility.Collapsed;
 
             InitializeData();
         }
@@ -233,7 +254,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                             SpeciesID = petData.Species_ID,
                             Age = age.ToString() + "mo.",
                             StatusColor = GetStatusColor(petData.Status_ID),
-                            ImagePath = petData.Image_path
+                            ImagePath = petData.Image_path == string.Empty || petData.Image_path == null ?
+                            "\\Themes\\Images\\placeholder.jpg" : petData.Image_path
                         });
                         //await Task.Delay(1);
                     }
@@ -279,7 +301,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                         SpeciesID = petData.Species_ID,
                         Age = age.ToString() + "mo.",
                         StatusColor = GetStatusColor(petData.Status_ID),
-                        ImagePath = petData.Image_path
+                        ImagePath = petData.Image_path == string.Empty || petData.Image_path == null ?
+                        "\\Themes\\Images\\placeholder.jpg" : petData.Image_path
                     });
                     //await Task.Delay(1);
                 }
@@ -479,10 +502,86 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             Price = Math.Round(chosenPet.Price, 2).ToString("#,##0.00");
             Species = chosenPet.Species;
             Breed = chosenPet.Breed;
+            ProfileImagePath = chosenPet.ImagePath;
 
             ProfileOptionsVisibility = Visibility.Visible;
+
+            switch (chosenPet.StatusID)
+            {
+                case 1:
+                    SecondaryOption = "RESERVE PET";
+                    SecondaryOptionVisibility = Visibility.Visible;
+                    break;
+                case 2:
+                    SecondaryOption = "SET ADOPTED";
+                    SecondaryOptionVisibility = Visibility.Visible;
+                    break;
+                default:
+                    SecondaryOptionVisibility = Visibility.Collapsed;
+                    break;
+            }
         }
 
         //-----------------------------------------------------------------//
+
+        private void SecondaryProfileOption()
+        {
+            if (_selectedPet.StatusID == 1)
+            {
+                CreateReserveTransaction();
+            }
+            else
+            {
+                CreateAdoptTransaction();
+            }
+        }
+
+        private void CreateReserveTransaction()
+        {
+            ConfirmationBox confirmBox = new ConfirmationBox("A 25% downpayment for reservation will be recorded. Continue?");
+            var result = confirmBox.ShowDialog();
+            ProfileClosedStatus = false;
+
+            if (result.HasValue && result == true)
+            {
+                PetshopDB.spTransactionCreate(DateTime.Now, 3, 1, 1);
+
+                int maxTransactionID = PetshopDB.spGetAllPetTransactions(null, null).Max(t => t.Transaction_ID);
+
+                PetshopDB.spTransactionAddPet((int?)maxTransactionID, (int?)_selectedPet.ID, (double?)(_selectedPet.Price * 0.25));
+                PetshopDB.spSetPetStatus(_selectedPet.ID, 2);
+
+                MessageBox.Show(maxTransactionID.ToString());
+
+                ResetResultsAndRestrictions();
+                UpdateSearchResult(SearchBarInput);
+                new AlertBox("Pet Reservation Successful").ShowDialog();
+            }
+            ProfileClosedStatus = true;
+        }
+
+        private void CreateAdoptTransaction()
+        {
+            ConfirmationBox confirmBox = new ConfirmationBox("Transaction will be created upon pet adoption. Continue?");
+            var result = confirmBox.ShowDialog();
+            ProfileClosedStatus = false;
+
+            if (result.HasValue && result == true)
+            {
+                PetshopDB.spTransactionCreate(DateTime.Now, 2, 1, 1);
+
+                int maxTransactionID = PetshopDB.spGetAllPetTransactions(null, null).Max(t => t.Transaction_ID);
+
+                MessageBox.Show(maxTransactionID.ToString());
+
+                PetshopDB.spTransactionAddPet((int?)maxTransactionID, (int?)_selectedPet.ID, (double?)(_selectedPet.Price * 0.75));
+                PetshopDB.spSetPetStatus(_selectedPet.ID, 3);
+
+                ResetResultsAndRestrictions();
+                UpdateSearchResult(SearchBarInput);
+                new AlertBox("Pet Adoption Successful").ShowDialog();
+            }
+            ProfileClosedStatus = true;
+        }
     }
 }

@@ -28,4 +28,8 @@
     <SolidColorBrush x:Key="TertiaryButtonColor">#F8B324</SolidColorBrush>
     <SolidColorBrush x:Key="TertiaryButtonHoveredColor">#FFB825</SolidColorBrush>
     <SolidColorBrush x:Key="TertiaryButtonPressedColor">#EDAB22</SolidColorBrush>
+
+    <SolidColorBrush x:Key="GeneralButtonSelectedColor">#3FFFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="GeneralButtonHoveredColor">#2FFFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="GeneralButtonPressedColor">#1FFFFFFF</SolidColorBrush>
 </ResourceDictionary>

@@ -19,14 +19,14 @@
                     <Grid IsHitTestVisible="True" Background="Transparent">
                         <Border Width="35"
                                 Margin="7.5"
-                                Background="White"
+                                BorderThickness="2"
+                                BorderBrush="White"
                                 CornerRadius="7.5"
                                 HorizontalAlignment="Left"
                                 ClipToBounds="True">
-                            <Border.Clip>
-                                <RectangleGeometry RadiusX="7.5" RadiusY="7.5" Rect="0,0,35,35"/>
-                            </Border.Clip>
-                            <Image Source="{Binding ImagePath, Mode=TwoWay}"/>
+                            <Border.Background>
+                                <ImageBrush ImageSource="{Binding ImagePath, Mode=TwoWay}" Stretch="UniformToFill"/>
+                            </Border.Background>
                         </Border>
                         <Grid Margin="45 0 36.5 0">
                             <Grid.ColumnDefinitions>

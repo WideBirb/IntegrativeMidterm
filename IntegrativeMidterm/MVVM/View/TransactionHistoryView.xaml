@@ -9,7 +9,7 @@
              xmlns:helpers="clr-namespace:IntegrativeMidterm.userControl.HelperClasses"
              xmlns:userControls="clr-namespace:IntegrativeMidterm.userControl.General"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="800" MinWidth="900">
+             d:DesignHeight="800" d:DesignWidth="900" MinWidth="1000">
     <UserControl.DataContext>
         <viewModel:TransactionHistoryViewModel/>
     </UserControl.DataContext>
@@ -20,63 +20,68 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Margin="25 25 12.5 25" IsEnabled="{Binding ProfileClosedStatus}">
+        <Grid Grid.Column="0" Margin="25 25 12.5 25">
             <Border Background="#2C2A3D"  CornerRadius="15"/>
             <StackPanel>
-                <userControls:SearchBar TextChangedCommand="{Binding SearchCommand}"
+                <!--<userControls:SearchBar TextChangedCommand="{Binding SearchCommand}"
                                         VerticalAlignment="Top" Margin="0 0 0 0"
                                         PlaceholderText="{Binding SearchBarPlaceholderText}"
-                                        InputText="{Binding SearchBarInput, Mode=TwoWay}"/>
+                                        InputText="{Binding SearchBarInput, Mode=TwoWay}"/>-->
 
-                <Grid Margin="50 0 90 0">
+                <Grid Margin="25 50 65 0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1.2*"/>
+                        <ColumnDefinition Width="2.2*"/>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="4*"/>
                     </Grid.ColumnDefinitions>
                     
+                    
                     <TextBlock Grid.Column="0"
-                               Text="ID"
+                               
+                               Text="      ID"
                                HorizontalAlignment="Center"
                                Foreground="{StaticResource FontColorLight}"
-                               FontSize="18"
+                               FontSize="18" FontWeight="SemiBold"
                                VerticalAlignment="Center"/>
                     <TextBlock Grid.Column="1"
                                Text="Total Sale"
                                HorizontalAlignment="Center"
                                Foreground="{StaticResource FontColorLight}"
-                               FontSize="18"
+                               FontSize="18" FontWeight="SemiBold"
                                VerticalAlignment="Center"/>
                     <TextBlock Grid.Column="2"
-                               Text="Process Date"
+                               Text="   Process Date"
                                HorizontalAlignment="Center"
                                Foreground="{StaticResource FontColorLight}"
-                               FontSize="18"
+                               FontSize="18" FontWeight="SemiBold"
                                VerticalAlignment="Center"/>
                     <TextBlock Grid.Column="3"
-                               Text="Staff"
+                               Text="Transaction Type"
                                HorizontalAlignment="Center"
                                Foreground="{StaticResource FontColorLight}"
-                               FontSize="18"
+                               FontSize="18" FontWeight="SemiBold"
                                VerticalAlignment="Center"/>
                 </Grid>
+                <Border Margin="25 10 25 10" Height="2" Background="White"/>
 
                 <ScrollViewer x:Name="ResultsScroll"
-                              MaxHeight="600"
+                              MaxHeight="600" Margin="12.5 0 15 0"
+                              Style="{StaticResource ThinScrollViewerStyle}"
                               helpers:ScrollViewerHelper.ScrollToEndCommand="{Binding EndScrollCommand}">
-                    <ItemsControl Margin="0 0 0 0"
-                    ItemsSource="{Binding AllTransactions}">
+                    <ItemsControl Margin="0 0 -15 0"
+                    ItemsSource="{Binding DisplayedTransactions}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <components:TransactionItem/>
+                                <components:TransactionItem
+                                    SelectedCommand="{Binding DataContext.ResultSelectCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel
                                 Orientation="Vertical"
-                                Margin="40 0 40 0"/>
+                                Margin="25 0 25 0"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
@@ -86,6 +91,95 @@
 
         <Grid Grid.Column="1" Margin="12.5 25 25 25" IsEnabled="{Binding ProfileClosedStatus}">
             <Border Grid.Row="0" Background="#2C2A3D" CornerRadius="15"/>
+            <TextBlock Height="50" Margin="0 50 0 0" FontWeight="SemiBold"
+                       Foreground="White" FontSize="25" 
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"
+                       Text="RECEIPT"/>
+            <Border Margin="25 84 25 10" Height="2" VerticalAlignment="Top" Background="White"/>
+            <ScrollViewer Margin="12 100 0 50"
+                Style="{StaticResource ThinScrollViewerStyle}">
+                <StackPanel  Margin="15 0 25 0" MinHeight="800">
+                    <StackPanel.Background>
+                        <ImageBrush ImageSource="/Themes/Images/ReceiptTexture.png" Stretch="UniformToFill"/>
+                    </StackPanel.Background>
+                    <TextBlock Foreground="Black" FontSize="40"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               Margin="0 0 0 0"
+                               Text="PET SHOP"/>
+                    <TextBlock Foreground="Black" FontSize="18"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               Margin="0 -10 0 0"
+                               Text="..................................................."/>
+                    <TextBlock Foreground="Black" FontSize="18"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Left"
+                               Margin="10 10 0 0"
+                               Text="{Binding TransactionID, StringFormat='Receipt No.: {0}'}"/>
+                    <TextBlock Foreground="Black" FontSize="15"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Left"
+                               Margin="10 0 0 10"
+                               Text="{Binding TransactionDate}"/>
+                    <ItemsControl
+                            ItemsSource="{Binding TransactionDetails}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid IsHitTestVisible="False">
+                                    <StackPanel Margin="10 0 0 10">
+                                        <TextBlock Foreground="Black" FontSize="18"
+                                                   FontWeight="SemiBold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="0 0 0 0"
+                                                   Text="{Binding SupplyName}"/>
+                                        <TextBlock Foreground="Black" FontSize="18"
+                                                   FontWeight="SemiBold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="0 0 0 0"
+                                                   Text="{Binding QuantityAndPrice}"/>
+                                    </StackPanel>
+                                    <TextBlock Foreground="Black" FontSize="18"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Right"
+                                               Margin="0 0 10 0"
+                                               Text="{Binding TotalItemPrice}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <TextBlock Foreground="Black" FontSize="18"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               Margin="0 0 0 0"
+                               Text="..................................................."/>
+                    <TextBlock Foreground="Black" FontSize="18"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Left"
+                               Margin="10 0 0 0"
+                               Text="{Binding PurchaseQuantity, StringFormat='Items count: {0}'}"/>
+                    <Grid>
+                        <TextBlock Foreground="Black" FontSize="18"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Left"
+                               Margin="10 10 0 0"
+                               Text="TOTAL"/>
+                        <TextBlock Foreground="Black" FontSize="18"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Right"
+                               Margin="0 10 10 0"
+                               Text="{Binding TotalPrice}"/>
+                    </Grid>
+                    <TextBlock Foreground="Black" FontSize="18"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               Margin="0 -10 0 0"
+                               Grid.Column="1"
+                               Text="..................................................."/>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </UserControl>

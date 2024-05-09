@@ -171,21 +171,16 @@
                         Margin="10 22.5 10 10"
                         VerticalAlignment="Center"
                         Visibility="{Binding ProfileOptionsVisibility}">
+                <Border Width="100" Height="100" BorderThickness="2" BorderBrush="White" CornerRadius="15">
+                    <Border.Background>
+                        <ImageBrush ImageSource="{Binding ProfileImagePath}" Stretch="UniformToFill"/>
+                    </Border.Background>
+                </Border>
                 <TextBlock Height="50"
                            Foreground="White"
                            FontSize="25"
                            HorizontalAlignment="Center"
                            Text="{Binding PetName}"/>
-                <TextBlock Height="30"
-                           Foreground="LightGray"
-                           FontSize="18"
-                           HorizontalAlignment="Center"
-                           Text="Birthday"/>
-                <TextBlock Height="30"
-                           Foreground="White"
-                           FontSize="18"
-                           HorizontalAlignment="Center"
-                           Text="{Binding Birthdate}"/>
                 <TextBlock Height="30" Margin="0 15 0 0"
                            Foreground="LightGray"
                            FontSize="18"
@@ -196,11 +191,6 @@
                            FontSize="18"
                            HorizontalAlignment="Center"
                            Text="{Binding PetStatus}"/>
-                <TextBlock Height="30"
-                           Foreground="White"
-                           FontSize="18"
-                           HorizontalAlignment="Center"
-                           Text="{Binding Customer}"/>
                 <TextBlock Height="30" Margin="0 15 0 0"
                            Foreground="LightGray"
                            FontSize="18"
@@ -214,10 +204,12 @@
 
                 <StackPanel Visibility="{Binding ProfileOptionsVisibility}">
                     <Button Style="{StaticResource SecondaryButtonStyle}"
-                            Content="MANAGE INFO"
+                            Content="MANAGE INFO" Margin="0"
                             Command="{Binding ConfirmCommand}"/>
                     <Button Style="{StaticResource TertiaryButtonStyle}"
-                            Content="UPDATE STATUS"/>
+                            Content="{Binding SecondaryOption}"
+                            Visibility="{Binding SecondaryOptionVisibility}"
+                            Command="{Binding SecondaryOptionCommand}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

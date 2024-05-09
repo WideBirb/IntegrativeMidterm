@@ -443,11 +443,6 @@
     <Parameter Name="status_id" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.spTransactionAddPet" Method="spTransactionAddPet">
-    <Parameter Name="transaction_history_id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="pet_id" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.spTransactionAddSupply" Method="spTransactionAddSupply">
     <Parameter Name="transaction_history_id" Type="System.Int32" DbType="Int" />
     <Parameter Name="purchase_quantity" Type="System.Int32" DbType="Int" />
@@ -568,5 +563,11 @@
     <ElementType Name="spSelectLatestTransactionHistoryIDResult">
       <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.spTransactionAddPet" Method="spTransactionAddPet">
+    <Parameter Name="transaction_history_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="pet_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="price" Type="System.Double" DbType="Float" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>

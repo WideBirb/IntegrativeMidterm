@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 11.875" name="DataClass">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 12" name="DataClass">
   <DataContextMoniker Name="/DataClassDataContext" />
   <nestedChildShapes>
     <classShape Id="4028c82e-bb8e-4af3-be81-cb27eafa9b52" absoluteBounds="0.75, 0.75, 2, 2.3478011067708335">
@@ -50,10 +50,10 @@
         <elementListCompartment Id="67e25d14-bb2a-48ff-83b0-2c85febe284a" absoluteBounds="3.765, 9.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="6a96e8ac-17d9-434a-9932-5137e516aab0" absoluteBounds="6.75, 8.75, 2, 2.9247054036458309">
+    <classShape Id="50edaff3-bb59-41a9-94cc-917d9624b1ca" absoluteBounds="7.125, 8.875, 2, 2.9247054036458331">
       <DataClassMoniker Name="/DataClassDataContext/vwPetTransaction" />
       <nestedChildShapes>
-        <elementListCompartment Id="41840d6d-91b8-41fa-91ec-dc661ca6ae5b" absoluteBounds="6.765, 9.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d5106742-131f-4cf8-af26-5bb26e6ce047" absoluteBounds="7.1400000000000006, 9.335, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

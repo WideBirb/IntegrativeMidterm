@@ -14,6 +14,7 @@ namespace IntegrativeMidterm.MVVM.Model
         public DateTime ProcessDate { get; set; }
         public int Quantity { get; set; }
         public string Staff { get; set; }
+        public string TransactionType { get; set; }
         public int TransactionTypeID { get; set; }
         public SolidColorBrush TransactionTypeColor { get; set; }
     }

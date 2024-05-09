@@ -358,13 +358,6 @@ namespace IntegrativeMidterm
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spTransactionAddPet")]
-		public int spTransactionAddPet([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> transaction_history_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_id)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), transaction_history_id, pet_id);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spTransactionAddSupply")]
 		public int spTransactionAddSupply([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> transaction_history_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> purchase_quantity, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_supply_id)
 		{
@@ -440,6 +433,13 @@ namespace IntegrativeMidterm
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
 			return ((ISingleResult<spSelectLatestTransactionHistoryIDResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.spTransactionAddPet")]
+		public int spTransactionAddPet([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> transaction_history_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> pet_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Float")] System.Nullable<double> price)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), transaction_history_id, pet_id, price);
+			return ((int)(result.ReturnValue));
 		}
 	}
 	

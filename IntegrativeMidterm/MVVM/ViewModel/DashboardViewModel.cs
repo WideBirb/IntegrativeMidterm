@@ -104,7 +104,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 				ISingleResult<spGetAllPetTransactionsResult> day =
 					PetshopDB.spGetAllPetTransactions(DateTime.Now.AddDays(-days), DateTime.Now.AddDays(-days + 1));
 
-
 				foreach (var item in day)
 				{
 					if (item.Cost.ToString() == null )

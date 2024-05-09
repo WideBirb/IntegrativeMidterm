@@ -83,11 +83,6 @@
                     Style="{StaticResource MenuButtonTheme}" />
 
                 <RadioButton
-                    Command="{Binding PetCheckOutViewCommand}"
-                    Content="Pet Shop"
-                    Style="{StaticResource MenuButtonTheme}" />
-
-                <RadioButton
                     Command="{Binding TransactionHistoryViewCommand}"
                     Content="Transaction History"
                     Style="{StaticResource MenuButtonTheme}" />

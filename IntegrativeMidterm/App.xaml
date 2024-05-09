@@ -41,10 +41,6 @@
                 <view:TransactionHistoryView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:PetCheckOutViewModel}">
-                <view:PetCheckOutView />
-            </DataTemplate>
-
             <DataTemplate DataType="{x:Type viewModel:PetInventoryViewModel}">
                 <view:PetInventoryView />
             </DataTemplate>

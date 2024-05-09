@@ -18,7 +18,7 @@
             <ControlTemplate TargetType="RadioButton">
                 <Border x:Name="RadioBorder" CornerRadius="15">
                     <Grid IsHitTestVisible="True" Background="Transparent">
-                        <Grid Margin="0 0 36.5 0">
+                        <Grid Margin="0 0 11.5 0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="2*"/>
@@ -46,20 +46,13 @@
                                        FontSize="18"
                                        VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="3"
-                                       Text="{Binding Staff}"
+                                       Text="{Binding TransactionType}"
                                        HorizontalAlignment="Left"
                                        Margin="20 0 0 0"
                                        Foreground="{StaticResource FontColorLight}"
                                        FontSize="18"
                                        VerticalAlignment="Center"/>
                         </Grid>
-
-                        <Border Width="25"
-                                Height="25"
-                                Background="Green"
-                                CornerRadius="12.5"
-                                HorizontalAlignment="Right"
-                                Margin="0 0 11.5 0"/>
                     </Grid>
                 </Border>
 

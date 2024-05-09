@@ -28,7 +28,7 @@
             <Setter.Value>
                 <ControlTemplate>
                     <TextBlock
-                        Margin="2,0,0,0"
+                        Margin="0,0,0,0"
                         VerticalAlignment="Center"
                         Foreground="Red"
                         Text="!" />
@@ -43,6 +43,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
+                        Height="50" IsHitTestVisible="True"
                         SnapsToDevicePixels="True" CornerRadius="15">
                         <SelectiveScrollingGrid>
                             <SelectiveScrollingGrid.ColumnDefinitions>
@@ -76,18 +77,21 @@
                 <Setter Property="Margin" Value="{Binding NewItemMargin, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="Black"/>
+                <Setter Property="Background" Value="{DynamicResource GeneralButtonHoveredColor}"/>
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="White"/>
+                <Setter Property="Background" Value="{DynamicResource GeneralButtonSelectedColor}"/>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="False">
+                <Setter Property="Foreground" Value="White"/>
             </Trigger>
         </Style.Triggers>
     </Style>
     <Style x:Key="DataGridColumnHeaderStyle1" TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Background" Value="{StaticResource ViewBorderBG}" />
-        <Setter Property="FontSize" Value="23" />
-        <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Foreground" Value="LimeGreen" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="Height" Value="35" />
         <Setter Property="Margin" Value="0,0,0,15" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -207,7 +211,7 @@
                                             Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.All}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
                                         <DataGridColumnHeadersPresenter
                                             x:Name="PART_ColumnHeadersPresenter"
-                                            Grid.Column="1"
+                                            Grid.Column="1" Margin="5 0 0 10"
                                             Background="{StaticResource SupplyItemsBG}"
                                             Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Column}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
                                         <ScrollContentPresenter
@@ -261,6 +265,10 @@
     <Style x:Key="DataGridCellStyle1" TargetType="{x:Type DataGridCell}">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource FontColorLight}"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="FontSize" Value="18"/>
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -269,6 +277,10 @@
 
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="Transparent"/>
+            </Trigger>
+
+            <Trigger Property="IsFocused" Value="False">
+                <Setter Property="Foreground" Value="White"/>
             </Trigger>
         </Style.Triggers>
     </Style>

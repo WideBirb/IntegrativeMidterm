@@ -24,11 +24,11 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 {
     internal class SuppliesInventoryViewModel : ViewModelBase
     {
-        
 		public ObservableCollection<PetSupply> SupplyItems { get; set; }
-		public ObservableCollection<PetSpecies> PetSpecies { get; set; }
+		public ObservableCollection<PetSpecies> PetSpeciesSelection { get; set; }
+		public ObservableCollection<PetSupplyType> SupplyTypeSelection { get; set; }
 
-		public RelayCommand CopyCommand => new RelayCommand(parameter => copySelectedItems(parameter), canExecute => SelectedItem != null);
+        public RelayCommand CopyCommand => new RelayCommand(parameter => copySelectedItems(parameter), canExecute => SelectedItem != null);
 		public RelayCommand ClearCommand => new RelayCommand(parameter => clearTextbox((StackPanel)parameter));
 		public RelayCommand AddCommand => new RelayCommand(parameter => AddItem(parameter));
 		public RelayCommand UpdateCommand => new RelayCommand(execute => UpdateItem(execute), canExecute => SelectedItem != null);
@@ -36,15 +36,65 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 		public RelayCommand UploadImageCommand => new RelayCommand(parameter => UploadImage());
 		//can only execute when selecteditem is not null
 
+		private PetSpecies _chosenSpecies = new PetSpecies();
+		public string ChosenSpecies
+		{
+			get
+			{
+				return _chosenSpecies.Description;
+			}
+			set
+			{
+				_chosenSpecies.Description = value;
+				_chosenSpecies.ID = DeterminePetType(value);
+				OnPropertyChanged();
+			}
+		}
 
-		// SPTransactionCreate , staff = 1, custmer id = null
-		// Kunin mo yung id ng ginawa mo
-		public SuppliesInventoryViewModel()
+        private PetSupplyType _chosenSupplyType = new PetSupplyType();
+        public string ChosenSupplyType
+        {
+            get
+            {
+                return _chosenSupplyType.Description;
+            }
+            set
+            {
+                _chosenSupplyType.Description = value;
+                _chosenSupplyType.ID = DetermineSupplyType(value);
+                OnPropertyChanged();
+            }
+        }
+
+        // SPTransactionCreate , staff = 1, custmer id = null
+        // Kunin mo yung id ng ginawa mo
+        public SuppliesInventoryViewModel()
         {
             SupplyItems = new ObservableCollection<PetSupply>();
-			InitializeData();
+			PetSpeciesSelection = new ObservableCollection<PetSpecies>();
+			SupplyTypeSelection = new ObservableCollection<PetSupplyType>();
 
+            var species = PetshopDB.spGetPetTypes();
 
+			foreach ( var type in species )
+			{
+				PetSpeciesSelection.Add(new PetSpecies{
+					ID = type.pet_type_id,
+					Description = type.description
+				});
+			}
+
+            var supplyTypes = PetshopDB.spGetPetSupplyTypes();
+
+            foreach (var type in supplyTypes)
+            {
+                SupplyTypeSelection.Add(new PetSupplyType
+                {
+                    ID = type.pet_supply_type_id,
+                    Description = type.description
+                });
+            }
+            InitializeData();
     	}
 
         private PetSupply selectedItem;
@@ -53,10 +103,11 @@ namespace IntegrativeMidterm.MVVM.ViewModel
             get { return selectedItem; }
             set
             {
-                selectedItem = value;
+				selectedItem = value;
                 OnPropertyChanged();
             }
         }
+
 		private string _profileImagePath = string.Empty;
 		public string ProfileImagePath
 		{
@@ -64,43 +115,58 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			set { _profileImagePath = value; OnPropertyChanged(); }
 		}
 
-		Random random = new Random();
+		//Random random = new Random();
 
-		public int determineSupplyType(string supplyType)
+		public int DetermineSupplyType(string supplyType)
 		{
-			if (supplyType == "food")
-				return 1;
-			else if (supplyType == "hygiene")
-				return 2;
-			else if (supplyType == "toys")
-				return 3;
-			else if (supplyType == "grooming")
-				return 4;
-			else if (supplyType == "accessories")
-				return 5;
-			else if (supplyType == "medication")
-				return 6;
-			else if (supplyType == "decoration")
-				return 7;
-			else if (supplyType == "feeding")
-				return 8;
-			else
-				return 9;
+            foreach (var type in SupplyTypeSelection)
+            {
+                if (type.Description == supplyType)
+                {
+                    return type.ID;
+                }
+            }
+            return -1;
+            //if (supplyType == "food")
+            //	return 1;
+            //else if (supplyType == "hygiene")
+            //	return 2;
+            //else if (supplyType == "toys")
+            //	return 3;
+            //else if (supplyType == "grooming")
+            //	return 4;
+            //else if (supplyType == "accessories")
+            //	return 5;
+            //else if (supplyType == "medication")
+            //	return 6;
+            //else if (supplyType == "decoration")
+            //	return 7;
+            //else if (supplyType == "feeding")
+            //	return 8;
+            //else
+            //	return 9;
 		}
 
-		public int determinePetType(string petType)
+		public int DeterminePetType(string petType)
 		{
-
-			if (petType == "Dog")
-				return 1;
-			else if (petType == "Cat")
-				return 2;
-			else if (petType == "Bird")
-				return 3;
-			else if (petType == "Fish")
-				return 4;
-			else
-				return 5;
+			foreach (var species in PetSpeciesSelection)
+			{
+				if (species.Description == petType)
+				{
+					return species.ID;
+				}
+			}
+			return -1;
+			//if (petType == "Dog")
+			//	return 1;
+			//else if (petType == "Cat")
+			//	return 2;
+			//else if (petType == "Bird")
+			//	return 3;
+			//else if (petType == "Fish")
+			//	return 4;
+			//else
+			//	return 5;
 		}
 
 		private void InitializeData()
@@ -159,15 +225,18 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 		private void copySelectedItems(object parameter)
 		{ 
 			SuppliesInventoryView view = (SuppliesInventoryView)parameter;		
-			view.NameTextBox.Text = selectedItem.PetSupplyName;
-			view.QuantityTextBox.Text = selectedItem.Quantity.ToString();
-			view.PriceTextBox.Text = selectedItem.Price.ToString();
-			foreach (var item in view.PetTypeComboBox.Items)
-				if ((item as ComboBoxItem).Content.ToString() == selectedItem.Species.ToString())
-				{
-					view.PetTypeComboBox.SelectedItem = item;
-					break; // Exit the loop once the item is found
-				}
+			view.NameTextBox.InputText = selectedItem.PetSupplyName;
+			view.QuantityTextBox.InputText = selectedItem.Quantity.ToString();
+			view.PriceTextBox.InputText = selectedItem.Price.ToString();
+			view.PetTypeComboBox.InputText = selectedItem.Species.ToString();
+			view.SupplyTypeComboBox.InputText = selectedItem.SupplyType.ToString();
+			ProfileImagePath = selectedItem.ImagePath;
+			//foreach (var item in view.PetTypeComboBox.Items)
+			//	if ((item as ComboBoxItem).Content.ToString() == selectedItem.Species.ToString())
+			//	{
+			//		view.PetTypeComboBox.SelectedItem = item;
+			//		break; // Exit the loop once the item is found
+			//	}
 
 			//view.SupplyTypeTextBox.Text = selectedItem.SupplyType;
 			//view.ImageURLTextBox.Text = selectedItem.ImagePath;
@@ -177,25 +246,24 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 		{
 			foreach (var child in container.Children)
 			{
-				if (child is TextBox textBox)
-					textBox.Text = "";
-				else if (child is ComboBox combo)
+				if (child is InputBar textBox)
+					textBox.InputText = "";
+				else if (child is DropdownSelection combo)
 				{ 
-					combo.SelectedItem = null;
+					combo.InputText = string.Empty;
 				}
 			}
-
-
 		}
 
 		private void AddItem(object parameter)
         {
             var item = (SuppliesInventoryView)parameter;
 
-			if (item.NameTextBox.Text == string.Empty ||
-				item.QuantityTextBox.Text == string.Empty ||
-				item.PriceTextBox.Text == string.Empty ||
-				item.PetTypeComboBox.SelectedItem == null)
+			if (item.NameTextBox.InputText == string.Empty ||
+				item.QuantityTextBox.InputText == string.Empty ||
+				item.PriceTextBox.InputText == string.Empty ||
+				ChosenSupplyType == string.Empty ||
+				ChosenSpecies == string.Empty)
 				//item.SupplyTypeTextBox.Text == string.Empty ||
 				//item.ImageURLTextBox.Text == string.Empty)
 			{
@@ -204,39 +272,44 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			}
             else
             {
-				//Add to DB
-				ComboBoxItem selectedComboBox = new ComboBoxItem();
-				foreach (ComboBoxItem items in item.PetTypeComboBox.Items)
-					if ((items as ComboBoxItem) == item.PetTypeComboBox.SelectedItem)
-					{
-						selectedComboBox = items;
-						break; // Exit the loop once the item is found
-					}
+				if (_chosenSupplyType.ID == -1 || _chosenSpecies.ID == -1)
+				{
+                    new AlertBox("Invalid pet supply or species selection!", 18).ShowDialog();
+                    ProfileImagePath = string.Empty;
+                    return;
+                }
 
-				PetshopDB.spAddPetSupply
+                //Add to DB
+                //ComboBoxItem selectedComboBox = new ComboBoxItem();
+                //foreach (ComboBoxItem items in item.PetTypeComboBox.Items)
+                //	if ((items as ComboBoxItem) == item.PetTypeComboBox.SelectedItem)
+                //	{
+                //		selectedComboBox = items;
+                //		break; // Exit the loop once the item is found
+                //	}
+
+                PetshopDB.spAddPetSupply
 					(
-						item.NameTextBox.Text,
-						1,//determineSupplyType(item.SupplyTypeTextBox.Text),
-						determinePetType(selectedComboBox.Content.ToString()),
-						float.TryParse(item.PriceTextBox.Text, out float price2) ? price2 : 999.99f,
-						int.TryParse(item.QuantityTextBox.Text, out int quantity2) ? quantity2 : 0,
+						item.NameTextBox.InputText,
+						_chosenSupplyType.ID,
+						_chosenSpecies.ID,
+						float.TryParse(item.PriceTextBox.InputText, out float price2) ? price2 : 999.99f,
+						int.TryParse(item.QuantityTextBox.InputText, out int quantity2) ? quantity2 : 0,
 						ProfileImagePath //item.ImageURLTextBox.Text
 					);
-
-
 				int maxID = PetshopDB.vwPetSupplies.Max(t => t.ID);
 
 				// ADD TO MEMORY
 				SupplyItems.Add(new PetSupply
 				{
-					PetSupplyName = item.NameTextBox.Text,
-					Quantity = int.TryParse(item.QuantityTextBox.Text, out int quantity) ? quantity : 0,
-					Price = float.TryParse(item.PriceTextBox.Text, out float price) ? price : 0.0f,
+					PetSupplyName = item.NameTextBox.InputText,
+					Quantity = int.TryParse(item.QuantityTextBox.InputText, out int quantity) ? quantity : 0,
+					Price = float.TryParse(item.PriceTextBox.InputText, out float price) ? price : 0.0f,
 					PetSupplyID = maxID,//int.Parse(item.ItemIDTextBox.Text),
-					SupplyType = "1", /*item.SupplyTypeTextBox.Text.ToLower(),*/
-					Species = selectedComboBox.Content.ToString().ToLower(),
-					InSupplyTypeID = 1, /*determineSupplyType(item.SupplyTypeTextBox.Text.ToLower()),*/
-					InPetTypeID = determinePetType(item.PetTypeComboBox.SelectedItem.ToString().ToLower()),
+					SupplyType = _chosenSupplyType.Description, /*item.SupplyTypeTextBox.Text.ToLower(),*/
+					Species = _chosenSpecies.Description,
+					InSupplyTypeID = _chosenSupplyType.ID, /*determineSupplyType(item.SupplyTypeTextBox.Text.ToLower()),*/
+					InPetTypeID = +_chosenSpecies.ID,
 					ImagePath = ProfileImagePath, //item.ImageURLTextBox.Text,
 
 					Status = "Available",
@@ -260,38 +333,44 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 			new AlertBox("Data Deleted Successfully!", 20).ShowDialog();
 		}
 
-
-
 		private void UpdateItem(object parameter)
 		{
 			var item = (SuppliesInventoryView)parameter;
 
-			ComboBoxItem selectedComboBox = new ComboBoxItem();
-			foreach (ComboBoxItem items in item.PetTypeComboBox.Items)
-				if ((items as ComboBoxItem) == item.PetTypeComboBox.SelectedItem)
-				{
-					selectedComboBox = items;
-					break; // Exit the loop once the item is found
-				}
+			//ComboBoxItem selectedComboBox = new ComboBoxItem();
+			//foreach (ComboBoxItem items in item.PetTypeComboBox.Items)
+			//	if ((items as ComboBoxItem) == item.PetTypeComboBox.SelectedItem)
+			//	{
+			//		selectedComboBox = items;
+			//		break; // Exit the loop once the item is found
+			//	}
 
 
-			if (item.NameTextBox.Text == string.Empty ||
-				item.QuantityTextBox.Text == string.Empty ||
-				item.PriceTextBox.Text == string.Empty ||
-				item.PetTypeComboBox.SelectedItem.ToString() == string.Empty)
+			if (item.NameTextBox.InputText == string.Empty ||
+				item.QuantityTextBox.InputText == string.Empty ||
+				item.PriceTextBox.InputText == string.Empty ||
+                ChosenSpecies == string.Empty ||
+				ChosenSupplyType == string.Empty)
 				//item.SupplyTypeTextBox.Text == string.Empty ||
 				//item.ImageURLTextBox.Text == string.Empty)
 			{
-
 				new AlertBox("Please fill out all the forms!", 18).ShowDialog();
 			}
 			else
 			{
-				selectedItem.PetSupplyName = item.NameTextBox.Text;
-				selectedItem.Quantity = int.Parse(item.QuantityTextBox.Text);
-				selectedItem.Price = float.Parse(item.PriceTextBox.Text);
-				selectedItem.Species = selectedComboBox.Content.ToString();
-				selectedItem.ImagePath = ProfileImagePath;
+                if (_chosenSupplyType.ID == -1 || _chosenSpecies.ID == -1)
+                {
+                    new AlertBox("Invalid pet supply or species selection!", 18).ShowDialog();
+                    ProfileImagePath = string.Empty;
+                    return;
+                }
+
+                selectedItem.PetSupplyName = item.NameTextBox.InputText;
+				selectedItem.Quantity = int.Parse(item.QuantityTextBox.InputText);
+				selectedItem.Price = float.Parse(item.PriceTextBox.InputText);
+				selectedItem.Species = _chosenSpecies.Description;
+				selectedItem.SupplyType = _chosenSupplyType.Description;
+                selectedItem.ImagePath = ProfileImagePath;
 				//selectedItem.SupplyType = item.SupplyTypeTextBox.Text;
 				//selectedItem.ImagePath = item.ImageURLTextBox.Text;
 
@@ -299,8 +378,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 					(
 						selectedItem.PetSupplyID,
 						selectedItem.PetSupplyName,
-						determineSupplyType(selectedItem.SupplyType),
-						determinePetType(selectedComboBox.Content.ToString().ToLower()), //determinePetType(selectedItem.Species),
+						_chosenSupplyType.ID,
+                        _chosenSpecies.ID, //determinePetType(selectedItem.Species),
 						selectedItem.Price,
 						selectedItem.Quantity,
 						selectedItem.ImagePath
@@ -311,7 +390,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 				new AlertBox("Data Updated Successfully!", 20).ShowDialog();
 				clearTextbox(item.TextBoxContainer);
 			}
-
 			ProfileImagePath = string.Empty;	
 		}
 	}
