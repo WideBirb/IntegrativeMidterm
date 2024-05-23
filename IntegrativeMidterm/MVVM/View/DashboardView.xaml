@@ -168,7 +168,7 @@
 
                     <lvc:LineSeries
                         x:Name="SupplySalesChart"
-                        Title="Supply Sales ( in Thousands )"
+                        Title="Supply Sales"
                         Foreground="White"
                         PointForeground="White"
                         PointGeometrySize="10"
@@ -178,7 +178,7 @@
 
                     <lvc:LineSeries
                         x:Name="ProfitChart"
-                        Title=" Pet Sales ( in Thousands )"
+                        Title=" Pet Sales"
                         Foreground="White"
                         PointForeground="White"
                         PointGeometrySize="10"

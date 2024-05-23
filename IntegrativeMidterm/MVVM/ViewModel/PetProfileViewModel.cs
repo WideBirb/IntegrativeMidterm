@@ -327,16 +327,16 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Birthday Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-            if (!CheckDateFormat(VaccinationDate, out vaccination) && VaccinationDate != "N/A")
-            {
-                MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Vaccination Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-            if (!CheckDateFormat(CheckupDate, out checkup) && CheckupDate != "N/A")
-            {
-                MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Checkup Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
+            //if (!CheckDateFormat(VaccinationDate, out vaccination) && VaccinationDate != "N/A")
+            //{
+            //    MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Vaccination Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    return false;
+            //}
+            //if (!CheckDateFormat(CheckupDate, out checkup) && CheckupDate != "N/A")
+            //{
+            //    MessageBox.Show("Date entries must be written in MM/DD/YYYY format!", "Invalid Checkup Date Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    return false;
+            //}
             if (!CheckSpecies(out species_ID))
             {
                 MessageBox.Show("Species not found or registered in database!", "Invalid Species Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -387,8 +387,8 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 Price == string.Empty ||
                 Species == string.Empty ||
                 Breed == string.Empty ||
-                VaccinationDate == string.Empty ||
-                CheckupDate == string.Empty ||
+                //VaccinationDate == string.Empty ||
+                //CheckupDate == string.Empty ||
                 (!IsGenderFemale && !IsGenderMale)
                 )
                 return false;

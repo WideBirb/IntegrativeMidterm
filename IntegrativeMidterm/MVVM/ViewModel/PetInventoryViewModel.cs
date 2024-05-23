@@ -551,8 +551,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 PetshopDB.spTransactionAddPet((int?)maxTransactionID, (int?)_selectedPet.ID, (double?)(_selectedPet.Price * 0.25));
                 PetshopDB.spSetPetStatus(_selectedPet.ID, 2);
 
-                MessageBox.Show(maxTransactionID.ToString());
-
                 ResetResultsAndRestrictions();
                 UpdateSearchResult(SearchBarInput);
                 new AlertBox("Pet Reservation Successful").ShowDialog();
@@ -571,8 +569,6 @@ namespace IntegrativeMidterm.MVVM.ViewModel
                 PetshopDB.spTransactionCreate(DateTime.Now, 2, 1, 1);
 
                 int maxTransactionID = PetshopDB.spGetAllPetTransactions(null, null).Max(t => t.Transaction_ID);
-
-                MessageBox.Show(maxTransactionID.ToString());
 
                 PetshopDB.spTransactionAddPet((int?)maxTransactionID, (int?)_selectedPet.ID, (double?)(_selectedPet.Price * 0.75));
                 PetshopDB.spSetPetStatus(_selectedPet.ID, 3);

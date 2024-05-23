@@ -124,19 +124,22 @@ namespace IntegrativeMidterm.MVVM.ViewModel
 
 			//Lifetime Profit
 			ISingleResult<spGetAllTransactionsResult> allTransactions = PetshopDB.spGetAllTransactions(null, null);
+
             foreach (var transaction in allTransactions)
 			{
 				if (transaction.Total_Cost == null)
 					continue;
 				LifetimeProfit += (float)transaction.Total_Cost;
             }
+
 			spGetAllTransactionsResult recentTransaction = PetshopDB.spGetAllTransactions(null, null).Last();
+
 			if (recentTransaction.Total_Cost != null)
 				RecentSaleCost = (double)recentTransaction.Total_Cost;
 
-            RecentSaleDate = recentTransaction.Process_Date.ToString();
+			RecentSaleDate = recentTransaction.Process_Date.ToString();
 
-            seriesCollection = new SeriesCollection();
+			seriesCollection = new SeriesCollection();
 			SupplyAmountSold = calculateSupplyWeekStatistics(item => (double)item.Quantity_Sold); ; // new ChartValues<double> { 63, 43, 52, 21, 45, 51, 75 };
 			SupplySales = calculateSupplyWeekStatistics(item => (double)item.Total_Cost);
 			PetSales = calculatePetWeekStatistics(item => (double)item.Cost);
